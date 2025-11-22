@@ -1,0 +1,52 @@
+{
+  "category": "DevilFruits",
+  "version": "1.0.0",
+  "last_updated": "2025-10-11",
+  "description": "Registry of all Devil Fruits in the game",
+  "types": [
+    {
+      "type": "Paramecia",
+      "path": "Paramecia/index.json",
+      "description": "Body-altering or manipulation abilities",
+      "count": 0
+    },
+    {
+      "type": "Zoan",
+      "path": "Zoan/index.json",
+      "description": "Animal transformation abilities",
+      "count": 0,
+      "subtypes": [
+        {
+          "subtype": "Regular",
+          "path": "Zoan/Regular/index.json",
+          "description": "Standard animal transformations",
+          "count": 0
+        },
+        {
+          "subtype": "Ancient",
+          "path": "Zoan/Ancient/index.json",
+          "description": "Prehistoric/extinct animal transformations",
+          "count": 0
+        },
+        {
+          "subtype": "Mythical",
+          "path": "Zoan/Mythical/index.json",
+          "description": "Legendary/mythological creature transformations",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "type": "Logia",
+      "path": "Logia/index.json",
+      "description": "Elemental intangibility abilities",
+      "count": 0
+    }
+  ],
+  "total_fruits": 0,
+  "notes": [
+    "Each fruit file should be named: FruitName.json",
+    "Example: GomuGomu.json, MeraMera.json",
+    "Use fruit's Japanese name for consistency"
+  ]
+}

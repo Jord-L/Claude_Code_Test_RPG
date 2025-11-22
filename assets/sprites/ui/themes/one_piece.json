@@ -1,0 +1,84 @@
+# One Piece Theme Configuration
+{
+  "theme_name": "One Piece",
+  "description": "Pirate adventure on the Grand Line with Devil Fruits",
+  
+  "character_classes": [
+    {
+      "id": "pirate",
+      "name": "Pirate", 
+      "description": "Adventurous seafarer seeking treasure and freedom",
+      "stat_bonuses": {"strength": 2, "charisma": 2, "luck": 1},
+      "skills": ["seamanship", "treasure_hunting", "navigation"]
+    },
+    {
+      "id": "marine",
+      "name": "Marine",
+      "description": "Navy soldier enforcing justice on the seas", 
+      "stat_bonuses": {"strength": 2, "endurance": 1, "intelligence": 1},
+      "skills": ["justice_sense", "tactical_combat", "investigation"]
+    },
+    {
+      "id": "doctor",
+      "name": "Doctor",
+      "description": "Medical expert who heals crew members",
+      "stat_bonuses": {"intelligence": 3, "charisma": 1}, 
+      "skills": ["medical_knowledge", "first_aid", "poison_resistance"]
+    }
+  ],
+  
+  "power_types": [
+    {
+      "id": "paramecia", 
+      "name": "Paramecia Devil Fruit",
+      "description": "Fruits that give superhuman abilities"
+    },
+    {
+      "id": "zoan",
+      "name": "Zoan Devil Fruit", 
+      "description": "Fruits that allow transformation into animals"
+    },
+    {
+      "id": "logia",
+      "name": "Logia Devil Fruit",
+      "description": "Fruits that turn the body into natural elements"
+    }
+  ],
+  
+  "currency": {
+    "name": "Beli",
+    "symbol": "฿",
+    "description": "The standard currency used across the world"
+  },
+  
+  "special_mechanics": {
+    "bounty_system": true,
+    "crew_system": true,
+    "ship_battles": true,
+    "devil_fruit_weakness": ["water", "sea_stone"]
+  },
+  
+  "items": [
+    {
+      "id": "meat",
+      "name": "Meat",
+      "description": "Delicious meat that restores health",
+      "type": "consumable",
+      "rarity": "common"
+    },
+    {
+      "id": "gomu_gomu_fruit",
+      "name": "Gomu Gomu no Mi", 
+      "description": "Paramecia fruit that turns the user into rubber",
+      "type": "special_item",
+      "rarity": "legendary",
+      "abilities": ["Rubber Body", "Gomu Gomu Pistol", "Gomu Gomu Gatling"]
+    }
+  ],
+  
+  "world_settings": {
+    "magic_level": "devil_fruits",
+    "technology_level": "age_of_sail",
+    "tone": "adventure_comedy"
+  }
+}

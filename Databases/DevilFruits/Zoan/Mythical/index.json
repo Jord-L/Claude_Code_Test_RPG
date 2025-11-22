@@ -1,0 +1,14 @@
+{
+  "subtype": "Mythical Zoan",
+  "description": "Legendary creature transformations - rarest Zoan type with special abilities beyond normal Zoans",
+  "fruits": [],
+  "total_count": 0,
+  "examples": [
+    "Human-Human Fruit: Model Buddha",
+    "Bird-Bird Fruit: Model Phoenix",
+    "Dog-Dog Fruit: Model Nine-Tailed Fox",
+    "Human-Human Fruit: Model Nika"
+  ],
+  "special_notes": "Mythical Zoans often include unique abilities beyond physical transformation (healing, elements, etc.)",
+  "notes": "Mythical Zoans are extremely rare and should be legendary-tier rewards. Consider carefully before adding."
+}

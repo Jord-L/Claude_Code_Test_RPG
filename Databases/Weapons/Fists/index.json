@@ -1,0 +1,38 @@
+{
+  "weapon_type": "Fists",
+  "description": "Gauntlets, knuckles, and hand-to-hand combat weapons",
+  "weapons": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_weapon_id",
+    "name": "Weapon Name",
+    "grade": "Common/Skillful/Great/O Wazamono/Supreme",
+    "description": "Weapon design and fighting style",
+    "rarity": "Common/Uncommon/Rare/Legendary/Unique",
+    "requirements": {
+      "level": 1,
+      "str": 10,
+      "agi": 10,
+      "skill": "Martial Arts"
+    },
+    "stats": {
+      "attack": 38,
+      "critical_chance": 8,
+      "critical_damage": 125,
+      "attack_speed": 150,
+      "combo_potential": "High"
+    },
+    "special_abilities": [],
+    "buy_price": 500,
+    "sell_price": 250,
+    "upgrade_slots": 3,
+    "fighting_style": "Brawler/Boxer"
+  },
+  "fist_types": {
+    "brass_knuckles": "Basic enhancement",
+    "gauntlets": "Armored fists",
+    "impact_dial": "Shell-based weapons",
+    "clawed_gloves": "Slashing variants"
+  },
+  "notes": "Fist weapons emphasize speed and combo attacks. Synergize well with martial arts Devil Fruits."
+}

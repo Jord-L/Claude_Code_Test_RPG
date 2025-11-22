@@ -1,0 +1,89 @@
+{
+  "category": "CrewManagement",
+  "version": "1.0.0",
+  "last_updated": "2025-10-11",
+  "description": "Crew member templates and recruitment database",
+  "crew_templates": [],
+  "total_count": 0,
+  "character_template": {
+    "id": "unique_character_id",
+    "name": "Character Name",
+    "type": "Story/Generic/Special",
+    "portrait": "character_portrait.png",
+    "description": "Character background and personality",
+    "class": "Fighter/Sniper/Navigator/Doctor/Cook/etc",
+    "recruitment": {
+      "method": "Story/Quest/Hire/Defeat",
+      "requirements": {
+        "island": "island_id",
+        "quest": "quest_id",
+        "level": 5,
+        "berries": 10000
+      },
+      "recruitment_story": "How they join the crew"
+    },
+    "starting_stats": {
+      "level": 1,
+      "str": 10,
+      "def": 10,
+      "agi": 10,
+      "int": 10,
+      "will": 10,
+      "cha": 10,
+      "lck": 10
+    },
+    "growth_rates": {
+      "str": 1.2,
+      "def": 1.0,
+      "agi": 1.5,
+      "int": 0.8,
+      "will": 1.0,
+      "cha": 1.0,
+      "lck": 1.0
+    },
+    "abilities": [
+      {
+        "ability_id": "unique_ability_id",
+        "name": "Ability Name",
+        "learn_level": 1,
+        "description": "What the ability does"
+      }
+    ],
+    "devil_fruit": null,
+    "weapon_preferences": ["Swords", "Guns"],
+    "unique_skill": "Special character trait or skill",
+    "loyalty": {
+      "starting": 50,
+      "max": 100,
+      "factors": ["Story choices", "Combat performance", "Time in party"]
+    },
+    "personal_quest": {
+      "quest_id": "character_quest_id",
+      "description": "Character's personal story quest"
+    },
+    "relationships": {
+      "synergies": ["character_id_1", "character_id_2"],
+      "conflicts": []
+    }
+  },
+  "crew_roles": [
+    "Captain (Player)",
+    "First Mate",
+    "Swordsman",
+    "Navigator",
+    "Sniper",
+    "Cook",
+    "Doctor",
+    "Archaeologist",
+    "Shipwright",
+    "Musician",
+    "Fighter",
+    "Helmsman"
+  ],
+  "notes": [
+    "Story characters should have detailed backstories and personal quests",
+    "Generic crew can be hired for basic roles",
+    "Consider crew synergies and relationships",
+    "Each crew member should feel unique and valuable"
+  ]
+}

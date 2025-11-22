@@ -1,0 +1,40 @@
+{
+  "type": "Paramecia",
+  "description": "Body-altering or manipulation Devil Fruits",
+  "fruits": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_fruit_id",
+    "name": "Fruit Name (Japanese)",
+    "translation": "Fruit Name (English)",
+    "description": "What the fruit does",
+    "rarity": "Common/Uncommon/Rare/Legendary",
+    "starting_available": false,
+    "abilities": [
+      {
+        "name": "Ability Name",
+        "level_required": 1,
+        "ap_cost": 10,
+        "cooldown": 0,
+        "description": "What the ability does",
+        "damage_type": "Physical/Special/Status",
+        "target": "Single/Multi/Self/All",
+        "effects": []
+      }
+    ],
+    "weaknesses": [
+      "Water/Seastone (standard)",
+      "Additional specific weaknesses"
+    ],
+    "strengths": [
+      "What this fruit excels at"
+    ],
+    "mastery_bonuses": {
+      "level_3": "Bonus description",
+      "level_5": "Bonus description",
+      "level_7": "Bonus description",
+      "level_10_awakening": "Awakening ability"
+    }
+  },
+  "notes": "Paramecia fruits offer the most variety - from body manipulation to environment control"
+}

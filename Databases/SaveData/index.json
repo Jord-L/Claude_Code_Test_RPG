@@ -1,0 +1,159 @@
+{
+  "category": "SaveData",
+  "version": "1.0.0",
+  "last_updated": "2025-10-11",
+  "description": "Player save file structure - each save contains complete game state",
+  "save_template": {
+    "save_id": "unique_save_id",
+    "save_name": "Save Slot Name",
+    "created_date": "timestamp",
+    "last_saved": "timestamp",
+    "playtime": "total_seconds",
+    "player_data": {
+      "name": "Player Name",
+      "level": 1,
+      "experience": 0,
+      "berries": 1000,
+      "stats": {
+        "str": 10,
+        "def": 10,
+        "agi": 10,
+        "int": 10,
+        "will": 10,
+        "cha": 10,
+        "lck": 10
+      },
+      "devil_fruit": {
+        "fruit_id": "selected_fruit_id",
+        "mastery_level": 1,
+        "abilities_unlocked": []
+      },
+      "appearance": {
+        "gender": "Male/Female",
+        "preset": "appearance_data"
+      },
+      "background": "chosen_background_id",
+      "bounty": 0,
+      "reputation": {
+        "pirates": 0,
+        "marines": 0,
+        "civilians": 0
+      }
+    },
+    "crew_data": {
+      "crew_name": "Pirate Crew Name",
+      "flag_design": "flag_data",
+      "active_party": [
+        "crew_member_id_1",
+        "crew_member_id_2",
+        "crew_member_id_3",
+        "crew_member_id_4"
+      ],
+      "all_crew_members": [
+        {
+          "crew_member_id": "unique_id",
+          "template_id": "character_template_id",
+          "level": 5,
+          "experience": 1250,
+          "stats": {},
+          "equipment": {
+            "weapon": "weapon_id",
+            "armor": "armor_id",
+            "accessories": []
+          },
+          "abilities": [],
+          "loyalty": 75,
+          "in_party": true
+        }
+      ],
+      "max_crew_size": 20
+    },
+    "ship_data": {
+      "ship_name": "Ship Name",
+      "ship_type": "Sloop/Brigantine/Frigate/etc",
+      "upgrades": {
+        "hull": 1,
+        "sails": 1,
+        "cannons": 1,
+        "quarters": 1
+      },
+      "stats": {
+        "speed": 10,
+        "durability": 100,
+        "max_durability": 100,
+        "cargo_capacity": 50,
+        "cannon_power": 10
+      },
+      "customization": {
+        "figurehead": "default",
+        "colors": "default"
+      }
+    },
+    "inventory": {
+      "berries": 1000,
+      "items": [
+        {
+          "item_id": "item_reference",
+          "quantity": 1
+        }
+      ],
+      "weapons": [
+        {
+          "weapon_id": "weapon_reference",
+          "equipped_by": "crew_member_id or null"
+        }
+      ],
+      "materials": [],
+      "key_items": []
+    },
+    "world_state": {
+      "current_location": {
+        "island_id": "current_island",
+        "position": {"x": 0, "y": 0}
+      },
+      "discovered_islands": ["island_id_1", "island_id_2"],
+      "unlocked_fast_travel": ["island_id_1"],
+      "time_played": 0,
+      "game_difficulty": "Normal"
+    },
+    "quest_data": {
+      "active_quests": [
+        {
+          "quest_id": "quest_reference",
+          "progress": {},
+          "objectives_completed": []
+        }
+      ],
+      "completed_quests": ["quest_id_1", "quest_id_2"],
+      "failed_quests": []
+    },
+    "flags": {
+      "story_flags": {
+        "intro_completed": true,
+        "first_crew_recruited": false
+      },
+      "event_flags": {},
+      "npc_flags": {}
+    },
+    "statistics": {
+      "battles_won": 0,
+      "enemies_defeated": 0,
+      "berries_earned": 0,
+      "berries_spent": 0,
+      "islands_visited": 0,
+      "deaths": 0
+    }
+  },
+  "save_slots": {
+    "max_slots": 10,
+    "autosave_enabled": true,
+    "quicksave_slot": "quicksave.json"
+  },
+  "notes": [
+    "Each save file is completely independent",
+    "Crew data is specific to each save",
+    "Save files should be named: save_[slot_number].json",
+    "Include backup/corruption protection",
+    "Compress save data if needed for size"
+  ]
+}

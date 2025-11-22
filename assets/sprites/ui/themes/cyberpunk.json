@@ -1,0 +1,84 @@
+# Cyberpunk Theme Configuration
+{
+  "theme_name": "Cyberpunk 2080",
+  "description": "High-tech dystopian future with cybernetic enhancements",
+  
+  "character_classes": [
+    {
+      "id": "netrunner",
+      "name": "Netrunner", 
+      "description": "Hacker who interfaces directly with cyberspace",
+      "stat_bonuses": {"intelligence": 3, "agility": 1},
+      "skills": ["hacking", "data_mining", "ice_breaking"]
+    },
+    {
+      "id": "street_samurai",
+      "name": "Street Samurai",
+      "description": "Cybernetically enhanced warrior for hire", 
+      "stat_bonuses": {"strength": 2, "agility": 2},
+      "skills": ["cybernetics", "firearms", "close_combat"]
+    },
+    {
+      "id": "corporate_agent",
+      "name": "Corporate Agent",
+      "description": "Well-connected operative with resources",
+      "stat_bonuses": {"charisma": 2, "intelligence": 2}, 
+      "skills": ["negotiation", "corporate_knowledge", "influence"]
+    }
+  ],
+  
+  "power_types": [
+    {
+      "id": "cybernetic", 
+      "name": "Cybernetic Enhancement",
+      "description": "Artificial body modifications and implants"
+    },
+    {
+      "id": "bioware",
+      "name": "Bioware", 
+      "description": "Biological enhancements and gene therapy"
+    },
+    {
+      "id": "psionic",
+      "name": "Psionic Ability",
+      "description": "Rare mental powers unlocked by technology"
+    }
+  ],
+  
+  "currency": {
+    "name": "Credits",
+    "symbol": "¤",
+    "description": "Digital currency controlled by megacorporations"
+  },
+  
+  "special_mechanics": {
+    "reputation_system": true,
+    "corporate_standing": true,
+    "cybernetic_humanity_cost": true,
+    "netrunning": true
+  },
+  
+  "items": [
+    {
+      "id": "stim_patch",
+      "name": "Stimulant Patch",
+      "description": "Biomedical patch that heals wounds quickly",
+      "type": "consumable",
+      "rarity": "common"
+    },
+    {
+      "id": "neural_interface",
+      "name": "Neural Interface Chip", 
+      "description": "Allows direct brain-computer connection",
+      "type": "special_item",
+      "rarity": "epic",
+      "abilities": ["Matrix Access", "Data Download", "Cyber Defense"]
+    }
+  ],
+  
+  "world_settings": {
+    "magic_level": "none",
+    "technology_level": "advanced_future",
+    "tone": "dark_dystopian"
+  }
+}

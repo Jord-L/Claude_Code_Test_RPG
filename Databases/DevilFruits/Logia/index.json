@@ -1,0 +1,49 @@
+{
+  "type": "Logia",
+  "description": "Elemental intangibility Devil Fruits - most powerful type",
+  "fruits": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_fruit_id",
+    "name": "Fruit Name (Japanese)",
+    "translation": "Fruit Name (English)",
+    "element": "Fire/Ice/Lightning/etc",
+    "description": "What the fruit does",
+    "rarity": "Legendary",
+    "starting_available": false,
+    "intangibility": true,
+    "abilities": [
+      {
+        "name": "Ability Name",
+        "level_required": 1,
+        "ap_cost": 15,
+        "cooldown": 0,
+        "description": "What the ability does",
+        "damage_type": "Elemental",
+        "target": "Single/Multi/Self/All",
+        "effects": []
+      }
+    ],
+    "weaknesses": [
+      "Water/Seastone (standard)",
+      "Haki penetration",
+      "Natural counter element (if applicable)"
+    ],
+    "strengths": [
+      "Intangibility to non-Haki attacks",
+      "Element-specific advantages"
+    ],
+    "special_mechanics": {
+      "intangibility_evasion": 90,
+      "weakness_multiplier": 2.0,
+      "environmental_synergy": "Description"
+    },
+    "mastery_bonuses": {
+      "level_3": "Bonus description",
+      "level_5": "Bonus description",
+      "level_7": "Enhanced intangibility",
+      "level_10_awakening": "Environmental manipulation"
+    }
+  },
+  "notes": "Logia fruits are rare and powerful - should be limited in number and carefully balanced"
+}

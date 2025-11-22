@@ -1,0 +1,82 @@
+{
+  "type": "Zoan",
+  "description": "Animal transformation Devil Fruits with multiple forms",
+  "subtypes": [
+    {
+      "name": "Regular",
+      "path": "Regular/index.json",
+      "description": "Standard animal transformations"
+    },
+    {
+      "name": "Ancient",
+      "path": "Ancient/index.json",
+      "description": "Prehistoric/extinct animals"
+    },
+    {
+      "name": "Mythical",
+      "path": "Mythical/index.json",
+      "description": "Legendary creatures"
+    }
+  ],
+  "total_count": 0,
+  "template": {
+    "id": "unique_fruit_id",
+    "name": "Fruit Name (Japanese)",
+    "translation": "Fruit Name (English)",
+    "model": "Animal/Creature Name",
+    "subtype": "Regular/Ancient/Mythical",
+    "description": "What animal and transformation",
+    "rarity": "Common/Uncommon/Rare/Legendary",
+    "starting_available": false,
+    "forms": {
+      "human": {
+        "description": "Normal human form",
+        "stat_modifiers": {}
+      },
+      "hybrid": {
+        "description": "Half-human, half-animal form",
+        "stat_modifiers": {
+          "str": "+20%",
+          "def": "+15%",
+          "agi": "+10%"
+        }
+      },
+      "full_beast": {
+        "description": "Complete animal form",
+        "stat_modifiers": {
+          "str": "+40%",
+          "def": "+30%",
+          "agi": "+20%"
+        }
+      }
+    },
+    "abilities": [
+      {
+        "name": "Ability Name",
+        "level_required": 1,
+        "ap_cost": 10,
+        "form_required": "Hybrid/Full Beast",
+        "cooldown": 0,
+        "description": "What the ability does",
+        "damage_type": "Physical",
+        "target": "Single/Multi/Self/All",
+        "effects": []
+      }
+    ],
+    "weaknesses": [
+      "Water/Seastone (standard)",
+      "Form-specific vulnerabilities"
+    ],
+    "strengths": [
+      "Enhanced physical stats",
+      "Versatility of multiple forms"
+    ],
+    "mastery_bonuses": {
+      "level_3": "Improved hybrid form control",
+      "level_5": "Enhanced stat bonuses",
+      "level_7": "Unique form-specific ability",
+      "level_10_awakening": "Monster Point or equivalent"
+    }
+  },
+  "notes": "Zoan fruits provide stat boosts and physical combat advantages. Ancient and Mythical Zoans are progressively rarer and stronger."
+}

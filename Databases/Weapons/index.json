@@ -1,0 +1,60 @@
+{
+  "category": "Weapons",
+  "version": "1.0.0",
+  "last_updated": "2025-10-11",
+  "description": "All weapon types and equipment",
+  "weapon_types": [
+    {
+      "type": "Swords",
+      "path": "Swords/index.json",
+      "description": "Katana, cutlass, sabers, and blade weapons",
+      "count": 0
+    },
+    {
+      "type": "Guns",
+      "path": "Guns/index.json",
+      "description": "Pistols, rifles, muskets, and firearms",
+      "count": 0
+    },
+    {
+      "type": "Staffs",
+      "path": "Staffs/index.json",
+      "description": "Bo staffs, magical staffs, and pole weapons",
+      "count": 0
+    },
+    {
+      "type": "Polearms",
+      "path": "Polearms/index.json",
+      "description": "Spears, lances, halberds, and pole weapons",
+      "count": 0
+    },
+    {
+      "type": "Bows",
+      "path": "Bows/index.json",
+      "description": "Bows, crossbows, and ranged weapons",
+      "count": 0
+    },
+    {
+      "type": "Fists",
+      "path": "Fists/index.json",
+      "description": "Gauntlets, knuckles, and hand-to-hand weapons",
+      "count": 0
+    }
+  ],
+  "total_weapons": 0,
+  "grading_system": {
+    "grades": [
+      "Common",
+      "Skillful Grade",
+      "Great Grade (50 works)",
+      "O Wazamono Grade (21 works)",
+      "Supreme Grade (12 works)"
+    ],
+    "note": "Following One Piece's sword grading system - can be applied to other weapon types"
+  },
+  "notes": [
+    "Each weapon file should be named: WeaponName.json",
+    "Named legendary weapons should have unique IDs",
+    "Consider weapon skills/techniques as separate abilities"
+  ]
+}

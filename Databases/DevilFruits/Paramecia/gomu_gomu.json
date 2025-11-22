@@ -1,0 +1,47 @@
+{
+  "id": "gomu_gomu",
+  "name": "Gomu Gomu no Mi",
+  "translation": "Rubber-Rubber Fruit",
+  "type": "paramecia",
+  "description": "Transforms the user's body into rubber, granting immunity to blunt attacks and electricity.",
+  "rarity": "Common",
+  "starting_available": true,
+  "abilities": [
+    {
+      "name": "Gomu Gomu Pistol",
+      "level_required": 1,
+      "ap_cost": 10,
+      "cooldown": 0,
+      "description": "Stretches arm back and launches a powerful punch",
+      "damage_type": "Physical",
+      "target": "Single",
+      "effects": []
+    },
+    {
+      "name": "Gomu Gomu Bazooka",
+      "level_required": 3,
+      "ap_cost": 15,
+      "cooldown": 1,
+      "description": "Stretches both arms and delivers a double-palm strike",
+      "damage_type": "Physical",
+      "target": "Single",
+      "effects": []
+    }
+  ],
+  "weaknesses": [
+    "Water/Seastone (standard)",
+    "Cutting attacks",
+    "Sharp objects"
+  ],
+  "strengths": [
+    "Blunt force immunity",
+    "Electricity immunity",
+    "High versatility"
+  ],
+  "mastery_bonuses": {
+    "level_3": "Increased stretch range",
+    "level_5": "Gomu Gomu Gatling unlocked",
+    "level_7": "Gear Second unlocked",
+    "level_10_awakening": "Environmental rubber manipulation"
+  }
+}

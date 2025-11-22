@@ -1,0 +1,40 @@
+{
+  "weapon_type": "Swords",
+  "description": "Bladed melee weapons - most iconic in One Piece",
+  "weapons": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_weapon_id",
+    "name": "Weapon Name",
+    "grade": "Common/Skillful/Great/O Wazamono/Supreme",
+    "description": "Weapon appearance and history",
+    "rarity": "Common/Uncommon/Rare/Legendary/Unique",
+    "requirements": {
+      "level": 1,
+      "str": 10,
+      "skill": "Swordsmanship"
+    },
+    "stats": {
+      "attack": 50,
+      "critical_chance": 5,
+      "critical_damage": 150,
+      "attack_speed": 100
+    },
+    "special_abilities": [],
+    "buy_price": 1000,
+    "sell_price": 500,
+    "upgrade_slots": 3,
+    "weight": "Light/Medium/Heavy"
+  },
+  "sword_types": {
+    "katana": "Traditional Japanese swords",
+    "cutlass": "Pirate sabers",
+    "longsword": "Two-handed blades",
+    "dual_blades": "Twin sword fighting"
+  },
+  "famous_examples": [
+    "Wado Ichimonji (O Wazamono Grade)",
+    "Sandai Kitetsu (Great Grade, cursed)",
+    "Shusui (O Wazamono Grade, black blade)"
+  ]
+}

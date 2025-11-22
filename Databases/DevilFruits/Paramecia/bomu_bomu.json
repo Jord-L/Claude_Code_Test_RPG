@@ -1,0 +1,38 @@
+{
+  "id": "bomu_bomu",
+  "name": "Bomu Bomu no Mi",
+  "translation": "Bomb-Bomb Fruit",
+  "type": "paramecia",
+  "description": "Grants the ability to make any part of the body explode and reform.",
+  "rarity": "Uncommon",
+  "starting_available": true,
+  "abilities": [
+    {
+      "name": "Nose Fancy Cannon",
+      "level_required": 1,
+      "ap_cost": 15,
+      "cooldown": 0,
+      "description": "Fires an explosive projectile from the nose",
+      "damage_type": "Explosive",
+      "target": "Single",
+      "effects": [
+        "Burn"
+      ]
+    }
+  ],
+  "weaknesses": [
+    "Water/Seastone (standard)",
+    "Fire can trigger uncontrolled explosions"
+  ],
+  "strengths": [
+    "AoE damage",
+    "Bomb immunity",
+    "Demolition expert"
+  ],
+  "mastery_bonuses": {
+    "level_3": "Larger explosions",
+    "level_5": "Delayed detonation",
+    "level_7": "Chain explosion combos",
+    "level_10_awakening": "Turn surroundings into bombs"
+  }
+}

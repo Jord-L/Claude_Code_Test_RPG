@@ -1,0 +1,37 @@
+{
+  "database_version": "1.0.0",
+  "last_updated": "2025-10-11",
+  "description": "Master index for One Piece RPG Database",
+  "categories": [
+    {
+      "name": "DevilFruits",
+      "path": "DevilFruits/index.json",
+      "description": "All Devil Fruit data organized by type"
+    },
+    {
+      "name": "Inventory",
+      "path": "Inventory/index.json",
+      "description": "Non-weapon items (consumables, materials, key items)"
+    },
+    {
+      "name": "Weapons",
+      "path": "Weapons/index.json",
+      "description": "All weapon data organized by weapon type"
+    },
+    {
+      "name": "Islands",
+      "path": "Islands/index.json",
+      "description": "Island locations, NPCs, and points of interest"
+    },
+    {
+      "name": "CrewManagement",
+      "path": "CrewManagement/index.json",
+      "description": "Crew member templates and recruitment data"
+    },
+    {
+      "name": "SaveData",
+      "path": "SaveData/index.json",
+      "description": "Player save files with crew configurations"
+    }
+  ]
+}

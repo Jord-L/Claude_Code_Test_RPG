@@ -1,0 +1,63 @@
+{
+  "id": "inu_inu_wolf",
+  "name": "Inu Inu no Mi, Model: Wolf",
+  "translation": "Dog-Dog Fruit, Model: Wolf",
+  "type": "zoan",
+  "model": "Wolf",
+  "subtype": "Regular",
+  "description": "Allows transformation into a wolf and wolf-human hybrid.",
+  "rarity": "Common",
+  "starting_available": true,
+  "forms": {
+    "human": {
+      "description": "Normal human form",
+      "stat_modifiers": {}
+    },
+    "hybrid": {
+      "description": "Wolf-human hybrid with enhanced senses",
+      "stat_modifiers": {
+        "str": "+20%",
+        "def": "+15%",
+        "agi": "+25%"
+      }
+    },
+    "full_beast": {
+      "description": "Complete wolf form with maximum physical boost",
+      "stat_modifiers": {
+        "str": "+35%",
+        "def": "+20%",
+        "agi": "+40%"
+      }
+    }
+  },
+  "abilities": [
+    {
+      "name": "Wolf Fangs",
+      "level_required": 1,
+      "ap_cost": 12,
+      "form_required": "Hybrid",
+      "cooldown": 0,
+      "description": "Powerful bite attack with wolf fangs",
+      "damage_type": "Physical",
+      "target": "Single",
+      "effects": [
+        "Bleed"
+      ]
+    }
+  ],
+  "weaknesses": [
+    "Water/Seastone (standard)",
+    "Silver (folklore weakness)"
+  ],
+  "strengths": [
+    "Enhanced physical stats",
+    "Keen senses",
+    "Pack tactics"
+  ],
+  "mastery_bonuses": {
+    "level_3": "Improved hybrid form control",
+    "level_5": "Enhanced stat bonuses (+10%)",
+    "level_7": "Awakened instincts ability",
+    "level_10_awakening": "Ancient Wolf Point"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "category": "Islands",
+  "version": "1.0.0",
+  "last_updated": "2025-10-11",
+  "description": "All island locations across the Four Blues",
+  "islands": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_island_id",
+    "name": "Island Name",
+    "sea": "East Blue/North Blue/West Blue/South Blue",
+    "type": "Town/Village/City/Wilderness/Marine Base/Pirate Haven",
+    "description": "Island appearance and atmosphere",
+    "climate": "Tropical/Temperate/Cold/Desert/etc",
+    "population": "Small/Medium/Large",
+    "danger_level": 1-10,
+    "story_importance": "Main/Side/Optional/Secret",
+    "locations": [
+      {
+        "name": "Location Name",
+        "type": "Town/Dungeon/Shop/Harbor/etc",
+        "description": "Location details",
+        "npcs": [],
+        "shops": [],
+        "quests": []
+      }
+    ],
+    "enemies": [
+      {
+        "enemy_id": "reference_to_enemy_database",
+        "spawn_rate": "Common/Uncommon/Rare"
+      }
+    ],
+    "resources": [
+      "Materials available on this island"
+    ],
+    "marine_presence": "None/Low/Medium/High/Base",
+    "fast_travel_available": true,
+    "discovered": false,
+    "coordinates": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "organization": {
+    "by_sea": "Islands grouped by which Blue they're in",
+    "by_importance": "Main story vs optional content",
+    "by_progression": "Recommended level order"
+  },
+  "notes": [
+    "Each island should have unique identity and purpose",
+    "Consider weather, culture, architecture themes",
+    "Balance story islands with exploration islands"
+  ]
+}

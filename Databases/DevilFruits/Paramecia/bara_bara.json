@@ -1,0 +1,36 @@
+{
+  "id": "bara_bara",
+  "name": "Bara Bara no Mi",
+  "translation": "Chop-Chop Fruit",
+  "type": "paramecia",
+  "description": "Allows the user to split their body into pieces and control them separately.",
+  "rarity": "Common",
+  "starting_available": true,
+  "abilities": [
+    {
+      "name": "Bara Bara Festival",
+      "level_required": 1,
+      "ap_cost": 12,
+      "cooldown": 0,
+      "description": "Splits body apart to dodge and attack simultaneously",
+      "damage_type": "Physical",
+      "target": "Multi",
+      "effects": []
+    }
+  ],
+  "weaknesses": [
+    "Water/Seastone (standard)",
+    "Cannot split feet from ground"
+  ],
+  "strengths": [
+    "Slash immunity",
+    "High evasion",
+    "Multi-target attacks"
+  ],
+  "mastery_bonuses": {
+    "level_3": "Increased control range",
+    "level_5": "Can split into smaller pieces",
+    "level_7": "Aerial combat mastery",
+    "level_10_awakening": "Split objects in environment"
+  }
+}

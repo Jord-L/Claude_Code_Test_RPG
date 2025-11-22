@@ -1,0 +1,76 @@
+# Generic Fantasy Theme Configuration
+{
+  "theme_name": "Generic Fantasy",
+  "description": "Classic medieval fantasy setting with magic and monsters",
+  
+  "character_classes": [
+    {
+      "id": "warrior",
+      "name": "Warrior", 
+      "description": "Strong melee fighter with heavy armor",
+      "stat_bonuses": {"strength": 3, "endurance": 2},
+      "skills": ["armor_mastery", "shield_combat", "battle_tactics"]
+    },
+    {
+      "id": "mage",
+      "name": "Mage",
+      "description": "Wielder of arcane magic and spells", 
+      "stat_bonuses": {"intelligence": 3, "charisma": 1},
+      "skills": ["spell_casting", "mana_control", "arcane_knowledge"]
+    },
+    {
+      "id": "rogue",
+      "name": "Rogue",
+      "description": "Stealthy character good with traps and locks",
+      "stat_bonuses": {"agility": 3, "luck": 1}, 
+      "skills": ["stealth", "lockpicking", "backstab"]
+    }
+  ],
+  
+  "power_types": [
+    {
+      "id": "elemental", 
+      "name": "Elemental Magic",
+      "description": "Control over fire, water, earth, and air"
+    },
+    {
+      "id": "divine",
+      "name": "Divine Power", 
+      "description": "Powers granted by gods and deities"
+    },
+    {
+      "id": "arcane",
+      "name": "Arcane Magic",
+      "description": "Raw magical energy manipulation"
+    }
+  ],
+  
+  "currency": {
+    "name": "Gold",
+    "symbol": "GP",
+    "description": "Standard golden coins used by merchants"
+  },
+  
+  "items": [
+    {
+      "id": "health_potion",
+      "name": "Health Potion",
+      "description": "Red potion that heals wounds",
+      "type": "consumable",
+      "rarity": "common"
+    },
+    {
+      "id": "mana_potion", 
+      "name": "Mana Potion",
+      "description": "Blue potion that restores magical energy",
+      "type": "consumable",
+      "rarity": "common"
+    }
+  ],
+  
+  "world_settings": {
+    "magic_level": "high",
+    "technology_level": "medieval",
+    "tone": "heroic_adventure"
+  }
+}

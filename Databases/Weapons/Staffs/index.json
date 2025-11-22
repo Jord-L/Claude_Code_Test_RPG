@@ -1,0 +1,37 @@
+{
+  "weapon_type": "Staffs",
+  "description": "Bo staffs and pole weapons for balanced combat",
+  "weapons": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_weapon_id",
+    "name": "Weapon Name",
+    "grade": "Common/Skillful/Great/O Wazamono/Supreme",
+    "description": "Weapon appearance and abilities",
+    "rarity": "Common/Uncommon/Rare/Legendary/Unique",
+    "requirements": {
+      "level": 1,
+      "str": 8,
+      "agi": 8,
+      "skill": "Staff Combat"
+    },
+    "stats": {
+      "attack": 40,
+      "defense": 10,
+      "critical_chance": 5,
+      "critical_damage": 130,
+      "attack_speed": 120
+    },
+    "special_abilities": [],
+    "buy_price": 600,
+    "sell_price": 300,
+    "upgrade_slots": 2,
+    "weapon_style": "Versatile/Defensive"
+  },
+  "staff_types": {
+    "bo_staff": "Traditional martial arts staff",
+    "clima_tact": "Weather-controlling staffs (Nami-style)",
+    "magical_staff": "Staffs with special properties"
+  },
+  "notes": "Staffs offer balanced offense/defense and can have special trick mechanisms"
+}

@@ -1,0 +1,33 @@
+{
+  "type": "Consumables",
+  "description": "Items that can be used in or out of combat for various effects",
+  "items": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_item_id",
+    "name": "Item Name",
+    "description": "What the item does",
+    "rarity": "Common/Uncommon/Rare/Legendary",
+    "buy_price": 100,
+    "sell_price": 50,
+    "usable_in_combat": true,
+    "usable_out_combat": true,
+    "target": "Single/Multi/Self/All",
+    "effect_type": "Healing/Buff/Debuff/Cleanse",
+    "effects": [
+      {
+        "type": "Restore HP",
+        "value": 50,
+        "duration": 0
+      }
+    ],
+    "stackable": true,
+    "max_stack": 99
+  },
+  "categories": {
+    "healing": "HP/AP restoration items",
+    "status_cure": "Cleanse negative status effects",
+    "buffs": "Temporary stat increases",
+    "combat_items": "Throwable/usable in battle"
+  }
+}

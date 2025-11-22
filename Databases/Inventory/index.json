@@ -1,0 +1,32 @@
+{
+  "category": "Inventory",
+  "version": "1.0.0",
+  "last_updated": "2025-10-11",
+  "description": "Non-weapon items registry",
+  "item_types": [
+    {
+      "type": "Consumables",
+      "path": "Consumables/index.json",
+      "description": "Healing items, buffs, and battle consumables",
+      "count": 0
+    },
+    {
+      "type": "Materials",
+      "path": "Materials/index.json",
+      "description": "Crafting materials and resources",
+      "count": 0
+    },
+    {
+      "type": "KeyItems",
+      "path": "KeyItems/index.json",
+      "description": "Quest items and story-important objects",
+      "count": 0
+    }
+  ],
+  "total_items": 0,
+  "notes": [
+    "Weapons are stored separately in the Weapons database",
+    "Each item file should be named: ItemName.json",
+    "Use descriptive names: HealthPotion.json, IronOre.json"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "Materials",
+  "description": "Crafting materials and resources for upgrades",
+  "items": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_material_id",
+    "name": "Material Name",
+    "description": "Material description and source",
+    "rarity": "Common/Uncommon/Rare/Legendary",
+    "buy_price": 50,
+    "sell_price": 25,
+    "used_for": [
+      "Ship upgrades",
+      "Weapon crafting",
+      "Equipment enhancement"
+    ],
+    "stackable": true,
+    "max_stack": 999
+  },
+  "categories": {
+    "metals": "Iron, steel, rare ores",
+    "wood": "Various wood types for ships",
+    "fabric": "Canvas, leather, special materials",
+    "gems": "Precious stones for enhancement",
+    "monster_drops": "Materials from defeated enemies"
+  }
+}

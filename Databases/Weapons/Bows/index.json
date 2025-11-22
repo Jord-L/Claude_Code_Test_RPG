@@ -1,0 +1,43 @@
+{
+  "weapon_type": "Bows",
+  "description": "Long-range precision weapons",
+  "weapons": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_weapon_id",
+    "name": "Weapon Name",
+    "grade": "Common/Skillful/Great/O Wazamono/Supreme",
+    "description": "Weapon design and range",
+    "rarity": "Common/Uncommon/Rare/Legendary/Unique",
+    "requirements": {
+      "level": 1,
+      "agi": 12,
+      "skill": "Archery"
+    },
+    "stats": {
+      "attack": 42,
+      "critical_chance": 15,
+      "critical_damage": 180,
+      "range": "Very Long",
+      "accuracy": 85
+    },
+    "special_abilities": [],
+    "buy_price": 700,
+    "sell_price": 350,
+    "upgrade_slots": 2,
+    "ammo_type": "Arrows/Bolts"
+  },
+  "bow_types": {
+    "longbow": "High damage, long range",
+    "crossbow": "Mechanical precision",
+    "compound_bow": "Modern design",
+    "shortbow": "Quick draw speed"
+  },
+  "special_arrows": [
+    "Fire arrows",
+    "Explosive arrows",
+    "Poison arrows",
+    "Net arrows"
+  ],
+  "notes": "Bows excel at range and critical hits but require ammunition"
+}

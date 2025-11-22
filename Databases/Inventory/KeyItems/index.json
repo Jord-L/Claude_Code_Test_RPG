@@ -1,0 +1,25 @@
+{
+  "type": "KeyItems",
+  "description": "Important quest and story items that cannot be sold or discarded",
+  "items": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_key_item_id",
+    "name": "Key Item Name",
+    "description": "Item description and significance",
+    "quest_related": true,
+    "quest_id": "associated_quest_id",
+    "cannot_sell": true,
+    "cannot_discard": true,
+    "unique": true,
+    "usage": "How/where this item is used"
+  },
+  "categories": {
+    "maps": "Island maps, treasure maps",
+    "keys": "Keys to unlock areas or chests",
+    "documents": "Letters, logs, important papers",
+    "treasures": "Unique valuable items",
+    "tools": "Special tools for progression"
+  },
+  "notes": "Key items should not take up normal inventory space and persist across the game"
+}

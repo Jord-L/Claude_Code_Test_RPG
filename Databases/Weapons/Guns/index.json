@@ -1,0 +1,38 @@
+{
+  "weapon_type": "Guns",
+  "description": "Firearms and ranged weapons",
+  "weapons": [],
+  "total_count": 0,
+  "template": {
+    "id": "unique_weapon_id",
+    "name": "Weapon Name",
+    "grade": "Common/Skillful/Great/O Wazamono/Supreme",
+    "description": "Weapon appearance and mechanics",
+    "rarity": "Common/Uncommon/Rare/Legendary/Unique",
+    "requirements": {
+      "level": 1,
+      "agi": 10,
+      "skill": "Marksmanship"
+    },
+    "stats": {
+      "attack": 45,
+      "critical_chance": 10,
+      "critical_damage": 200,
+      "range": "Long",
+      "ammo_capacity": 6,
+      "reload_time": 2
+    },
+    "special_abilities": [],
+    "buy_price": 800,
+    "sell_price": 400,
+    "upgrade_slots": 2,
+    "ammo_type": "Standard/Special"
+  },
+  "gun_types": {
+    "pistol": "Single-hand firearms",
+    "rifle": "Long-range weapons",
+    "musket": "Old-style firearms",
+    "dual_pistols": "Dual-wielding style"
+  },
+  "notes": "Consider ammo as a consumable resource"
+}
