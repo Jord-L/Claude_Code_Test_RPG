@@ -81,7 +81,12 @@ class BattleState(State):
         self.logger.info(f"Created enemy party: {[e.name for e in enemies]}")
         
         # Create battle manager
-        player_party = [player]
+        # Use party if available, otherwise just the player
+        if hasattr(player, 'party_manager') and player.party_manager:
+            player_party = player.party_manager.get_active_party()
+        else:
+            player_party = [player]
+
         self.battle_manager = BattleManager(player_party, enemies)
         
         # Create battle UI

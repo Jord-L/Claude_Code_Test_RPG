@@ -8,6 +8,7 @@ from typing import Optional, Tuple
 from entities.player import Player
 from world.map import Map
 from utils.constants import TILE_SIZE, PLAYER_SPEED
+from systems.sprite_manager import SpriteManager, AnimationController
 
 
 class Direction:
@@ -51,8 +52,12 @@ class PlayerController:
         
         # Visual
         self.sprite_size = TILE_SIZE
-        self.color = (255, 100, 100)  # Red for player
-        
+        self.color = (255, 100, 100)  # Red for player (fallback)
+
+        # Sprite animation
+        sprite_manager = SpriteManager()
+        self.animation_controller = sprite_manager.create_player_animation_controller(self.sprite_size)
+
         # Input buffering
         self.input_buffer = {
             "up": False,
@@ -124,9 +129,24 @@ class PlayerController:
             self.facing = Direction.RIGHT
             self.moving = True
         
-        # Check if no input
+        # Update animation based on movement
         if dx == 0 and dy == 0:
             self.moving = False
+            self.animation_controller.play_animation("idle")
+        else:
+            self.animation_controller.play_animation("run")
+
+        # Update animation controller
+        self.animation_controller.update(dt)
+
+        # Update sprite flip based on facing direction
+        if self.facing == Direction.LEFT:
+            self.animation_controller.set_flip(horizontal=True, vertical=False)
+        else:
+            self.animation_controller.set_flip(horizontal=False, vertical=False)
+
+        # Check if no input
+        if dx == 0 and dy == 0:
             return None
         
         # Try to move
@@ -255,7 +275,7 @@ class PlayerController:
     def render(self, surface: pygame.Surface, camera_x: int, camera_y: int):
         """
         Render player sprite.
-        
+
         Args:
             surface: Surface to draw on
             camera_x: Camera X offset
@@ -264,16 +284,19 @@ class PlayerController:
         # Calculate screen position
         screen_x = int(self.x - camera_x)
         screen_y = int(self.y - camera_y)
-        
-        # Draw player (simple colored square for now)
-        rect = pygame.Rect(screen_x, screen_y, self.sprite_size, self.sprite_size)
-        pygame.draw.rect(surface, self.color, rect)
-        
-        # Draw border
-        pygame.draw.rect(surface, (0, 0, 0), rect, 2)
-        
-        # Draw facing direction indicator (small triangle)
-        self._draw_direction_indicator(surface, screen_x, screen_y)
+
+        # Try to render sprite animation
+        current_frame = self.animation_controller.get_current_frame()
+
+        if current_frame:
+            # Draw animated sprite
+            surface.blit(current_frame, (screen_x, screen_y))
+        else:
+            # Fallback to colored rectangle if sprite fails
+            rect = pygame.Rect(screen_x, screen_y, self.sprite_size, self.sprite_size)
+            pygame.draw.rect(surface, self.color, rect)
+            pygame.draw.rect(surface, (0, 0, 0), rect, 2)
+            self._draw_direction_indicator(surface, screen_x, screen_y)
     
     def _draw_direction_indicator(self, surface: pygame.Surface, screen_x: int, screen_y: int):
         """Draw a small indicator showing facing direction."""

@@ -5,9 +5,10 @@ Tile-based map system for the game world.
 
 import pygame
 import random
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 from world.tile import Tile, TileType
 from utils.constants import TILE_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT
+from systems.sprite_manager import SpriteManager
 
 
 class Map:
@@ -30,12 +31,18 @@ class Map:
         
         # Create tile grid
         self.tiles: List[List[Tile]] = []
+
+        # Load tile sprites
+        sprite_manager = SpriteManager()
+        self.tile_sprites = sprite_manager.create_tile_sprites(TILE_SIZE)
+
         self._create_tiles()
-        
+        self._apply_tile_sprites()
+
         # Map properties
         self.name = "Unnamed Map"
         self.spawn_point = (width // 2, height // 2)  # Default center spawn
-        
+
         # Encounter settings
         self.allow_encounters = True
         self.encounter_groups = []  # List of enemy groups
@@ -49,6 +56,22 @@ class Map:
                 tile = Tile(x, y, self.default_tile_type)
                 row.append(tile)
             self.tiles.append(row)
+
+    def _apply_tile_sprites(self):
+        """Apply sprite textures to all tiles based on their type."""
+        if not self.tile_sprites:
+            print("Warning: No tile sprites loaded, using colored rectangles")
+            return
+
+        tiles_updated = 0
+        for row in self.tiles:
+            for tile in row:
+                # Check if we have a sprite for this tile type
+                if tile.tile_type in self.tile_sprites:
+                    tile.sprite = self.tile_sprites[tile.tile_type]
+                    tiles_updated += 1
+
+        print(f"Applied sprites to {tiles_updated} tiles")
     
     def get_tile(self, tile_x: int, tile_y: int) -> Optional[Tile]:
         """
@@ -83,7 +106,7 @@ class Map:
     def set_tile(self, tile_x: int, tile_y: int, tile_type: str):
         """
         Set tile type at position.
-        
+
         Args:
             tile_x: Tile X coordinate
             tile_y: Tile Y coordinate
@@ -94,6 +117,10 @@ class Map:
             tile.tile_type = tile_type
             tile.color = tile._get_color()
             tile._setup_tile_properties()
+
+            # Apply sprite if available
+            if tile_type in self.tile_sprites:
+                tile.sprite = self.tile_sprites[tile_type]
     
     def is_walkable(self, tile_x: int, tile_y: int) -> bool:
         """
