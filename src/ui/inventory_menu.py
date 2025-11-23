@@ -4,12 +4,15 @@ Visual inventory management with grid display and item tooltips.
 """
 
 import pygame
-from typing import Optional, Callable, List
+from typing import Optional, Callable, List, TYPE_CHECKING
 from systems.item_system import Item, Inventory, InventorySlot, Equipment
 from systems.item_loader import get_item_loader
 from ui.panel import Panel
 from ui.button import Button
 from utils.constants import *
+
+if TYPE_CHECKING:
+    from entities.character import Character
 
 
 class ItemSlotUI:
@@ -263,6 +266,7 @@ class InventoryMenu:
 
         # Inventory reference
         self.inventory: Optional[Inventory] = None
+        self.character: Optional['Character'] = None
 
         # Layout
         self.panel_width = 800
@@ -334,14 +338,24 @@ class InventoryMenu:
         )
         self.use_button.set_enabled(False)
 
-    def set_inventory(self, inventory: Inventory):
+        self.equip_button = Button(
+            self.panel_x + 260,
+            button_y,
+            100, 40,
+            "Equip"
+        )
+        self.equip_button.set_enabled(False)
+
+    def set_inventory(self, inventory: Inventory, character: Optional['Character'] = None):
         """
         Set inventory to display.
 
         Args:
             inventory: Inventory instance
+            character: Character who owns the inventory (for equipping)
         """
         self.inventory = inventory
+        self.character = character
         self._update_slots()
 
     def _update_slots(self):
@@ -403,6 +417,11 @@ class InventoryMenu:
                     self._use_selected_item()
                 return
 
+            if self.equip_button.is_enabled and self.equip_button.contains_point(mouse_x, mouse_y):
+                if self.selected_slot and self.selected_slot.slot:
+                    self._equip_selected_item()
+                return
+
             # Check item slots
             for slot in self.item_slots:
                 if slot.contains_point(mouse_x, mouse_y) and slot.slot:
@@ -459,6 +478,16 @@ class InventoryMenu:
         else:
             self.use_button.set_enabled(False)
 
+        # Enable/disable equip button
+        if slot.slot and isinstance(slot.slot.item, Equipment) and self.character and self.character.equipment_slots:
+            # Check if can equip (level requirement)
+            if slot.slot.item.can_equip(self.character):
+                self.equip_button.set_enabled(True)
+            else:
+                self.equip_button.set_enabled(False)
+        else:
+            self.equip_button.set_enabled(False)
+
     def _use_selected_item(self):
         """Use the selected item."""
         if not self.selected_slot or not self.selected_slot.slot:
@@ -483,6 +512,45 @@ class InventoryMenu:
                 self.selected_slot.set_selected(False)
                 self.selected_slot = None
                 self.use_button.set_enabled(False)
+
+    def _equip_selected_item(self):
+        """Equip the selected equipment."""
+        if not self.selected_slot or not self.selected_slot.slot:
+            return
+
+        if not self.character or not self.character.equipment_slots:
+            return
+
+        item = self.selected_slot.slot.item
+
+        if not isinstance(item, Equipment):
+            return
+
+        # Check if can equip
+        if not item.can_equip(self.character):
+            print(f"Level {item.level_requirement} required to equip {item.name}!")
+            return
+
+        # Equip the item
+        old_equipment = self.character.equipment_slots.equip(item)
+
+        # Add old equipment back to inventory if there was one
+        if old_equipment:
+            self.inventory.add_item(old_equipment, 1)
+            print(f"Unequipped {old_equipment.name}")
+
+        # Remove equipped item from inventory
+        self.inventory.remove_item(item.id, 1)
+        print(f"Equipped {item.name} on {self.character.name}!")
+
+        # Update slots
+        self._update_slots()
+
+        # Deselect
+        if self.selected_slot:
+            self.selected_slot.set_selected(False)
+        self.selected_slot = None
+        self.equip_button.set_enabled(False)
 
     def update(self, dt: float):
         """Update menu state."""
@@ -525,6 +593,7 @@ class InventoryMenu:
         # Draw buttons
         self.sort_button.render(surface)
         self.use_button.render(surface)
+        self.equip_button.render(surface)
         self.close_button.render(surface)
 
         # Draw tooltip (on top)

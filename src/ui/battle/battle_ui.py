@@ -12,6 +12,8 @@ from combat.combat_action import CombatAction, ActionType
 from .action_menu import ActionMenu, ActionOption
 from .target_selector import TargetSelector
 from .battle_hud import BattleHUD
+from .item_menu import BattleItemMenu
+from systems.item_system import Item
 from utils.constants import *
 
 
@@ -49,6 +51,7 @@ class BattleUI:
         self.state = UIState.WAITING
         self.current_action_type: Optional[str] = None
         self.pending_action: Optional[CombatAction] = None
+        self.selected_item: Optional[Item] = None
         
         # Components
         self._setup_components()
@@ -96,9 +99,19 @@ class BattleUI:
         self.target_selector.on_target_selected = self._on_target_selected
         self.target_selector.on_cancel = self._on_target_selection_cancel
         self.target_selector.set_visible(False)
-        
+
+        # Item Selection Menu (center-right)
+        item_menu_width = 400
+        item_menu_height = 400
+        item_menu_x = (self.screen_width - item_menu_width) // 2
+        item_menu_y = (self.screen_height - item_menu_height) // 2
+
+        self.item_menu = BattleItemMenu(item_menu_x, item_menu_y, item_menu_width, item_menu_height)
+        self.item_menu.on_item_selected = self._on_item_selected
+        self.item_menu.on_cancel = self._on_item_menu_cancel
+        self.item_menu.set_visible(False)
+
         # TODO: Ability selection menu (Phase 2)
-        # TODO: Item selection menu (Phase 2)
     
     def _on_turn_start(self, actor: Character):
         """
@@ -219,9 +232,12 @@ class BattleUI:
                 self._show_action_menu(actor)
         
         elif action_type == "item":
-            # TODO: Show item selection menu (Phase 2)
-            self.hud.add_log_message("Item system not yet implemented!")
-            self._show_action_menu(actor)
+            # Show item selection menu
+            if hasattr(actor, 'inventory') and actor.inventory:
+                self._show_item_menu(actor)
+            else:
+                self.hud.add_log_message("No items in inventory!")
+                self._show_action_menu(actor)
         
         elif action_type == "run":
             # Run doesn't need target - execute immediately
@@ -253,24 +269,30 @@ class BattleUI:
     def _on_target_selected(self, target: Character):
         """
         Called when a target is selected.
-        
+
         Args:
             target: Selected target
         """
         # Hide target selector
         self.target_selector.hide()
-        
+
         # Execute action with target
         if self.current_action_type == "attack":
             self._execute_action(ActionType.ATTACK, target=target)
-        
+
         elif self.current_action_type == "ability":
             # Use pending action (which has ability data)
             if self.pending_action:
                 self.pending_action.target = target
                 self.battle_manager.execute_action(self.pending_action)
                 self.pending_action = None
-        
+
+        elif self.current_action_type == "item":
+            # Use selected item on target
+            if self.selected_item:
+                self._use_item(self.selected_item, target)
+                self.selected_item = None
+
         # Reset state
         self.current_action_type = None
     
@@ -281,7 +303,101 @@ class BattleUI:
         actor = self.battle_manager.current_actor
         if actor:
             self._show_action_menu(actor)
-    
+
+    def _show_item_menu(self, actor: Character):
+        """
+        Show item selection menu.
+
+        Args:
+            actor: Acting character
+        """
+        self.state = UIState.ITEM_SELECTION
+
+        # Hide action menu
+        self.action_menu.set_visible(False)
+        self.action_menu.set_active(False)
+
+        # Get usable items from inventory
+        inventory_items = actor.inventory.get_all_items()
+
+        # Show item menu
+        self.item_menu.set_items(inventory_items)
+        self.item_menu.set_visible(True)
+        self.item_menu.set_active(True)
+
+    def _on_item_selected(self, item: Item):
+        """
+        Called when an item is selected.
+
+        Args:
+            item: Selected item
+        """
+        self.selected_item = item
+
+        # Hide item menu
+        self.item_menu.set_visible(False)
+        self.item_menu.set_active(False)
+
+        # Show target selector for party members (healing items)
+        # Or enemies (offensive items) - for now assume all items are healing
+        self._show_target_selector(
+            self.battle_manager.get_alive_players(),
+            f"Use {item.name} on:"
+        )
+
+    def _on_item_menu_cancel(self):
+        """Called when item menu is cancelled."""
+        # Go back to action menu
+        self.item_menu.set_visible(False)
+        self.item_menu.set_active(False)
+        self.selected_item = None
+
+        actor = self.battle_manager.current_actor
+        if actor:
+            self._show_action_menu(actor)
+
+    def _use_item(self, item: Item, target: Character):
+        """
+        Use an item on a target.
+
+        Args:
+            item: Item to use
+            target: Target character
+        """
+        actor = self.battle_manager.current_actor
+
+        if not actor or not hasattr(actor, 'inventory'):
+            return
+
+        # Use the item (applies effects)
+        results = item.use(target)
+
+        # Log results
+        if "hp_healed" in results and results["hp_healed"] > 0:
+            self.hud.add_log_message(f"{actor.name} used {item.name} on {target.name}!")
+            self.hud.add_log_message(f"{target.name} recovered {results['hp_healed']} HP!")
+        elif "ap_restored" in results and results["ap_restored"] > 0:
+            self.hud.add_log_message(f"{actor.name} used {item.name} on {target.name}!")
+            self.hud.add_log_message(f"{target.name} recovered {results['ap_restored']} AP!")
+        elif "revived" in results:
+            self.hud.add_log_message(f"{actor.name} used {item.name} on {target.name}!")
+            self.hud.add_log_message(f"{target.name} was revived!")
+        else:
+            self.hud.add_log_message(f"{actor.name} used {item.name}!")
+
+        # Remove item from inventory
+        actor.inventory.remove_item(item.id, 1)
+
+        # End turn
+        self.battle_manager.end_turn()
+
+        # Update HUD
+        self.hud.update_combatants(self.battle_manager.player_party, self.battle_manager.enemies)
+
+        # Enter animation state briefly
+        self.state = UIState.ANIMATING
+        self.animation_timer = 0.0
+
     def _execute_action(self, action_type: ActionType, target: Optional[Character] = None):
         """
         Execute an action.
@@ -344,6 +460,7 @@ class BattleUI:
         # Hide all menus
         self.action_menu.set_visible(False)
         self.target_selector.set_visible(False)
+        self.item_menu.set_visible(False)
     
     def handle_event(self, event: pygame.event.Event) -> bool:
         """
@@ -358,10 +475,13 @@ class BattleUI:
         # Pass events to active UI components based on state
         if self.state == UIState.ACTION_SELECTION:
             return self.action_menu.handle_event(event)
-        
+
         elif self.state == UIState.TARGET_SELECTION:
             return self.target_selector.handle_event(event)
-        
+
+        elif self.state == UIState.ITEM_SELECTION:
+            return self.item_menu.handle_event(event)
+
         elif self.state == UIState.BATTLE_END:
             # Allow Enter to continue after battle
             if event.type == pygame.KEYDOWN:
@@ -391,10 +511,13 @@ class BattleUI:
         # Update active components
         if self.state == UIState.ACTION_SELECTION:
             self.action_menu.update(dt)
-        
+
         elif self.state == UIState.TARGET_SELECTION:
             self.target_selector.update(dt)
-        
+
+        elif self.state == UIState.ITEM_SELECTION:
+            self.item_menu.update(dt)
+
         elif self.state == UIState.ANIMATING:
             # Simple animation timer
             self.animation_timer += dt
@@ -419,10 +542,13 @@ class BattleUI:
         # Render active UI components
         if self.action_menu.visible:
             self.action_menu.render(surface)
-        
+
         if self.target_selector.visible:
             self.target_selector.render(surface)
-        
+
+        if self.item_menu.visible:
+            self.item_menu.render(surface)
+
         # Render battle result if shown
         if self.show_result:
             self._render_battle_result(surface)

@@ -124,7 +124,7 @@ class WorldState(State):
             equipment_manager.initialize_character_equipment(member)
 
         # Set inventory and equipment menus
-        self.inventory_menu.set_inventory(player.inventory)
+        self.inventory_menu.set_inventory(player.inventory, player)
         self.equipment_menu.set_character(player, player.inventory)
 
         # Create player controller
