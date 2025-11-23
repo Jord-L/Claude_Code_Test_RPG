@@ -10,6 +10,9 @@ from entities.player import Player
 from world.map import Map
 from world.camera import Camera
 from world.player_controller import PlayerController
+from systems.party_manager import PartyManager
+from ui.party_menu import PartyMenu
+from utils.party_helpers import create_starter_crew
 from utils.constants import *
 
 
@@ -41,7 +44,11 @@ class WorldState(State):
         # UI
         self.font = pygame.font.Font(None, 28)
         self.small_font = pygame.font.Font(None, 22)
-        
+
+        # Party menu
+        self.party_menu = PartyMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.party_menu.on_close = self._on_party_menu_close
+
         # Debug
         self.show_debug = True
     
@@ -83,9 +90,20 @@ class WorldState(State):
             # Create test map
             self.current_map = Map.create_test_map()
         
+        # Initialize party manager if not already set
+        if not hasattr(player, 'party_manager') or player.party_manager is None:
+            player.party_manager = PartyManager(player)
+            print(f"Initialized party manager for {player.name}")
+
+            # Add starter crew for testing/demo
+            create_starter_crew(player.party_manager)
+
+        # Set party menu's party manager
+        self.party_menu.set_party_manager(player.party_manager)
+
         # Create player controller
         self.player_controller = PlayerController(player, self.current_map)
-        
+
         # Create camera
         map_width, map_height = self.current_map.get_world_size()
         self.camera = Camera(map_width, map_height)
@@ -117,25 +135,35 @@ class WorldState(State):
     def handle_event(self, event):
         """
         Handle pygame events.
-        
+
         Args:
             event: Pygame event
         """
+        # Party menu gets priority
+        if self.party_menu.visible:
+            self.party_menu.handle_event(event)
+            return
+
         if event.type == pygame.KEYDOWN:
             # Debug toggle
             if event.key == pygame.K_F3:
                 self.show_debug = not self.show_debug
-            
+
+            # Party menu (P key)
+            elif event.key == pygame.K_p:
+                self.party_menu.show()
+                print("Party menu opened!")
+
             # Pause (ESC)
             elif event.key == pygame.K_ESCAPE:
                 self.paused = not self.paused
                 print(f"Game {'paused' if self.paused else 'unpaused'}")
-            
+
             # Manual battle trigger (for testing)
             elif event.key == pygame.K_b:
                 print("Manual battle trigger!")
                 self.battle_triggered = True
-        
+
         # Pass input to player controller
         if not self.paused:
             self.player_controller.handle_event(event)
@@ -212,6 +240,9 @@ class WorldState(State):
         # Render pause overlay
         if self.paused:
             self._render_pause_overlay(surface)
+
+        # Render party menu (on top of everything)
+        self.party_menu.render(surface)
     
     def _render_ui(self, surface: pygame.Surface):
         """Render UI elements."""
@@ -255,7 +286,7 @@ class WorldState(State):
         surface.blit(location_text, (20, 105))
         
         # Controls hint (bottom-center)
-        controls = "WASD/Arrows: Move | ESC: Pause | B: Battle (test) | F3: Debug"
+        controls = "WASD/Arrows: Move | P: Party | ESC: Pause | B: Battle (test) | F3: Debug"
         controls_text = self.small_font.render(controls, True, LIGHT_GRAY)
         controls_x = (SCREEN_WIDTH - controls_text.get_width()) // 2
         surface.blit(controls_text, (controls_x, SCREEN_HEIGHT - 30))
@@ -288,16 +319,20 @@ class WorldState(State):
         overlay.set_alpha(180)
         overlay.fill(BLACK)
         surface.blit(overlay, (0, 0))
-        
+
         # Pause text
         pause_font = pygame.font.Font(None, 80)
         pause_text = pause_font.render("PAUSED", True, WHITE)
         pause_x = (SCREEN_WIDTH - pause_text.get_width()) // 2
         pause_y = SCREEN_HEIGHT // 3
         surface.blit(pause_text, (pause_x, pause_y))
-        
+
         # Resume instruction
         resume_text = self.font.render("Press ESC to resume", True, LIGHT_GRAY)
         resume_x = (SCREEN_WIDTH - resume_text.get_width()) // 2
         resume_y = pause_y + 100
         surface.blit(resume_text, (resume_x, resume_y))
+
+    def _on_party_menu_close(self):
+        """Callback when party menu is closed."""
+        print("Party menu closed")
