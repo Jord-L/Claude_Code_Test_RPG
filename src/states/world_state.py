@@ -10,6 +10,8 @@ from entities.player import Player
 from world.map import Map
 from world.camera import Camera
 from world.player_controller import PlayerController
+from world.island import IslandManager
+from world.island_factory import IslandFactory
 from systems.party_manager import PartyManager
 from systems.equipment_manager import EquipmentManager
 from ui.party_menu import PartyMenu
@@ -39,6 +41,7 @@ class WorldState(State):
         self.current_map: Optional[Map] = None
         self.camera: Optional[Camera] = None
         self.player_controller: Optional[PlayerController] = None
+        self.island_manager: Optional[IslandManager] = None
         
         # State
         self.paused = False
@@ -95,11 +98,25 @@ class WorldState(State):
             player.max_ap = 50
             player.current_ap = 50
         
-        # Load or create map
-        if "current_map" in persistent:
-            self.current_map = persistent["current_map"]
+        # Initialize island manager
+        if not hasattr(self, 'island_manager') or self.island_manager is None:
+            self.island_manager = IslandManager()
+
+            # Register all East Blue islands
+            print("\nInitializing East Blue islands...")
+            for island in IslandFactory.create_all_islands():
+                self.island_manager.register_island(island)
+
+            # Start at Foosha Village
+            self.island_manager.set_current_island("foosha_village")
+            print(f"Starting location: {self.island_manager.get_current_island().name}\n")
+
+        # Get current map from island
+        current_island = self.island_manager.get_current_island()
+        if current_island:
+            self.current_map = current_island.map
         else:
-            # Create test map
+            # Fallback to test map if no island
             self.current_map = Map.create_test_map()
         
         # Initialize party manager if not already set
