@@ -7,6 +7,7 @@ from typing import Dict, List, Optional, TYPE_CHECKING
 from entities.character import Character
 from entities.stats import Stats
 from utils.constants import STARTING_BERRIES
+from systems.item_system import Inventory
 
 if TYPE_CHECKING:
     from systems.party_manager import PartyManager
@@ -30,7 +31,12 @@ class Player(Character):
         
         # Player-specific attributes
         self.berries = STARTING_BERRIES
-        self.inventory = []
+
+        # New inventory system
+        self.inventory = Inventory(max_slots=50)
+
+        # Legacy inventory (deprecated, kept for compatibility)
+        self.old_inventory = []
         self.key_items = []
         
         # Bounty

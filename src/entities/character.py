@@ -3,9 +3,12 @@ Character Class
 Base class for all characters (player, enemies, NPCs, crew members).
 """
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, TYPE_CHECKING
 from entities.stats import Stats
 from entities.devil_fruit import DevilFruit
+
+if TYPE_CHECKING:
+    from systems.equipment_manager import EquipmentSlots
 
 
 class Character:
@@ -39,12 +42,15 @@ class Character:
         # Devil Fruit
         self.devil_fruit: Optional[DevilFruit] = None
         
-        # Equipment
+        # Equipment (old dict format - deprecated, kept for compatibility)
         self.equipment = {
             "weapon": None,
             "armor": None,
             "accessory": None
         }
+
+        # New equipment system (initialized by EquipmentManager)
+        self.equipment_slots: Optional['EquipmentSlots'] = None
         
         # Status effects
         self.status_effects = []
