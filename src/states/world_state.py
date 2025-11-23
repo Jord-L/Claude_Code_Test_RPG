@@ -17,6 +17,7 @@ from systems.equipment_manager import EquipmentManager
 from ui.party_menu import PartyMenu
 from ui.inventory_menu import InventoryMenu
 from ui.equipment_menu import EquipmentMenu
+from ui.travel_menu import TravelMenu
 from utils.party_helpers import create_starter_crew
 from utils.item_helpers import add_starter_items
 from utils.constants import *
@@ -63,6 +64,11 @@ class WorldState(State):
         # Equipment menu
         self.equipment_menu = EquipmentMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.equipment_menu.on_close = self._on_equipment_menu_close
+
+        # Travel menu
+        self.travel_menu = TravelMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.travel_menu.on_travel = self._on_travel_selected
+        self.travel_menu.on_close = self._on_travel_menu_close
 
         # Debug
         self.show_debug = True
@@ -195,6 +201,10 @@ class WorldState(State):
             self.equipment_menu.handle_event(event)
             return
 
+        if self.travel_menu.visible:
+            self.travel_menu.handle_event(event)
+            return
+
         if event.type == pygame.KEYDOWN:
             # Debug toggle
             if event.key == pygame.K_F3:
@@ -214,6 +224,21 @@ class WorldState(State):
             elif event.key == pygame.K_e:
                 self.equipment_menu.show()
                 print("Equipment menu opened!")
+
+            # Travel menu (T key)
+            elif event.key == pygame.K_t:
+                if self.island_manager and self.player_controller:
+                    current_island = self.island_manager.get_current_island()
+                    available = self.island_manager.get_available_islands()
+                    connections = current_island.connections if current_island else []
+                    self.travel_menu.set_destinations(
+                        current_island,
+                        available,
+                        connections,
+                        self.player_controller.player.berries
+                    )
+                    self.travel_menu.show()
+                    print("Travel menu opened!")
 
             # Pause (ESC)
             elif event.key == pygame.K_ESCAPE:
@@ -306,6 +331,7 @@ class WorldState(State):
         self.party_menu.render(surface)
         self.inventory_menu.render(surface)
         self.equipment_menu.render(surface)
+        self.travel_menu.render(surface)
     
     def _render_ui(self, surface: pygame.Surface):
         """Render UI elements."""
@@ -349,7 +375,7 @@ class WorldState(State):
         surface.blit(location_text, (20, 105))
         
         # Controls hint (bottom-center)
-        controls = "WASD: Move | P: Party | I: Inventory | E: Equipment | B: Battle (test) | ESC: Pause | F3: Debug"
+        controls = "WASD: Move | P: Party | I: Inv | E: Equip | T: Travel | B: Battle | ESC: Pause | F3: Debug"
         controls_text = self.small_font.render(controls, True, LIGHT_GRAY)
         controls_x = (SCREEN_WIDTH - controls_text.get_width()) // 2
         surface.blit(controls_text, (controls_x, SCREEN_HEIGHT - 30))
@@ -407,3 +433,41 @@ class WorldState(State):
     def _on_equipment_menu_close(self):
         """Callback when equipment menu is closed."""
         print("Equipment menu closed")
+
+    def _on_travel_menu_close(self):
+        """Callback when travel menu is closed."""
+        print("Travel menu closed")
+
+    def _on_travel_selected(self, destination_id: str):
+        """Handle island travel."""
+        if self.island_manager and self.player_controller:
+            player = self.player_controller.player
+
+            # Get travel cost
+            current_island = self.island_manager.get_current_island()
+            if current_island:
+                for conn in current_island.connections:
+                    if conn.destination_island == destination_id:
+                        # Check if can afford
+                        if player.berries >= conn.berries_cost:
+                            # Deduct cost
+                            player.berries -= conn.berries_cost
+
+                            # Travel to island
+                            if self.island_manager.travel_to_island(destination_id):
+                                # Update map
+                                new_island = self.island_manager.get_current_island()
+                                self.current_map = new_island.map
+
+                                # Move player to spawn point
+                                spawn_x, spawn_y = new_island.map.spawn_point
+                                self.player_controller.set_position(spawn_x * 64, spawn_y * 64)
+
+                                # Close menu
+                                self.travel_menu.hide()
+                                print(f"Traveled to {new_island.name}!")
+                            else:
+                                print("Travel failed!")
+                        else:
+                            print("Not enough berries!")
+                        break
