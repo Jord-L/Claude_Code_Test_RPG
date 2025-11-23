@@ -11,8 +11,12 @@ from world.map import Map
 from world.camera import Camera
 from world.player_controller import PlayerController
 from systems.party_manager import PartyManager
+from systems.equipment_manager import EquipmentManager
 from ui.party_menu import PartyMenu
+from ui.inventory_menu import InventoryMenu
+from ui.equipment_menu import EquipmentMenu
 from utils.party_helpers import create_starter_crew
+from utils.item_helpers import add_starter_items
 from utils.constants import *
 
 
@@ -48,6 +52,14 @@ class WorldState(State):
         # Party menu
         self.party_menu = PartyMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.party_menu.on_close = self._on_party_menu_close
+
+        # Inventory menu
+        self.inventory_menu = InventoryMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.inventory_menu.on_close = self._on_inventory_menu_close
+
+        # Equipment menu
+        self.equipment_menu = EquipmentMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.equipment_menu.on_close = self._on_equipment_menu_close
 
         # Debug
         self.show_debug = True
@@ -98,8 +110,22 @@ class WorldState(State):
             # Add starter crew for testing/demo
             create_starter_crew(player.party_manager)
 
+            # Add starter items for testing/demo
+            print("\nAdding starter items...")
+            add_starter_items(player.inventory)
+
         # Set party menu's party manager
         self.party_menu.set_party_manager(player.party_manager)
+
+        # Initialize equipment slots for all party members
+        equipment_manager = EquipmentManager()
+        equipment_manager.initialize_character_equipment(player)
+        for member in player.party_manager.get_all_members():
+            equipment_manager.initialize_character_equipment(member)
+
+        # Set inventory and equipment menus
+        self.inventory_menu.set_inventory(player.inventory)
+        self.equipment_menu.set_character(player, player.inventory)
 
         # Create player controller
         self.player_controller = PlayerController(player, self.current_map)
@@ -139,9 +165,17 @@ class WorldState(State):
         Args:
             event: Pygame event
         """
-        # Party menu gets priority
+        # Menus get priority (check in order)
         if self.party_menu.visible:
             self.party_menu.handle_event(event)
+            return
+
+        if self.inventory_menu.visible:
+            self.inventory_menu.handle_event(event)
+            return
+
+        if self.equipment_menu.visible:
+            self.equipment_menu.handle_event(event)
             return
 
         if event.type == pygame.KEYDOWN:
@@ -153,6 +187,16 @@ class WorldState(State):
             elif event.key == pygame.K_p:
                 self.party_menu.show()
                 print("Party menu opened!")
+
+            # Inventory menu (I key)
+            elif event.key == pygame.K_i:
+                self.inventory_menu.show()
+                print("Inventory menu opened!")
+
+            # Equipment menu (E key)
+            elif event.key == pygame.K_e:
+                self.equipment_menu.show()
+                print("Equipment menu opened!")
 
             # Pause (ESC)
             elif event.key == pygame.K_ESCAPE:
@@ -241,8 +285,10 @@ class WorldState(State):
         if self.paused:
             self._render_pause_overlay(surface)
 
-        # Render party menu (on top of everything)
+        # Render menus (on top of everything)
         self.party_menu.render(surface)
+        self.inventory_menu.render(surface)
+        self.equipment_menu.render(surface)
     
     def _render_ui(self, surface: pygame.Surface):
         """Render UI elements."""
@@ -286,7 +332,7 @@ class WorldState(State):
         surface.blit(location_text, (20, 105))
         
         # Controls hint (bottom-center)
-        controls = "WASD/Arrows: Move | P: Party | ESC: Pause | B: Battle (test) | F3: Debug"
+        controls = "WASD: Move | P: Party | I: Inventory | E: Equipment | B: Battle (test) | ESC: Pause | F3: Debug"
         controls_text = self.small_font.render(controls, True, LIGHT_GRAY)
         controls_x = (SCREEN_WIDTH - controls_text.get_width()) // 2
         surface.blit(controls_text, (controls_x, SCREEN_HEIGHT - 30))
@@ -336,3 +382,11 @@ class WorldState(State):
     def _on_party_menu_close(self):
         """Callback when party menu is closed."""
         print("Party menu closed")
+
+    def _on_inventory_menu_close(self):
+        """Callback when inventory menu is closed."""
+        print("Inventory menu closed")
+
+    def _on_equipment_menu_close(self):
+        """Callback when equipment menu is closed."""
+        print("Equipment menu closed")
