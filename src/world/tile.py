@@ -17,7 +17,10 @@ class TileType:
     WOOD = "wood"
     WALL = "wall"
     DOOR = "door"
-    
+    DIRT = "dirt"
+    ROCK = "rock"
+    TREE = "tree"
+
     # Special tiles
     BATTLE_ZONE = "battle_zone"  # Trigger random encounters
     SAFE_ZONE = "safe_zone"      # No encounters
@@ -103,6 +106,19 @@ class Tile:
         elif self.tile_type == TileType.WOOD:
             self.walkable = True
             self.encounter_zone = False
+
+        elif self.tile_type == TileType.DIRT:
+            self.walkable = True
+            self.encounter_zone = True
+            self.encounter_rate = 0.03  # 3% per step
+
+        elif self.tile_type == TileType.ROCK:
+            self.walkable = False
+            self.encounter_zone = False
+
+        elif self.tile_type == TileType.TREE:
+            self.walkable = False
+            self.encounter_zone = False
     
     def _get_color(self) -> tuple:
         """
@@ -119,6 +135,9 @@ class Tile:
             TileType.WOOD: (139, 90, 43),       # Brown
             TileType.WALL: (64, 64, 64),        # Dark gray
             TileType.DOOR: (160, 82, 45),       # Sienna
+            TileType.DIRT: (101, 67, 33),       # Dark brown
+            TileType.ROCK: (105, 105, 105),     # Dim gray
+            TileType.TREE: (0, 100, 0),         # Dark green
             TileType.BATTLE_ZONE: (50, 150, 50), # Green
             TileType.SAFE_ZONE: (100, 149, 237), # Cornflower blue
             TileType.TOWN: (210, 180, 140),     # Tan

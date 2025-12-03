@@ -7,7 +7,7 @@ import sys
 import os
 
 # Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from utils.logger import init_logger, get_logger
 
@@ -37,11 +37,11 @@ def test_party_system():
         usopp = Character("Usopp", level=7)
 
         logger.info("Adding crew members to reserve...")
-        party_manager.add_to_reserve(zoro)
-        party_manager.add_to_reserve(nami)
-        party_manager.add_to_reserve(usopp)
+        party_manager.add_member(zoro, to_active=False)
+        party_manager.add_member(nami, to_active=False)
+        party_manager.add_member(usopp, to_active=False)
 
-        logger.info(f"Reserve size: {len(party_manager.reserve_crew)}")
+        logger.info(f"Reserve size: {len(party_manager.reserve_party)}")
         logger.info(f"Active party size: {len(party_manager.get_active_party())}")
 
         logger.info("✓ Party System: PASSED")
@@ -83,9 +83,9 @@ def test_inventory_system():
         logger.info("Testing equipment manager...")
         player = Player("Test Player")
         equipment_manager = EquipmentManager()
-        equipment_manager.initialize_character_equipment(player)
+        equipment_slots = equipment_manager.get_or_create_slots(player)
 
-        logger.info(f"Equipment slots initialized: {player.equipment_slots is not None}")
+        logger.info(f"Equipment slots initialized: {equipment_slots is not None}")
 
         logger.info("✓ Inventory & Equipment: PASSED")
         return True
@@ -151,7 +151,7 @@ def test_dialogue_system():
         if dialogue_manager.start_dialogue("mayor_greeting"):
             logger.info("Started mayor dialogue")
 
-            while not dialogue_manager.current_dialogue.is_finished():
+            while dialogue_manager.current_dialogue and not dialogue_manager.current_dialogue.is_finished():
                 line = dialogue_manager.get_current_line()
                 logger.info(f"  {line.speaker}: {line.text}")
                 dialogue_manager.advance_dialogue()
