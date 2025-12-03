@@ -8,7 +8,7 @@ from entities.character import Character
 from entities.player import Player
 from utils.logger import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger()
 
 
 class PartyFormation:
