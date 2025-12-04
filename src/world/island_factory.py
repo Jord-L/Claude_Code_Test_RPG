@@ -19,7 +19,7 @@ class IslandFactory:
     def create_foosha_village() -> Island:
         """
         Create Foosha Village - the starting island.
-        Small peaceful village where Luffy grew up.
+        Small peaceful village where Alex grew up.
         """
         # Create map (30x30 tiles)
         map_instance = Map(30, 30, TileType.GRASS)
@@ -28,7 +28,7 @@ class IslandFactory:
 
         # Create island
         island = Island("foosha_village", "Foosha Village", map_instance)
-        island.description = "A peaceful village in the East Blue where Monkey D. Luffy grew up."
+        island.description = "A peaceful village in the East Blue where Alex grew up."
         island.recommended_level = 1
         island.story_arc = "Romance Dawn"
         island.dock_position = (15, 28)
@@ -48,7 +48,7 @@ class IslandFactory:
 
         island.add_npc(NPCData(
             npc_id="makino",
-            name="Makino",
+            name="Mira",
             tile_x=12,
             tile_y=12,
             npc_type="shopkeeper",
@@ -108,7 +108,7 @@ class IslandFactory:
     def create_shell_town() -> Island:
         """
         Create Shell Town - Marine base town.
-        Where Luffy meets Zoro.
+        Where Alex meets Kane.
         """
         # Create map (35x35 tiles)
         map_instance = Map(35, 35, TileType.STONE)
@@ -127,7 +127,7 @@ class IslandFactory:
         # Add NPCs
         island.add_npc(NPCData(
             npc_id="zoro",
-            name="Roronoa Zoro",
+            name="Kane",
             tile_x=17,
             tile_y=15,
             npc_type="crew_member",
@@ -171,7 +171,7 @@ class IslandFactory:
     def create_orange_town() -> Island:
         """
         Create Orange Town - town terrorized by Buggy the Clown.
-        Where Luffy meets Nami.
+        Where Alex meets Marina.
         """
         map_instance = Map(40, 40, TileType.DIRT)
         map_instance.name = "Orange Town"
@@ -188,7 +188,7 @@ class IslandFactory:
         # NPCs
         island.add_npc(NPCData(
             npc_id="nami",
-            name="Nami",
+            name="Marina",
             tile_x=20,
             tile_y=20,
             npc_type="crew_member",
@@ -231,7 +231,7 @@ class IslandFactory:
     @staticmethod
     def create_syrup_village() -> Island:
         """
-        Create Syrup Village - Usopp's home village.
+        Create Syrup Village - Finn's home village.
         Where Kuro's plan unfolds.
         """
         map_instance = Map(45, 45, TileType.GRASS)
@@ -249,7 +249,7 @@ class IslandFactory:
         # NPCs
         island.add_npc(NPCData(
             npc_id="usopp",
-            name="Usopp",
+            name="Finn",
             tile_x=22,
             tile_y=25,
             npc_type="crew_member",
@@ -301,7 +301,7 @@ class IslandFactory:
     def create_baratie() -> Island:
         """
         Create Baratie - the floating restaurant.
-        Where Luffy meets Sanji.
+        Where Alex meets Marcus.
         """
         map_instance = Map(30, 30, TileType.WOOD)  # Wooden ship floors
         map_instance.name = "Baratie"
@@ -318,7 +318,7 @@ class IslandFactory:
         # NPCs
         island.add_npc(NPCData(
             npc_id="sanji",
-            name="Sanji",
+            name="Marcus",
             tile_x=15,
             tile_y=15,
             npc_type="crew_member",
@@ -371,7 +371,7 @@ class IslandFactory:
     def create_arlong_park() -> Island:
         """
         Create Arlong Park - Fish-man pirate base.
-        Nami's arc climax.
+        Marina's arc climax.
         """
         map_instance = Map(50, 50, TileType.STONE)
         map_instance.name = "Arlong Park"
@@ -600,7 +600,7 @@ class IslandFactory:
                 if x == 13 or x == 17 or y == 8 or y == 10:
                     map_instance.set_tile(x, y, TileType.WALL)
 
-        # Makino's bar
+        # Mira's bar
         for x in range(10, 15):
             for y in range(11, 14):
                 if x == 10 or x == 14 or y == 11 or y == 13:

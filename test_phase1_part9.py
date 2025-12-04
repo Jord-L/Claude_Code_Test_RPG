@@ -31,7 +31,7 @@ def test_world_system():
     
     # Create test player
     print("\n1. Creating test player...")
-    player = Player("Luffy", level=5)
+    player = Player("Alex", level=5)
     player.max_hp = 150
     player.current_hp = 150
     print(f"   ✓ Player created: {player.name} (Level {player.level})")

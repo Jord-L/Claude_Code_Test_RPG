@@ -72,7 +72,7 @@ class ItemDatabase:
         },
         "meat": {
             "name": "Sea King Meat",
-            "description": "Restores 50% HP. Luffy's favorite!",
+            "description": "Restores 50% HP. Alex's favorite!",
             "type": "consumable",
             "rarity": "uncommon",
             "max_stack": 20,

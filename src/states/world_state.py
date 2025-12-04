@@ -87,7 +87,7 @@ class WorldState(State):
             player = persistent["player"]
         else:
             # Create test player
-            player = Player("Luffy")
+            player = Player("Alex")
             player.level = 5
             player.max_hp = 150
             player.current_hp = 150

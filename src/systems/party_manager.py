@@ -43,7 +43,7 @@ class CrewMember(Character):
         # One Piece flavor
         self.dream = ""  # Character's personal dream
         self.bounty = 0  # Individual bounty
-        self.epithet = ""  # "Straw Hat", "Pirate Hunter", etc.
+        self.epithet = ""  # "Captain", "Demon Blade", etc.
 
         # Recruitment
         self.is_recruitable = True

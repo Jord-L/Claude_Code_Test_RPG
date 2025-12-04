@@ -145,11 +145,11 @@ def create_default_quests() -> QuestManager:
     """Create default game quests."""
     manager = QuestManager()
 
-    # Recruit Zoro
+    # Recruit Kane
     recruit_zoro = Quest(
         "recruit_zoro",
-        "The Pirate Hunter",
-        "Help Zoro and recruit him to your crew."
+        "The Demon Blade",
+        "Help Kane and recruit him to your crew."
     )
     recruit_zoro.objectives.append(QuestObjective(
         "Defeat Captain Morgan's forces",
@@ -158,7 +158,7 @@ def create_default_quests() -> QuestManager:
         5
     ))
     recruit_zoro.objectives.append(QuestObjective(
-        "Talk to Zoro",
+        "Talk to Kane",
         "talk_to_npc",
         "zoro",
         1
