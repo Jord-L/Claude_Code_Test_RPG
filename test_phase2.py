@@ -25,16 +25,16 @@ def test_party_system():
         from entities.character import Character
 
         logger.info("Creating test player...")
-        player = Player("Test Luffy")
+        player = Player("Test Alex")
         player.level = 10
 
         logger.info("Initializing PartyManager...")
         party_manager = PartyManager(player)
 
         logger.info("Creating test crew members...")
-        zoro = Character("Zoro", level=9)
-        nami = Character("Nami", level=8)
-        usopp = Character("Usopp", level=7)
+        zoro = Character("Kane", level=9)
+        nami = Character("Marina", level=8)
+        usopp = Character("Finn", level=7)
 
         logger.info("Adding crew members to reserve...")
         party_manager.add_member(zoro, to_active=False)

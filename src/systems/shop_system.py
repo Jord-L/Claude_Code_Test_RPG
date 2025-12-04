@@ -91,8 +91,8 @@ def create_default_shops() -> Dict[str, Shop]:
     """Create default game shops."""
     shops = {}
 
-    # Makino's Bar (Foosha Village)
-    makino_bar = Shop("makino_bar", "Makino's Bar")
+    # Mira's Bar (Foosha Village)
+    makino_bar = Shop("makino_bar", "Mira's Bar")
     makino_bar.add_item("health_potion_small", 99)
     makino_bar.add_item("health_potion_medium", 50)
     makino_bar.add_item("meat", 20)

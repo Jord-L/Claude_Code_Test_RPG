@@ -11,37 +11,37 @@ from systems.devil_fruit_manager import DevilFruitManager
 def create_starter_crew(party_manager: PartyManager) -> None:
     """
     Create a starter crew for testing/demo purposes.
-    Inspired by One Piece Straw Hat crew.
+    Inspired by One Piece starter crew.
 
     Args:
         party_manager: PartyManager to add crew to
     """
-    # Zoro - Swordsman/Fighter
-    zoro = PartyFactory.create_fighter("Roronoa Zoro", level=5, epithet="Pirate Hunter")
+    # Kane - Swordsman/Fighter
+    zoro = PartyFactory.create_fighter("Kane", level=5, epithet="Demon Blade")
     zoro.set_dream("To become the world's greatest swordsman")
     zoro.loyalty = 100
     party_manager.add_member(zoro, to_active=True)
 
-    # Nami - Navigator
-    nami = PartyFactory.create_navigator("Nami", level=4, epithet="Cat Burglar")
+    # Marina - Navigator
+    nami = PartyFactory.create_navigator("Marina", level=4, epithet="Navigator")
     nami.set_dream("To draw a map of the entire world")
     nami.loyalty = 95
     party_manager.add_member(nami, to_active=True)
 
-    # Usopp - Sniper
-    usopp = PartyFactory.create_sniper("Usopp", level=3, epithet="God Usopp")
+    # Finn - Sniper
+    usopp = PartyFactory.create_sniper("Finn", level=3, epithet="Sharpshooter")
     usopp.set_dream("To become a brave warrior of the sea")
     usopp.loyalty = 100
     party_manager.add_member(usopp, to_active=True)
 
-    # Sanji - Cook
-    sanji = PartyFactory.create_cook("Sanji", level=5, epithet="Black Leg")
-    sanji.set_dream("To find the All Blue")
+    # Marcus - Cook
+    sanji = PartyFactory.create_cook("Marcus", level=5, epithet="Master Chef")
+    sanji.set_dream("To find the Legendary Sea")
     sanji.loyalty = 100
     party_manager.add_member(sanji, to_active=False)  # In reserve
 
-    # Chopper - Doctor
-    chopper = PartyFactory.create_doctor("Tony Tony Chopper", level=2, epithet="Cotton Candy Lover")
+    # Reed - Doctor
+    chopper = PartyFactory.create_doctor("Reed", level=2, epithet="Doctor")
     chopper.set_dream("To cure any disease")
     chopper.loyalty = 100
     party_manager.add_member(chopper, to_active=False)

@@ -26,7 +26,7 @@ def test_character_system():
         from entities.enemy import Enemy
 
         logger.info("Creating player character...")
-        player = Player("Luffy")
+        player = Player("Alex")
         player.level = 5
 
         logger.info(f"Player: {player.name} (Level {player.level})")
@@ -67,7 +67,7 @@ def test_combat_system():
         from entities.enemy import Enemy
 
         logger.info("Creating battle...")
-        player = Player("Luffy")
+        player = Player("Alex")
         player.level = 10
 
         enemies = [Enemy("Bandit", level=5), Enemy("Thief", level=6)]
@@ -144,7 +144,7 @@ def test_devil_fruit_system():
         data_loader = DataLoader()
 
         logger.info("Creating player...")
-        player = Player("Luffy")
+        player = Player("Alex")
 
         logger.info("Testing devil fruit assignment...")
         # Test that player can have a devil fruit
@@ -193,7 +193,7 @@ def test_experience_leveling():
         from entities.player import Player
 
         logger.info("Creating player...")
-        player = Player("Luffy")
+        player = Player("Alex")
         initial_level = player.level
         initial_stats = (player.max_hp, player.stats.get_attack(), player.stats.get_defense())
 

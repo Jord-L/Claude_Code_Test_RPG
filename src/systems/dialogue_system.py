@@ -112,10 +112,10 @@ def create_default_dialogues() -> DialogueManager:
     mayor.add_line("Mayor", "We're a peaceful village, but watch out for bandits in the forest.")
     manager.register_dialogue(mayor)
 
-    # Makino greeting
+    # Mira greeting
     makino = Dialogue("makino_greeting")
-    makino.add_line("Makino", "Welcome to my bar! Can I get you something?")
-    makino.add_line("Makino", "Luffy used to come here all the time as a kid.")
+    makino.add_line("Mira", "Welcome to my bar! Can I get you something?")
+    makino.add_line("Mira", "Alex used to come here all the time as a kid.")
     manager.register_dialogue(makino)
 
     return manager
