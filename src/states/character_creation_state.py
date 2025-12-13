@@ -385,30 +385,37 @@ class CharacterCreationState(State):
         """Handle confirm button - create character and start game."""
         # Create the player
         player = Player(self.player_name, level=1)
-        
+
         # Equip Devil Fruit if selected
         if self.selected_fruit_data:
             player.equip_devil_fruit(self.selected_fruit_data)
             print(f"{player.name} ate the {self.selected_fruit_data.get('name')}!")
         else:
             print(f"{player.name} starts without a Devil Fruit!")
-        
-        # Store player in game state (or wherever it should go)
-        # For now, we'll just print success
+
+        # Store player in persistent data
         print(f"Character created successfully!")
         print(f"Name: {player.name}")
         print(f"Level: {player.level}")
         print(f"Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
-        
-        # Transition to world state
-        self.done = True
-        self.next_state = "world"
-        self.persist = {"player": player}
-    
+
+        # Transition to world state with player data
+        self.state_manager.change_state("world")
+
+        # TODO: Pass player data to world state via persistent data
+        # self.persistent["player"] = player
+
     def _on_cancel(self):
-        """Handle cancel button - go back to fruit selection."""
+        """Handle cancel button - go back to previous stage or main menu."""
         if self.stage == "confirm":
+            # Go back to devil fruit selection
             self._setup_devil_fruit_stage()
+        elif self.stage == "devil_fruit":
+            # Go back to name entry
+            self._setup_name_stage()
+        elif self.stage == "name":
+            # Go back to main menu
+            self.state_manager.change_state(STATE_MENU)
     
     def handle_event(self, event: pygame.event.Event):
         """
