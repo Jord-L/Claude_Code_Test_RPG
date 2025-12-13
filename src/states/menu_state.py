@@ -111,12 +111,12 @@ class MenuState(State):
             self.state_manager.change_state(STATE_CHAR_CREATION)
             
         elif option == "Load Game":
-            # TODO: Transition to load game screen
-            print("Load Game not implemented yet")
-        
+            # Transition to load game screen
+            self.state_manager.change_state(STATE_LOAD)
+
         elif option == "Settings":
-            # TODO: Transition to settings screen
-            print("Settings not implemented yet")
+            # Transition to settings screen
+            self.state_manager.change_state(STATE_SETTINGS)
         
         elif option == "Exit":
             # Exit the game
