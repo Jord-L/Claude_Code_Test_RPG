@@ -396,17 +396,16 @@ class CharacterCreationState(State):
         else:
             print(f"{player.name} starts without a Devil Fruit!")
 
-        # Store player in persistent data
+        # Store player for cleanup to pass to world state
+        self.created_player = player
+
         print(f"Character created successfully!")
         print(f"Name: {player.name}")
         print(f"Level: {player.level}")
         print(f"Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
 
-        # Transition to world state with player data
+        # Transition to world state - player data will be passed via cleanup()
         self.state_manager.change_state("world")
-
-        # TODO: Pass player data to world state via persistent data
-        # self.persistent["player"] = player
 
     def _on_cancel(self):
         """Handle cancel button - go back to previous stage or main menu."""
@@ -837,4 +836,7 @@ class CharacterCreationState(State):
     def cleanup(self):
         """Called when state is removed."""
         print("Exiting Character Creation")
+        # Return created player if it exists
+        if hasattr(self, 'created_player'):
+            return {"player": self.created_player}
         return {}
