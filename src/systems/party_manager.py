@@ -417,10 +417,10 @@ class PartyFactory:
         member.set_epithet(epithet)
 
         # Fighter stats: High STR, DEF
-        member.stats.strength.set_base(15)
-        member.stats.defense.set_base(12)
-        member.stats.speed.set_base(8)
-        member.stats.skill.set_base(10)
+        member.stats.strength = 15
+        member.stats.defense = 12
+        member.stats.agility = 8
+        member.stats.intelligence = 10
 
         return member
 
@@ -430,11 +430,11 @@ class PartyFactory:
         member = CrewMember(name, level, "Sniper")
         member.set_epithet(epithet)
 
-        # Sniper stats: High SKILL, SPD
-        member.stats.strength.set_base(10)
-        member.stats.defense.set_base(8)
-        member.stats.speed.set_base(12)
-        member.stats.skill.set_base(15)
+        # Sniper stats: High Intelligence (for skill), Agility
+        member.stats.strength = 10
+        member.stats.defense = 8
+        member.stats.agility = 12
+        member.stats.intelligence = 15
 
         return member
 
@@ -444,12 +444,12 @@ class PartyFactory:
         member = CrewMember(name, level, "Navigator")
         member.set_epithet(epithet)
 
-        # Navigator stats: Balanced with high WILL
-        member.stats.strength.set_base(8)
-        member.stats.defense.set_base(9)
-        member.stats.speed.set_base(11)
-        member.stats.skill.set_base(12)
-        member.stats.will.set_base(15)
+        # Navigator stats: Balanced with high Willpower
+        member.stats.strength = 8
+        member.stats.defense = 9
+        member.stats.agility = 11
+        member.stats.intelligence = 12
+        member.stats.willpower = 15
 
         return member
 
@@ -459,11 +459,11 @@ class PartyFactory:
         member = CrewMember(name, level, "Cook")
         member.set_epithet(epithet)
 
-        # Cook stats: High STR, DEF (kicks!)
-        member.stats.strength.set_base(14)
-        member.stats.defense.set_base(11)
-        member.stats.speed.set_base(13)
-        member.stats.skill.set_base(9)
+        # Cook stats: High STR, Agility (kicks!)
+        member.stats.strength = 14
+        member.stats.defense = 11
+        member.stats.agility = 13
+        member.stats.intelligence = 9
 
         return member
 
@@ -474,11 +474,11 @@ class PartyFactory:
         member.set_epithet(epithet)
 
         # Doctor stats: Support-oriented
-        member.stats.strength.set_base(9)
-        member.stats.defense.set_base(10)
-        member.stats.speed.set_base(10)
-        member.stats.skill.set_base(14)
-        member.stats.will.set_base(12)
+        member.stats.strength = 9
+        member.stats.defense = 10
+        member.stats.agility = 10
+        member.stats.intelligence = 14
+        member.stats.willpower = 12
 
         return member
 
@@ -489,11 +489,11 @@ class PartyFactory:
         member.set_epithet(epithet)
 
         # Archaeologist stats: Intelligence and technique
-        member.stats.strength.set_base(10)
-        member.stats.defense.set_base(9)
-        member.stats.speed.set_base(9)
-        member.stats.skill.set_base(15)
-        member.stats.will.set_base(13)
+        member.stats.strength = 10
+        member.stats.defense = 9
+        member.stats.agility = 9
+        member.stats.intelligence = 15
+        member.stats.willpower = 13
 
         return member
 
@@ -504,10 +504,10 @@ class PartyFactory:
         member.set_epithet(epithet)
 
         # Shipwright stats: Balanced physical
-        member.stats.strength.set_base(13)
-        member.stats.defense.set_base(14)
-        member.stats.speed.set_base(9)
-        member.stats.skill.set_base(11)
+        member.stats.strength = 13
+        member.stats.defense = 14
+        member.stats.agility = 9
+        member.stats.intelligence = 11
 
         return member
 
@@ -518,10 +518,10 @@ class PartyFactory:
         member.set_epithet(epithet)
 
         # Musician stats: Speed and technique
-        member.stats.strength.set_base(11)
-        member.stats.defense.set_base(9)
-        member.stats.speed.set_base(14)
-        member.stats.skill.set_base(13)
-        member.stats.charisma.set_base(15)
+        member.stats.strength = 11
+        member.stats.defense = 9
+        member.stats.agility = 14
+        member.stats.intelligence = 13
+        member.stats.charisma = 15
 
         return member
