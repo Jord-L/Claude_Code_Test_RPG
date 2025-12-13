@@ -6,7 +6,7 @@ Main game class that handles the game loop, state management, and core systems.
 import pygame
 from utils.constants import (
     SCREEN_WIDTH, SCREEN_HEIGHT, FPS, GAME_TITLE,
-    BLACK, WHITE, STATE_MENU, STATE_CHAR_CREATION
+    BLACK, WHITE, STATE_MENU, STATE_CHAR_CREATION, STATE_SETTINGS, STATE_LOAD
 )
 from utils.logger import get_logger
 from states.state_manager import StateManager
@@ -14,6 +14,8 @@ from states.menu_state import MenuState
 from states.character_creation_state import CharacterCreationState
 from states.world_state import WorldState
 from states.battle_state import BattleState
+from states.settings_state import SettingsState
+from states.load_game_state import LoadGameState
 
 
 class Game:
@@ -62,13 +64,19 @@ class Game:
         """Register all game states with the state manager."""
         self.logger.debug(f"Registering state: {STATE_MENU} -> MenuState")
         self.state_manager.register_state(STATE_MENU, MenuState)
-        
+
         self.logger.debug(f"Registering state: {STATE_CHAR_CREATION} -> CharacterCreationState")
         self.state_manager.register_state(STATE_CHAR_CREATION, CharacterCreationState)
-        
+
+        self.logger.debug(f"Registering state: {STATE_SETTINGS} -> SettingsState")
+        self.state_manager.register_state(STATE_SETTINGS, SettingsState)
+
+        self.logger.debug(f"Registering state: {STATE_LOAD} -> LoadGameState")
+        self.state_manager.register_state(STATE_LOAD, LoadGameState)
+
         self.logger.debug(f"Registering state: world -> WorldState")
         self.state_manager.register_state("world", WorldState)
-        
+
         self.logger.debug(f"Registering state: battle -> BattleState")
         self.state_manager.register_state("battle", BattleState)
     
