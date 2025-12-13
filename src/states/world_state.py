@@ -171,9 +171,13 @@ class WorldState(State):
         # Reset flags
         self.paused = False
         self.battle_triggered = False
-        
-        print(f"World State: Loaded map '{self.current_map.name}'")
-        print(f"World State: Player at {self.player_controller.get_tile_position()}")
+
+        print(f"\n✓ World State: Loaded map '{self.current_map.name}'")
+        print(f"✓ World State: Player at {self.player_controller.get_tile_position()}")
+        print(f"✓ World State: Camera centered on player")
+        print("="*60)
+        print("✅ WORLD STATE INITIALIZATION COMPLETE")
+        print("="*60 + "\n")
     
     def cleanup(self):
         """
