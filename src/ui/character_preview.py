@@ -4,6 +4,7 @@ Visual preview of the character being created.
 """
 
 import pygame
+import math
 from typing import Optional
 from entities.character import Character
 from entities.player import Player
@@ -70,12 +71,12 @@ class CharacterPreview:
     def update(self, dt: float):
         """
         Update animation.
-        
+
         Args:
             dt: Delta time
         """
         # Simple bobbing animation
-        self.bob_offset = self.bob_amplitude * pygame.math.sin(
+        self.bob_offset = self.bob_amplitude * math.sin(
             pygame.time.get_ticks() * 0.001 * self.bob_speed
         )
     
