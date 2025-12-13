@@ -40,8 +40,6 @@ STATE_DIALOGUE = "dialogue"
 STATE_INVENTORY = "inventory"
 STATE_PARTY = "party"
 STATE_SAVE_LOAD = "save_load"
-STATE_SETTINGS = "settings"
-STATE_LOAD = "load"
 
 # Character Stats
 MAX_PARTY_SIZE = 4

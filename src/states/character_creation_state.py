@@ -377,9 +377,6 @@ class CharacterCreationState(State):
         if self.stage == "devil_fruit":
             # Go back to name entry
             self._setup_name_stage()
-        elif self.stage == "name":
-            # Go back to main menu
-            self.state_manager.change_state(STATE_MENU)
     
     def _on_confirm(self):
         """Handle confirm button - create character and start game."""
