@@ -180,7 +180,7 @@ class CharacterCreationState(State):
         """Set up UI for name input stage."""
         self.stage = "name"
         self.input_active = True
-        
+
         # Instruction text
         self.instruction_text = CenteredText(
             x=SCREEN_WIDTH // 2,
@@ -190,7 +190,7 @@ class CharacterCreationState(State):
             color=UI_TEXT_COLOR,
             centered=True
         )
-        
+
         # Name input box
         self.name_input_box = CenteredText(
             x=SCREEN_WIDTH // 2,
@@ -200,10 +200,11 @@ class CharacterCreationState(State):
             color=WHITE if self.player_name else GRAY,
             centered=True
         )
-        
-        # Show only continue button
+
+        # Show continue and exit buttons
         self.continue_button.visible = True
-        self.back_button.visible = False
+        self.back_button.visible = True  # Exit button
+        self.back_button.text = "Exit"  # Change text to "Exit" for name stage
         self.confirm_button.visible = False
         self.cancel_button.visible = False
     
@@ -264,6 +265,7 @@ class CharacterCreationState(State):
         # Show back and continue buttons
         self.continue_button.visible = True
         self.back_button.visible = True
+        self.back_button.text = "Back"  # Change text back to "Back" for devil fruit stage
         self.confirm_button.visible = False
         self.cancel_button.visible = False
     
