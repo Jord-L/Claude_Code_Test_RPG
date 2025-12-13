@@ -76,16 +76,23 @@ class WorldState(State):
     def startup(self, persistent):
         """
         Called when state becomes active.
-        
+
         Args:
             persistent: Data from previous state
         """
-        print("World State: Starting up...")
-        
+        print("\n" + "="*60)
+        print("WORLD STATE STARTUP - Initializing game world")
+        print("="*60)
+        print(f"Received persistent data keys: {list(persistent.keys())}")
+
         # Get player from persistent data or create new
         if "player" in persistent:
             player = persistent["player"]
+            print(f"✓ Using player from character creation: {player.name}")
+            print(f"   Level: {player.level}")
+            print(f"   Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
         else:
+            print("⚠ No player in persistent data - creating test player")
             # Create test player
             player = Player("Alex")
             player.level = 5

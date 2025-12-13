@@ -386,23 +386,32 @@ class CharacterCreationState(State):
     
     def _on_confirm(self):
         """Handle confirm button - create character and start game."""
+        print("\n" + "="*60)
+        print("CONFIRM BUTTON CLICKED - Starting character creation...")
+        print("="*60)
+
         # Create the player
         player = Player(self.player_name, level=1)
+        print(f"✓ Player object created: {player.name}")
 
         # Equip Devil Fruit if selected
         if self.selected_fruit_data:
             player.equip_devil_fruit(self.selected_fruit_data)
-            print(f"{player.name} ate the {self.selected_fruit_data.get('name')}!")
+            print(f"✓ {player.name} ate the {self.selected_fruit_data.get('name')}!")
         else:
-            print(f"{player.name} starts without a Devil Fruit!")
+            print(f"✓ {player.name} starts without a Devil Fruit!")
 
         # Store player for cleanup to pass to world state
         self.created_player = player
+        print(f"✓ Player stored in self.created_player")
 
-        print(f"Character created successfully!")
-        print(f"Name: {player.name}")
-        print(f"Level: {player.level}")
-        print(f"Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
+        print(f"\n📋 Character Summary:")
+        print(f"   Name: {player.name}")
+        print(f"   Level: {player.level}")
+        print(f"   Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
+
+        print(f"\n🎮 Transitioning to world state...")
+        print("="*60 + "\n")
 
         # Transition to world state - player data will be passed via cleanup()
         self.state_manager.change_state("world")
@@ -835,8 +844,18 @@ class CharacterCreationState(State):
     
     def cleanup(self):
         """Called when state is removed."""
-        print("Exiting Character Creation")
+        print("\n" + "="*60)
+        print("CHARACTER CREATION CLEANUP - Preparing data for next state")
+        print("="*60)
+
         # Return created player if it exists
         if hasattr(self, 'created_player'):
+            print(f"✓ Returning player data: {self.created_player.name}")
+            print(f"   Level: {self.created_player.level}")
+            print(f"   Devil Fruit: {self.created_player.devil_fruit.name if self.created_player.devil_fruit else 'None'}")
+            print("="*60 + "\n")
             return {"player": self.created_player}
-        return {}
+        else:
+            print("⚠ No player data to return (character creation was cancelled)")
+            print("="*60 + "\n")
+            return {}
