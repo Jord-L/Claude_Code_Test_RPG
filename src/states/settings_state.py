@@ -1,6 +1,6 @@
 """
 Settings State
-Basic settings menu with TODO for bug fixes.
+Manage game settings like volume, fullscreen, and controls.
 """
 
 import pygame
@@ -10,21 +10,172 @@ from ui.text_box import CenteredText
 from utils.constants import *
 
 
-class SettingsState(State):
-    """
-    Settings menu (simplified version with known bugs).
+class Slider:
+    """Simple slider UI component for numeric values."""
 
-    TODO: Fix settings bugs:
-    - Button states not updating properly
-    - Volume changes not persisting
-    - Fullscreen toggle needs work
-    """
+    def __init__(self, x: int, y: int, width: int, min_val: float, max_val: float, initial_val: float, label: str):
+        """
+        Initialize slider.
+
+        Args:
+            x: X position (left edge)
+            y: Y position (center)
+            width: Width of slider track
+            min_val: Minimum value
+            max_val: Maximum value
+            initial_val: Initial value
+            label: Label text
+        """
+        self.x = x
+        self.y = y
+        self.width = width
+        self.min_val = min_val
+        self.max_val = max_val
+        self.value = initial_val
+        self.label = label
+
+        self.handle_radius = 8
+        self.track_height = 4
+        self.dragging = False
+
+        self.font = pygame.font.Font(None, 28)
+
+    def get_handle_x(self) -> int:
+        """Get the X position of the slider handle."""
+        ratio = (self.value - self.min_val) / (self.max_val - self.min_val)
+        return int(self.x + ratio * self.width)
+
+    def handle_event(self, event: pygame.event.Event) -> bool:
+        """
+        Handle input events.
+
+        Args:
+            event: Pygame event
+
+        Returns:
+            True if value changed
+        """
+        changed = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:  # Left click
+                handle_x = self.get_handle_x()
+                mouse_x, mouse_y = event.pos
+
+                # Check if clicking on handle
+                if (abs(mouse_x - handle_x) <= self.handle_radius and
+                    abs(mouse_y - self.y) <= self.handle_radius):
+                    self.dragging = True
+                # Or clicking on track
+                elif (self.x <= mouse_x <= self.x + self.width and
+                      abs(mouse_y - self.y) <= 10):
+                    # Jump to clicked position
+                    ratio = (mouse_x - self.x) / self.width
+                    ratio = max(0, min(1, ratio))
+                    old_value = self.value
+                    self.value = self.min_val + ratio * (self.max_val - self.min_val)
+                    changed = old_value != self.value
+
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                self.dragging = False
+
+        elif event.type == pygame.MOUSEMOTION:
+            if self.dragging:
+                mouse_x, _ = event.pos
+                ratio = (mouse_x - self.x) / self.width
+                ratio = max(0, min(1, ratio))
+                old_value = self.value
+                self.value = self.min_val + ratio * (self.max_val - self.min_val)
+                changed = old_value != self.value
+
+        return changed
+
+    def render(self, screen: pygame.Surface):
+        """Render the slider."""
+        # Label
+        label_surface = self.font.render(self.label, True, WHITE)
+        screen.blit(label_surface, (self.x, self.y - 35))
+
+        # Value display
+        value_text = f"{int(self.value * 100)}%"
+        value_surface = self.font.render(value_text, True, UI_TEXT_COLOR)
+        screen.blit(value_surface, (self.x + self.width + 20, self.y - 12))
+
+        # Track
+        track_rect = pygame.Rect(
+            self.x,
+            self.y - self.track_height // 2,
+            self.width,
+            self.track_height
+        )
+        pygame.draw.rect(screen, (100, 100, 100), track_rect)
+
+        # Filled portion
+        handle_x = self.get_handle_x()
+        filled_rect = pygame.Rect(
+            self.x,
+            self.y - self.track_height // 2,
+            handle_x - self.x,
+            self.track_height
+        )
+        pygame.draw.rect(screen, UI_ACCENT_COLOR, filled_rect)
+
+        # Handle
+        handle_color = UI_BUTTON_HOVER if self.dragging else WHITE
+        pygame.draw.circle(screen, handle_color, (handle_x, self.y), self.handle_radius)
+        pygame.draw.circle(screen, BLACK, (handle_x, self.y), self.handle_radius, 2)
+
+
+class ToggleButton(Button):
+    """Button that toggles between ON/OFF states."""
+
+    def __init__(self, x: int, y: int, width: int, height: int, label: str, initial_state: bool, callback):
+        """
+        Initialize toggle button.
+
+        Args:
+            x: X position
+            y: Y position
+            width: Button width
+            height: Button height
+            label: Label text
+            initial_state: Initial ON/OFF state
+            callback: Callback function(new_state)
+        """
+        self.label = label
+        self.state = initial_state
+        self._callback = callback
+
+        # Initialize with current state text
+        text = f"{label}: {'ON' if initial_state else 'OFF'}"
+        super().__init__(x, y, width, height, text, self._on_click)
+
+    def _on_click(self):
+        """Handle click - toggle state."""
+        self.state = not self.state
+        self.text = f"{self.label}: {'ON' if self.state else 'OFF'}"
+        self._callback(self.state)
+
+
+class SettingsState(State):
+    """Settings menu for game configuration."""
 
     def __init__(self, game):
         super().__init__(game)
 
+        # Settings values
+        self.music_volume = 0.7
+        self.sfx_volume = 0.8
+        self.fullscreen = False
+
+        # UI elements
         self.title_text = None
+        self.music_slider = None
+        self.sfx_slider = None
+        self.fullscreen_toggle = None
         self.back_button = None
+
         self._setup_ui()
 
     def _setup_ui(self):
@@ -32,11 +183,44 @@ class SettingsState(State):
         # Title
         self.title_text = CenteredText(
             x=SCREEN_WIDTH // 2,
-            y=100,
+            y=80,
             text="Settings",
             font_size=64,
             color=WHITE,
             centered=True
+        )
+
+        # Music volume slider
+        self.music_slider = Slider(
+            x=300,
+            y=200,
+            width=400,
+            min_val=0.0,
+            max_val=1.0,
+            initial_val=self.music_volume,
+            label="Music Volume"
+        )
+
+        # SFX volume slider
+        self.sfx_slider = Slider(
+            x=300,
+            y=300,
+            width=400,
+            min_val=0.0,
+            max_val=1.0,
+            initial_val=self.sfx_volume,
+            label="SFX Volume"
+        )
+
+        # Fullscreen toggle
+        self.fullscreen_toggle = ToggleButton(
+            x=SCREEN_WIDTH // 2 - 100,
+            y=400,
+            width=200,
+            height=50,
+            label="Fullscreen",
+            initial_state=self.fullscreen,
+            callback=self._on_fullscreen_toggle
         )
 
         # Back button
@@ -49,51 +233,87 @@ class SettingsState(State):
             callback=self._on_back
         )
 
+    def _on_fullscreen_toggle(self, enabled: bool):
+        """Handle fullscreen toggle."""
+        print(f"Fullscreen: {'Enabled' if enabled else 'Disabled'}")
+        self.fullscreen = enabled
+        # Note: Actual fullscreen toggle would require pygame.display.toggle_fullscreen()
+        # or recreating the display surface, which we'll skip for now
+
     def _on_back(self):
         """Return to main menu."""
         print("Settings: Returning to main menu")
+        print(f"Final settings - Music: {int(self.music_volume * 100)}%, SFX: {int(self.sfx_volume * 100)}%, Fullscreen: {self.fullscreen}")
         self.state_manager.change_state(STATE_MENU)
 
     def handle_event(self, event: pygame.event.Event):
+        """Handle input events."""
+        # ESC to go back
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self._on_back()
+                return
+
+        # Handle sliders
+        if self.music_slider.handle_event(event):
+            self.music_volume = self.music_slider.value
+            print(f"Music volume: {int(self.music_volume * 100)}%")
+            # TODO: Apply to actual music system when implemented
+
+        if self.sfx_slider.handle_event(event):
+            self.sfx_volume = self.sfx_slider.value
+            print(f"SFX volume: {int(self.sfx_volume * 100)}%")
+            # TODO: Apply to actual SFX system when implemented
+
+        # Handle buttons
+        if self.fullscreen_toggle:
+            self.fullscreen_toggle.handle_event(event)
 
         if self.back_button:
             self.back_button.handle_event(event)
 
     def update(self, dt: float):
+        """Update state."""
+        if self.fullscreen_toggle:
+            self.fullscreen_toggle.update(dt)
+
         if self.back_button:
             self.back_button.update(dt)
 
     def render(self, screen: pygame.Surface):
+        """Render settings menu."""
         screen.fill(BLACK)
 
         # Draw title
         if self.title_text:
             self.title_text.render(screen)
 
-        # Draw placeholder text
-        font = pygame.font.Font(None, 36)
-        text = "Settings menu - TODO: Implement full features"
-        text_surface = font.render(text, True, WHITE)
-        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-        screen.blit(text_surface, text_rect)
+        # Draw sliders
+        if self.music_slider:
+            self.music_slider.render(screen)
 
-        # Draw note about bugs
-        bug_font = pygame.font.Font(None, 28)
-        bug_text = "Note: Settings has known bugs - marked with TODO in code"
-        bug_surface = bug_font.render(bug_text, True, (255, 200, 0))
-        bug_rect = bug_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
-        screen.blit(bug_surface, bug_rect)
+        if self.sfx_slider:
+            self.sfx_slider.render(screen)
 
-        # Draw back button
+        # Draw buttons
+        if self.fullscreen_toggle:
+            self.fullscreen_toggle.render(screen)
+
         if self.back_button:
             self.back_button.render(screen)
 
+        # Draw instructions
+        font = pygame.font.Font(None, 24)
+        instructions = "Use mouse to adjust sliders • ESC or Back button to return to menu"
+        text_surface = font.render(instructions, True, (150, 150, 150))
+        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 40))
+        screen.blit(text_surface, text_rect)
+
     def startup(self, persistent):
-        print("Settings menu loaded (with known bugs - see TODO)")
+        """Called when state becomes active."""
+        print("Settings menu loaded")
 
     def cleanup(self):
+        """Called when leaving state."""
         print("Settings menu cleanup")
         return {}
