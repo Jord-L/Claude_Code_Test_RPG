@@ -216,7 +216,7 @@ class SettingsState(State):
         self.sfx_volume = settings.get("sfx_volume", 0.8)
         self.text_speed = settings.get("text_speed", 0.5)
         self.fullscreen = settings.get("fullscreen", False)
-        self.aspect_ratio = settings.get("aspect_ratio", "16:9")
+        self.resolution = settings.get("resolution", "1280x720")
         self.battle_animations = settings.get("battle_animations", True)
         self.auto_save = settings.get("auto_save", True)
         self.difficulty = settings.get("difficulty", "Normal")
@@ -228,7 +228,7 @@ class SettingsState(State):
         self.sfx_slider = None
         self.text_speed_slider = None
         self.fullscreen_toggle = None
-        self.aspect_ratio_cycle = None
+        self.resolution_cycle = None
         self.battle_animations_toggle = None
         self.auto_save_toggle = None
         self.difficulty_cycle = None
@@ -319,7 +319,7 @@ class SettingsState(State):
             label="SFX Volume"
         )
 
-        # VIDEO TAB - Fullscreen toggle and aspect ratio
+        # VIDEO TAB - Fullscreen toggle and resolution
         self.fullscreen_toggle = ToggleButton(
             x=center_x - button_width // 2,
             y=content_y,
@@ -330,22 +330,28 @@ class SettingsState(State):
             callback=self._on_fullscreen_toggle
         )
 
-        # Determine initial aspect ratio index
-        aspect_ratio_options = ["16:9", "16:10", "4:3", "21:9"]
+        # Determine initial resolution index
+        resolution_options = [
+            "1280x720",   # HD
+            "1600x900",   # HD+
+            "1920x1080",  # Full HD
+            "2560x1440",  # 2K
+            "3840x2160"   # 4K
+        ]
         try:
-            aspect_ratio_index = aspect_ratio_options.index(self.aspect_ratio)
+            resolution_index = resolution_options.index(self.resolution)
         except ValueError:
-            aspect_ratio_index = 0  # Default to 16:9
+            resolution_index = 0  # Default to 1280x720
 
-        self.aspect_ratio_cycle = CycleButton(
+        self.resolution_cycle = CycleButton(
             x=center_x - button_width // 2,
             y=content_y + vertical_spacing,
             width=button_width,
             height=button_height,
-            label="Aspect Ratio",
-            options=aspect_ratio_options,
-            initial_index=aspect_ratio_index,
-            callback=self._on_aspect_ratio_change
+            label="Resolution",
+            options=resolution_options,
+            initial_index=resolution_index,
+            callback=self._on_resolution_change
         )
 
         # GAMEPLAY TAB - Text speed, battle animations, auto-save, difficulty
@@ -428,26 +434,26 @@ class SettingsState(State):
                 )
                 print(f"Switched to fullscreen: {display_info.current_w}x{display_info.current_h}")
             else:
-                # Return to windowed mode with current aspect ratio
-                width, height = self._calculate_resolution(self.aspect_ratio)
+                # Return to windowed mode with current resolution
+                width, height = self._parse_resolution(self.resolution)
                 self.game.screen = pygame.display.set_mode((width, height))
                 print(f"Switched to windowed mode: {width}x{height}")
         except Exception as e:
             print(f"Error toggling fullscreen: {e}")
 
-    def _on_aspect_ratio_change(self, aspect_ratio: str):
-        """Handle aspect ratio change."""
-        print(f"Aspect Ratio changed to: {aspect_ratio}")
-        self.aspect_ratio = aspect_ratio
+    def _on_resolution_change(self, resolution: str):
+        """Handle resolution change."""
+        print(f"Resolution changed to: {resolution}")
+        self.resolution = resolution
 
-        # Apply aspect ratio immediately (only if not in fullscreen)
+        # Apply resolution immediately (only if not in fullscreen)
         if not self.fullscreen:
             try:
-                width, height = self._calculate_resolution(aspect_ratio)
+                width, height = self._parse_resolution(resolution)
                 self.game.screen = pygame.display.set_mode((width, height))
-                print(f"Resolution changed to: {width}x{height} ({aspect_ratio})")
+                print(f"Window resized to: {width}x{height}")
             except Exception as e:
-                print(f"Error changing aspect ratio: {e}")
+                print(f"Error changing resolution: {e}")
 
     def _on_battle_animations_toggle(self, enabled: bool):
         """Handle battle animations toggle."""
@@ -464,25 +470,22 @@ class SettingsState(State):
         print(f"Difficulty changed to: {difficulty}")
         self.difficulty = difficulty
 
-    def _calculate_resolution(self, aspect_ratio: str) -> tuple:
+    def _parse_resolution(self, resolution: str) -> tuple:
         """
-        Calculate window resolution based on aspect ratio.
+        Parse resolution string to width and height.
 
         Args:
-            aspect_ratio: Aspect ratio string (e.g., "16:9")
+            resolution: Resolution string (e.g., "1920x1080")
 
         Returns:
             Tuple of (width, height)
         """
-        # Aspect ratio to resolution mapping (based on 720p height)
-        aspect_ratios = {
-            "16:9": (1280, 720),
-            "16:10": (1152, 720),
-            "4:3": (960, 720),
-            "21:9": (1680, 720)
-        }
-
-        return aspect_ratios.get(aspect_ratio, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        try:
+            width, height = resolution.split('x')
+            return (int(width), int(height))
+        except (ValueError, AttributeError):
+            # Fallback to default if parsing fails
+            return (SCREEN_WIDTH, SCREEN_HEIGHT)
 
     def _on_back(self):
         """Return to main menu."""
@@ -492,7 +495,7 @@ class SettingsState(State):
             "sfx_volume": self.sfx_volume,
             "text_speed": self.text_speed,
             "fullscreen": self.fullscreen,
-            "aspect_ratio": self.aspect_ratio,
+            "resolution": self.resolution,
             "battle_animations": self.battle_animations,
             "auto_save": self.auto_save,
             "difficulty": self.difficulty
@@ -506,7 +509,7 @@ class SettingsState(State):
         print(f"  SFX: {int(self.sfx_volume * 100)}%")
         print(f"  Text Speed: {int(self.text_speed * 100)}%")
         print(f"  Fullscreen: {self.fullscreen}")
-        print(f"  Aspect Ratio: {self.aspect_ratio}")
+        print(f"  Resolution: {self.resolution}")
         print(f"  Battle Animations: {self.battle_animations}")
         print(f"  Auto-Save: {self.auto_save}")
         print(f"  Difficulty: {self.difficulty}")
@@ -547,8 +550,8 @@ class SettingsState(State):
             if self.fullscreen_toggle:
                 self.fullscreen_toggle.handle_event(event)
 
-            if self.aspect_ratio_cycle:
-                self.aspect_ratio_cycle.handle_event(event)
+            if self.resolution_cycle:
+                self.resolution_cycle.handle_event(event)
 
         elif self.active_tab == "Gameplay":
             # Gameplay settings
@@ -580,8 +583,8 @@ class SettingsState(State):
             if self.fullscreen_toggle:
                 self.fullscreen_toggle.update(dt)
 
-            if self.aspect_ratio_cycle:
-                self.aspect_ratio_cycle.update(dt)
+            if self.resolution_cycle:
+                self.resolution_cycle.update(dt)
 
         elif self.active_tab == "Gameplay":
             if self.battle_animations_toggle:
@@ -632,8 +635,8 @@ class SettingsState(State):
             # Video settings
             if self.fullscreen_toggle:
                 self.fullscreen_toggle.render(screen)
-            if self.aspect_ratio_cycle:
-                self.aspect_ratio_cycle.render(screen)
+            if self.resolution_cycle:
+                self.resolution_cycle.render(screen)
 
         elif self.active_tab == "Gameplay":
             # Gameplay settings

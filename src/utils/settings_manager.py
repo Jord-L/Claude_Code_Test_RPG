@@ -17,7 +17,7 @@ class SettingsManager:
         "sfx_volume": 0.8,
         "text_speed": 0.5,
         "fullscreen": False,
-        "aspect_ratio": "16:9",
+        "resolution": "1280x720",
         "battle_animations": True,
         "auto_save": True,
         "difficulty": "Normal"
@@ -145,7 +145,7 @@ class SettingsManager:
 
         # Apply fullscreen
         fullscreen = self.settings.get("fullscreen", False)
-        aspect_ratio = self.settings.get("aspect_ratio", "16:9")
+        resolution = self.settings.get("resolution", "1280x720")
 
         try:
             if fullscreen:
@@ -160,12 +160,12 @@ class SettingsManager:
                 )
                 self.logger.info("Fullscreen mode enabled")
             else:
-                # Calculate window size based on aspect ratio
-                width, height = self._calculate_resolution(aspect_ratio)
+                # Parse resolution string
+                width, height = self._parse_resolution(resolution)
 
                 # Set windowed mode
                 game.screen = pygame.display.set_mode((width, height))
-                self.logger.info(f"Windowed mode set to {width}x{height} ({aspect_ratio})")
+                self.logger.info(f"Windowed mode set to {width}x{height}")
 
         except Exception as e:
             self.logger.error(f"Error applying display settings: {e}")
@@ -185,27 +185,24 @@ class SettingsManager:
 
         self.logger.info("Settings applied successfully")
 
-    def _calculate_resolution(self, aspect_ratio: str) -> tuple:
+    def _parse_resolution(self, resolution: str) -> tuple:
         """
-        Calculate window resolution based on aspect ratio.
+        Parse resolution string to width and height.
 
         Args:
-            aspect_ratio: Aspect ratio string (e.g., "16:9")
+            resolution: Resolution string (e.g., "1920x1080")
 
         Returns:
             Tuple of (width, height)
         """
         from utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
-        # Aspect ratio to resolution mapping (based on 720p height)
-        aspect_ratios = {
-            "16:9": (1280, 720),
-            "16:10": (1152, 720),
-            "4:3": (960, 720),
-            "21:9": (1680, 720)
-        }
-
-        return aspect_ratios.get(aspect_ratio, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        try:
+            width, height = resolution.split('x')
+            return (int(width), int(height))
+        except (ValueError, AttributeError):
+            # Fallback to default if parsing fails
+            return (SCREEN_WIDTH, SCREEN_HEIGHT)
 
 
 # Global settings manager instance
