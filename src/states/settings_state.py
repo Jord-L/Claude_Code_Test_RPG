@@ -119,7 +119,7 @@ class Slider:
             handle_x - self.x,
             self.track_height
         )
-        pygame.draw.rect(screen, UI_ACCENT_COLOR, filled_rect)
+        pygame.draw.rect(screen, UI_HIGHLIGHT_COLOR, filled_rect)
 
         # Handle
         handle_color = UI_BUTTON_HOVER if self.dragging else WHITE
@@ -446,11 +446,11 @@ class SettingsState(State):
         font = pygame.font.Font(None, 28)
 
         # Left column label
-        audio_label = font.render("Audio & Display", True, UI_ACCENT_COLOR)
+        audio_label = font.render("Audio & Display", True, UI_HIGHLIGHT_COLOR)
         screen.blit(audio_label, (200, 115))
 
         # Right column label
-        gameplay_label = font.render("Gameplay", True, UI_ACCENT_COLOR)
+        gameplay_label = font.render("Gameplay", True, UI_HIGHLIGHT_COLOR)
         screen.blit(gameplay_label, (700, 100))
 
         # Draw sliders
