@@ -38,7 +38,7 @@ class Slider:
         self.track_height = 4
         self.dragging = False
 
-        self.font = pygame.font.Font(None, 28)
+        self.font = pygame.font.Font(None, 24)
 
     def get_handle_x(self) -> int:
         """Get the X position of the slider handle."""
@@ -95,12 +95,12 @@ class Slider:
         """Render the slider."""
         # Label
         label_surface = self.font.render(self.label, True, WHITE)
-        screen.blit(label_surface, (self.x, self.y - 35))
+        screen.blit(label_surface, (self.x, self.y - 28))
 
         # Value display
         value_text = f"{int(self.value * 100)}%"
         value_surface = self.font.render(value_text, True, UI_TEXT_COLOR)
-        screen.blit(value_surface, (self.x + self.width + 20, self.y - 12))
+        screen.blit(value_surface, (self.x + self.width + 15, self.y - 10))
 
         # Track
         track_rect = pygame.Rect(
@@ -158,6 +158,43 @@ class ToggleButton(Button):
         self._callback(self.state)
 
 
+class CycleButton(Button):
+    """Button that cycles through multiple options."""
+
+    def __init__(self, x: int, y: int, width: int, height: int, label: str, options: list, initial_index: int, callback):
+        """
+        Initialize cycle button.
+
+        Args:
+            x: X position
+            y: Y position
+            width: Button width
+            height: Button height
+            label: Label text
+            options: List of option values
+            initial_index: Initial option index
+            callback: Callback function(new_value)
+        """
+        self.label = label
+        self.options = options
+        self.current_index = initial_index
+        self._callback = callback
+
+        # Initialize with current option text
+        text = f"{label}: {options[initial_index]}"
+        super().__init__(x, y, width, height, text, self._on_click)
+
+    def _on_click(self):
+        """Handle click - cycle to next option."""
+        self.current_index = (self.current_index + 1) % len(self.options)
+        self.text = f"{self.label}: {self.options[self.current_index]}"
+        self._callback(self.options[self.current_index])
+
+    def get_value(self):
+        """Get current selected value."""
+        return self.options[self.current_index]
+
+
 class SettingsState(State):
     """Settings menu for game configuration."""
 
@@ -167,13 +204,21 @@ class SettingsState(State):
         # Settings values
         self.music_volume = 0.7
         self.sfx_volume = 0.8
+        self.text_speed = 0.5
         self.fullscreen = False
+        self.battle_animations = True
+        self.auto_save = True
+        self.difficulty = "Normal"
 
         # UI elements
         self.title_text = None
         self.music_slider = None
         self.sfx_slider = None
+        self.text_speed_slider = None
         self.fullscreen_toggle = None
+        self.battle_animations_toggle = None
+        self.auto_save_toggle = None
+        self.difficulty_cycle = None
         self.back_button = None
 
         self._setup_ui()
@@ -183,18 +228,22 @@ class SettingsState(State):
         # Title
         self.title_text = CenteredText(
             x=SCREEN_WIDTH // 2,
-            y=80,
+            y=60,
             text="Settings",
-            font_size=64,
+            font_size=56,
             color=WHITE,
             centered=True
         )
 
+        # Left column (sliders)
+        left_x = 200
+        slider_width = 320
+
         # Music volume slider
         self.music_slider = Slider(
-            x=300,
-            y=200,
-            width=400,
+            x=left_x,
+            y=150,
+            width=slider_width,
             min_val=0.0,
             max_val=1.0,
             initial_val=self.music_volume,
@@ -203,31 +252,81 @@ class SettingsState(State):
 
         # SFX volume slider
         self.sfx_slider = Slider(
-            x=300,
-            y=300,
-            width=400,
+            x=left_x,
+            y=220,
+            width=slider_width,
             min_val=0.0,
             max_val=1.0,
             initial_val=self.sfx_volume,
             label="SFX Volume"
         )
 
+        # Text speed slider
+        self.text_speed_slider = Slider(
+            x=left_x,
+            y=290,
+            width=slider_width,
+            min_val=0.0,
+            max_val=1.0,
+            initial_val=self.text_speed,
+            label="Text Speed"
+        )
+
+        # Right column (toggles and cycles)
+        right_x = 700
+        button_width = 240
+        button_height = 45
+
         # Fullscreen toggle
         self.fullscreen_toggle = ToggleButton(
-            x=SCREEN_WIDTH // 2 - 100,
-            y=400,
-            width=200,
-            height=50,
+            x=right_x,
+            y=135,
+            width=button_width,
+            height=button_height,
             label="Fullscreen",
             initial_state=self.fullscreen,
             callback=self._on_fullscreen_toggle
         )
 
-        # Back button
+        # Battle animations toggle
+        self.battle_animations_toggle = ToggleButton(
+            x=right_x,
+            y=195,
+            width=button_width,
+            height=button_height,
+            label="Battle Animations",
+            initial_state=self.battle_animations,
+            callback=self._on_battle_animations_toggle
+        )
+
+        # Auto-save toggle
+        self.auto_save_toggle = ToggleButton(
+            x=right_x,
+            y=255,
+            width=button_width,
+            height=button_height,
+            label="Auto-Save",
+            initial_state=self.auto_save,
+            callback=self._on_auto_save_toggle
+        )
+
+        # Difficulty cycle button
+        self.difficulty_cycle = CycleButton(
+            x=right_x,
+            y=315,
+            width=button_width,
+            height=button_height,
+            label="Difficulty",
+            options=["Easy", "Normal", "Hard"],
+            initial_index=1,  # Start at Normal
+            callback=self._on_difficulty_change
+        )
+
+        # Back button (centered at bottom)
         self.back_button = Button(
-            x=SCREEN_WIDTH // 2 - 100,
-            y=SCREEN_HEIGHT - 100,
-            width=200,
+            x=SCREEN_WIDTH // 2 - 120,
+            y=SCREEN_HEIGHT - 80,
+            width=240,
             height=50,
             text="Back to Menu",
             callback=self._on_back
@@ -240,10 +339,32 @@ class SettingsState(State):
         # Note: Actual fullscreen toggle would require pygame.display.toggle_fullscreen()
         # or recreating the display surface, which we'll skip for now
 
+    def _on_battle_animations_toggle(self, enabled: bool):
+        """Handle battle animations toggle."""
+        print(f"Battle Animations: {'Enabled' if enabled else 'Disabled'}")
+        self.battle_animations = enabled
+
+    def _on_auto_save_toggle(self, enabled: bool):
+        """Handle auto-save toggle."""
+        print(f"Auto-Save: {'Enabled' if enabled else 'Disabled'}")
+        self.auto_save = enabled
+
+    def _on_difficulty_change(self, difficulty: str):
+        """Handle difficulty change."""
+        print(f"Difficulty changed to: {difficulty}")
+        self.difficulty = difficulty
+
     def _on_back(self):
         """Return to main menu."""
         print("Settings: Returning to main menu")
-        print(f"Final settings - Music: {int(self.music_volume * 100)}%, SFX: {int(self.sfx_volume * 100)}%, Fullscreen: {self.fullscreen}")
+        print(f"Final settings:")
+        print(f"  Music: {int(self.music_volume * 100)}%")
+        print(f"  SFX: {int(self.sfx_volume * 100)}%")
+        print(f"  Text Speed: {int(self.text_speed * 100)}%")
+        print(f"  Fullscreen: {self.fullscreen}")
+        print(f"  Battle Animations: {self.battle_animations}")
+        print(f"  Auto-Save: {self.auto_save}")
+        print(f"  Difficulty: {self.difficulty}")
         self.state_manager.change_state(STATE_MENU)
 
     def handle_event(self, event: pygame.event.Event):
@@ -265,10 +386,25 @@ class SettingsState(State):
             print(f"SFX volume: {int(self.sfx_volume * 100)}%")
             # TODO: Apply to actual SFX system when implemented
 
-        # Handle buttons
+        if self.text_speed_slider.handle_event(event):
+            self.text_speed = self.text_speed_slider.value
+            print(f"Text speed: {int(self.text_speed * 100)}%")
+
+        # Handle toggle buttons
         if self.fullscreen_toggle:
             self.fullscreen_toggle.handle_event(event)
 
+        if self.battle_animations_toggle:
+            self.battle_animations_toggle.handle_event(event)
+
+        if self.auto_save_toggle:
+            self.auto_save_toggle.handle_event(event)
+
+        # Handle cycle button
+        if self.difficulty_cycle:
+            self.difficulty_cycle.handle_event(event)
+
+        # Handle back button
         if self.back_button:
             self.back_button.handle_event(event)
 
@@ -276,6 +412,15 @@ class SettingsState(State):
         """Update state."""
         if self.fullscreen_toggle:
             self.fullscreen_toggle.update(dt)
+
+        if self.battle_animations_toggle:
+            self.battle_animations_toggle.update(dt)
+
+        if self.auto_save_toggle:
+            self.auto_save_toggle.update(dt)
+
+        if self.difficulty_cycle:
+            self.difficulty_cycle.update(dt)
 
         if self.back_button:
             self.back_button.update(dt)
@@ -288,6 +433,17 @@ class SettingsState(State):
         if self.title_text:
             self.title_text.render(screen)
 
+        # Draw column labels
+        font = pygame.font.Font(None, 28)
+
+        # Left column label
+        audio_label = font.render("Audio & Display", True, UI_ACCENT_COLOR)
+        screen.blit(audio_label, (200, 115))
+
+        # Right column label
+        gameplay_label = font.render("Gameplay", True, UI_ACCENT_COLOR)
+        screen.blit(gameplay_label, (700, 100))
+
         # Draw sliders
         if self.music_slider:
             self.music_slider.render(screen)
@@ -295,18 +451,32 @@ class SettingsState(State):
         if self.sfx_slider:
             self.sfx_slider.render(screen)
 
-        # Draw buttons
+        if self.text_speed_slider:
+            self.text_speed_slider.render(screen)
+
+        # Draw toggle buttons
         if self.fullscreen_toggle:
             self.fullscreen_toggle.render(screen)
 
+        if self.battle_animations_toggle:
+            self.battle_animations_toggle.render(screen)
+
+        if self.auto_save_toggle:
+            self.auto_save_toggle.render(screen)
+
+        # Draw cycle button
+        if self.difficulty_cycle:
+            self.difficulty_cycle.render(screen)
+
+        # Draw back button
         if self.back_button:
             self.back_button.render(screen)
 
         # Draw instructions
-        font = pygame.font.Font(None, 24)
-        instructions = "Use mouse to adjust sliders • ESC or Back button to return to menu"
-        text_surface = font.render(instructions, True, (150, 150, 150))
-        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 40))
+        inst_font = pygame.font.Font(None, 20)
+        instructions = "Use mouse to adjust settings • ESC or Back button to return to menu"
+        text_surface = inst_font.render(instructions, True, (150, 150, 150))
+        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 30))
         screen.blit(text_surface, text_rect)
 
     def startup(self, persistent):

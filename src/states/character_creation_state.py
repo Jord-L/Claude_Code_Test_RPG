@@ -431,10 +431,17 @@ class CharacterCreationState(State):
     def handle_event(self, event: pygame.event.Event):
         """
         Handle input events.
-        
+
         Args:
             event: Pygame event
         """
+        # ESC key - return to main menu
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                print("Character creation: ESC pressed - returning to main menu")
+                self.state_manager.change_state(STATE_MENU)
+                return
+
         # Handle text input for name
         if self.stage == "name" and self.input_active:
             if event.type == pygame.KEYDOWN:
