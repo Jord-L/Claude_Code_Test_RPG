@@ -201,6 +201,8 @@ class SettingsState(State):
     def __init__(self, game):
         super().__init__(game)
 
+        print("SettingsState: Initializing...")
+
         # Settings values
         self.music_volume = 0.7
         self.sfx_volume = 0.8
@@ -221,7 +223,14 @@ class SettingsState(State):
         self.difficulty_cycle = None
         self.back_button = None
 
-        self._setup_ui()
+        print("SettingsState: Setting up UI...")
+        try:
+            self._setup_ui()
+            print("SettingsState: UI setup complete!")
+        except Exception as e:
+            print(f"SettingsState: ERROR during UI setup: {e}")
+            import traceback
+            traceback.print_exc()
 
     def _setup_ui(self):
         """Set up UI elements."""
