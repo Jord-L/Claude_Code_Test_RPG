@@ -107,17 +107,18 @@ class MenuState(State):
         
         if option == "New Game":
             # Transition to character creation
-            # Note: CharacterCreationState must be registered in game.py first
             self.state_manager.change_state(STATE_CHAR_CREATION)
-            
+
         elif option == "Load Game":
-            # TODO: Transition to load game screen
-            print("Load Game not implemented yet")
-        
+            # Transition to load game screen
+            from utils.constants import STATE_LOAD_GAME
+            self.state_manager.change_state(STATE_LOAD_GAME)
+
         elif option == "Settings":
-            # TODO: Transition to settings screen
-            print("Settings not implemented yet")
-        
+            # Transition to settings screen
+            from utils.constants import STATE_SETTINGS
+            self.state_manager.change_state(STATE_SETTINGS)
+
         elif option == "Exit":
             # Exit the game
             import sys
