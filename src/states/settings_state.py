@@ -8,6 +8,7 @@ from states.state import State
 from ui.button import Button
 from ui.text_box import CenteredText
 from utils.constants import *
+from utils.settings_manager import get_settings_manager
 
 
 class Slider:
@@ -206,15 +207,19 @@ class SettingsState(State):
         # Current active tab
         self.active_tab = "Audio"  # Audio, Video, or Gameplay
 
-        # Settings values
-        self.music_volume = 0.7
-        self.sfx_volume = 0.8
-        self.text_speed = 0.5
-        self.fullscreen = False
-        self.aspect_ratio = "16:9"
-        self.battle_animations = True
-        self.auto_save = True
-        self.difficulty = "Normal"
+        # Get settings manager
+        self.settings_manager = get_settings_manager()
+
+        # Load current settings
+        settings = self.settings_manager.get_all()
+        self.music_volume = settings.get("music_volume", 0.7)
+        self.sfx_volume = settings.get("sfx_volume", 0.8)
+        self.text_speed = settings.get("text_speed", 0.5)
+        self.fullscreen = settings.get("fullscreen", False)
+        self.aspect_ratio = settings.get("aspect_ratio", "16:9")
+        self.battle_animations = settings.get("battle_animations", True)
+        self.auto_save = settings.get("auto_save", True)
+        self.difficulty = settings.get("difficulty", "Normal")
 
         # UI elements
         self.title_text = None
@@ -325,14 +330,21 @@ class SettingsState(State):
             callback=self._on_fullscreen_toggle
         )
 
+        # Determine initial aspect ratio index
+        aspect_ratio_options = ["16:9", "16:10", "4:3", "21:9"]
+        try:
+            aspect_ratio_index = aspect_ratio_options.index(self.aspect_ratio)
+        except ValueError:
+            aspect_ratio_index = 0  # Default to 16:9
+
         self.aspect_ratio_cycle = CycleButton(
             x=center_x - button_width // 2,
             y=content_y + vertical_spacing,
             width=button_width,
             height=button_height,
             label="Aspect Ratio",
-            options=["16:9", "16:10", "4:3", "21:9"],
-            initial_index=0,  # Start at 16:9
+            options=aspect_ratio_options,
+            initial_index=aspect_ratio_index,
             callback=self._on_aspect_ratio_change
         )
 
@@ -367,14 +379,21 @@ class SettingsState(State):
             callback=self._on_auto_save_toggle
         )
 
+        # Determine initial difficulty index
+        difficulty_options = ["Easy", "Normal", "Hard"]
+        try:
+            difficulty_index = difficulty_options.index(self.difficulty)
+        except ValueError:
+            difficulty_index = 1  # Default to Normal
+
         self.difficulty_cycle = CycleButton(
             x=center_x - button_width // 2,
             y=content_y + vertical_spacing * 3,
             width=button_width,
             height=button_height,
             label="Difficulty",
-            options=["Easy", "Normal", "Hard"],
-            initial_index=1,  # Start at Normal
+            options=difficulty_options,
+            initial_index=difficulty_index,
             callback=self._on_difficulty_change
         )
 
@@ -397,15 +416,38 @@ class SettingsState(State):
         """Handle fullscreen toggle."""
         print(f"Fullscreen: {'Enabled' if enabled else 'Disabled'}")
         self.fullscreen = enabled
-        # Note: Actual fullscreen toggle would require pygame.display.toggle_fullscreen()
-        # or recreating the display surface, which we'll skip for now
+
+        # Apply fullscreen immediately
+        try:
+            if enabled:
+                # Get current display info
+                display_info = pygame.display.Info()
+                self.game.screen = pygame.display.set_mode(
+                    (display_info.current_w, display_info.current_h),
+                    pygame.FULLSCREEN
+                )
+                print(f"Switched to fullscreen: {display_info.current_w}x{display_info.current_h}")
+            else:
+                # Return to windowed mode with current aspect ratio
+                width, height = self._calculate_resolution(self.aspect_ratio)
+                self.game.screen = pygame.display.set_mode((width, height))
+                print(f"Switched to windowed mode: {width}x{height}")
+        except Exception as e:
+            print(f"Error toggling fullscreen: {e}")
 
     def _on_aspect_ratio_change(self, aspect_ratio: str):
         """Handle aspect ratio change."""
         print(f"Aspect Ratio changed to: {aspect_ratio}")
         self.aspect_ratio = aspect_ratio
-        # Note: Actual aspect ratio change would require resizing the display
-        # or adjusting the viewport, which we'll skip for now
+
+        # Apply aspect ratio immediately (only if not in fullscreen)
+        if not self.fullscreen:
+            try:
+                width, height = self._calculate_resolution(aspect_ratio)
+                self.game.screen = pygame.display.set_mode((width, height))
+                print(f"Resolution changed to: {width}x{height} ({aspect_ratio})")
+            except Exception as e:
+                print(f"Error changing aspect ratio: {e}")
 
     def _on_battle_animations_toggle(self, enabled: bool):
         """Handle battle animations toggle."""
@@ -422,8 +464,42 @@ class SettingsState(State):
         print(f"Difficulty changed to: {difficulty}")
         self.difficulty = difficulty
 
+    def _calculate_resolution(self, aspect_ratio: str) -> tuple:
+        """
+        Calculate window resolution based on aspect ratio.
+
+        Args:
+            aspect_ratio: Aspect ratio string (e.g., "16:9")
+
+        Returns:
+            Tuple of (width, height)
+        """
+        # Aspect ratio to resolution mapping (based on 720p height)
+        aspect_ratios = {
+            "16:9": (1280, 720),
+            "16:10": (1152, 720),
+            "4:3": (960, 720),
+            "21:9": (1680, 720)
+        }
+
+        return aspect_ratios.get(aspect_ratio, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
     def _on_back(self):
         """Return to main menu."""
+        # Save all settings
+        settings = {
+            "music_volume": self.music_volume,
+            "sfx_volume": self.sfx_volume,
+            "text_speed": self.text_speed,
+            "fullscreen": self.fullscreen,
+            "aspect_ratio": self.aspect_ratio,
+            "battle_animations": self.battle_animations,
+            "auto_save": self.auto_save,
+            "difficulty": self.difficulty
+        }
+
+        self.settings_manager.save(settings)
+
         print("Settings: Returning to main menu")
         print(f"Final settings:")
         print(f"  Music: {int(self.music_volume * 100)}%")
@@ -434,6 +510,13 @@ class SettingsState(State):
         print(f"  Battle Animations: {self.battle_animations}")
         print(f"  Auto-Save: {self.auto_save}")
         print(f"  Difficulty: {self.difficulty}")
+
+        # Apply music volume
+        try:
+            pygame.mixer.music.set_volume(self.music_volume)
+        except Exception as e:
+            print(f"Could not set music volume: {e}")
+
         self.state_manager.change_state(STATE_MENU)
 
     def handle_event(self, event: pygame.event.Event):

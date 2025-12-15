@@ -9,6 +9,7 @@ from utils.constants import (
     BLACK, WHITE, STATE_MENU, STATE_CHAR_CREATION, STATE_SETTINGS, STATE_LOAD_GAME
 )
 from utils.logger import get_logger
+from utils.settings_manager import get_settings_manager
 from states.state_manager import StateManager
 from states.menu_state import MenuState
 from states.character_creation_state import CharacterCreationState
@@ -29,13 +30,23 @@ class Game:
         # Initialize Pygame
         self.logger.debug("Initializing Pygame...")
         pygame.init()
-        
-        # Create the game window
+
+        # Load settings
+        self.logger.debug("Loading game settings...")
+        self.settings_manager = get_settings_manager()
+        self.settings_manager.load()
+
+        # Create the game window (will be adjusted by settings)
         self.logger.debug(f"Creating game window ({SCREEN_WIDTH}x{SCREEN_HEIGHT})...")
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption(GAME_TITLE)
         self.logger.info(f"Game window created: {GAME_TITLE}")
-        self.logger.info(f"Resolution: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
+        self.logger.info(f"Initial resolution: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
+
+        # Apply saved settings
+        self.logger.debug("Applying saved settings...")
+        self.settings_manager.apply_to_game(self)
+        self.logger.info("Settings applied")
         
         # Clock for FPS control
         self.clock = pygame.time.Clock()
