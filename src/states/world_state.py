@@ -149,9 +149,9 @@ class WorldState(State):
 
         # Initialize equipment slots for all party members
         equipment_manager = EquipmentManager()
-        equipment_manager.initialize_character_equipment(player)
+        equipment_manager.get_or_create_slots(player)
         for member in player.party_manager.get_all_members():
-            equipment_manager.initialize_character_equipment(member)
+            equipment_manager.get_or_create_slots(member)
 
         # Set inventory and equipment menus
         self.inventory_menu.set_inventory(player.inventory, player)
