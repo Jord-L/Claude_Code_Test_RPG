@@ -211,6 +211,7 @@ class SettingsState(State):
         self.sfx_volume = 0.8
         self.text_speed = 0.5
         self.fullscreen = False
+        self.aspect_ratio = "16:9"
         self.battle_animations = True
         self.auto_save = True
         self.difficulty = "Normal"
@@ -222,6 +223,7 @@ class SettingsState(State):
         self.sfx_slider = None
         self.text_speed_slider = None
         self.fullscreen_toggle = None
+        self.aspect_ratio_cycle = None
         self.battle_animations_toggle = None
         self.auto_save_toggle = None
         self.difficulty_cycle = None
@@ -312,7 +314,7 @@ class SettingsState(State):
             label="SFX Volume"
         )
 
-        # VIDEO TAB - Fullscreen toggle
+        # VIDEO TAB - Fullscreen toggle and aspect ratio
         self.fullscreen_toggle = ToggleButton(
             x=center_x - button_width // 2,
             y=content_y,
@@ -321,6 +323,17 @@ class SettingsState(State):
             label="Fullscreen",
             initial_state=self.fullscreen,
             callback=self._on_fullscreen_toggle
+        )
+
+        self.aspect_ratio_cycle = CycleButton(
+            x=center_x - button_width // 2,
+            y=content_y + vertical_spacing,
+            width=button_width,
+            height=button_height,
+            label="Aspect Ratio",
+            options=["16:9", "16:10", "4:3", "21:9"],
+            initial_index=0,  # Start at 16:9
+            callback=self._on_aspect_ratio_change
         )
 
         # GAMEPLAY TAB - Text speed, battle animations, auto-save, difficulty
@@ -365,10 +378,10 @@ class SettingsState(State):
             callback=self._on_difficulty_change
         )
 
-        # Back button (centered at bottom)
+        # Back button (centered at bottom, with more clearance)
         self.back_button = Button(
             x=SCREEN_WIDTH // 2 - 120,
-            y=SCREEN_HEIGHT - 80,
+            y=SCREEN_HEIGHT - 110,
             width=240,
             height=50,
             text="Back to Menu",
@@ -386,6 +399,13 @@ class SettingsState(State):
         self.fullscreen = enabled
         # Note: Actual fullscreen toggle would require pygame.display.toggle_fullscreen()
         # or recreating the display surface, which we'll skip for now
+
+    def _on_aspect_ratio_change(self, aspect_ratio: str):
+        """Handle aspect ratio change."""
+        print(f"Aspect Ratio changed to: {aspect_ratio}")
+        self.aspect_ratio = aspect_ratio
+        # Note: Actual aspect ratio change would require resizing the display
+        # or adjusting the viewport, which we'll skip for now
 
     def _on_battle_animations_toggle(self, enabled: bool):
         """Handle battle animations toggle."""
@@ -410,6 +430,7 @@ class SettingsState(State):
         print(f"  SFX: {int(self.sfx_volume * 100)}%")
         print(f"  Text Speed: {int(self.text_speed * 100)}%")
         print(f"  Fullscreen: {self.fullscreen}")
+        print(f"  Aspect Ratio: {self.aspect_ratio}")
         print(f"  Battle Animations: {self.battle_animations}")
         print(f"  Auto-Save: {self.auto_save}")
         print(f"  Difficulty: {self.difficulty}")
@@ -443,6 +464,9 @@ class SettingsState(State):
             if self.fullscreen_toggle:
                 self.fullscreen_toggle.handle_event(event)
 
+            if self.aspect_ratio_cycle:
+                self.aspect_ratio_cycle.handle_event(event)
+
         elif self.active_tab == "Gameplay":
             # Gameplay settings
             if self.text_speed_slider.handle_event(event):
@@ -472,6 +496,9 @@ class SettingsState(State):
         if self.active_tab == "Video":
             if self.fullscreen_toggle:
                 self.fullscreen_toggle.update(dt)
+
+            if self.aspect_ratio_cycle:
+                self.aspect_ratio_cycle.update(dt)
 
         elif self.active_tab == "Gameplay":
             if self.battle_animations_toggle:
@@ -522,6 +549,8 @@ class SettingsState(State):
             # Video settings
             if self.fullscreen_toggle:
                 self.fullscreen_toggle.render(screen)
+            if self.aspect_ratio_cycle:
+                self.aspect_ratio_cycle.render(screen)
 
         elif self.active_tab == "Gameplay":
             # Gameplay settings
