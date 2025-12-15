@@ -203,6 +203,9 @@ class SettingsState(State):
 
         print("SettingsState: Initializing...")
 
+        # Current active tab
+        self.active_tab = "Audio"  # Audio, Video, or Gameplay
+
         # Settings values
         self.music_volume = 0.7
         self.sfx_volume = 0.8
@@ -214,6 +217,7 @@ class SettingsState(State):
 
         # UI elements
         self.title_text = None
+        self.tab_buttons = {}  # Tab switching buttons
         self.music_slider = None
         self.sfx_slider = None
         self.text_speed_slider = None
@@ -244,14 +248,53 @@ class SettingsState(State):
             centered=True
         )
 
-        # Left column (sliders)
-        left_x = 200
-        slider_width = 320
+        # Tab buttons
+        tab_y = 130
+        tab_width = 160
+        tab_height = 45
+        tab_spacing = 20
+        total_tab_width = (tab_width * 3) + (tab_spacing * 2)
+        start_x = (SCREEN_WIDTH - total_tab_width) // 2
 
-        # Music volume slider
+        self.tab_buttons = {
+            "Audio": Button(
+                x=start_x,
+                y=tab_y,
+                width=tab_width,
+                height=tab_height,
+                text="Audio",
+                callback=lambda: self._switch_tab("Audio")
+            ),
+            "Video": Button(
+                x=start_x + tab_width + tab_spacing,
+                y=tab_y,
+                width=tab_width,
+                height=tab_height,
+                text="Video",
+                callback=lambda: self._switch_tab("Video")
+            ),
+            "Gameplay": Button(
+                x=start_x + (tab_width + tab_spacing) * 2,
+                y=tab_y,
+                width=tab_width,
+                height=tab_height,
+                text="Gameplay",
+                callback=lambda: self._switch_tab("Gameplay")
+            )
+        }
+
+        # Settings position (centered)
+        center_x = SCREEN_WIDTH // 2
+        content_y = 220
+        slider_width = 400
+        button_width = 300
+        button_height = 50
+        vertical_spacing = 80
+
+        # AUDIO TAB - Music and SFX volume sliders
         self.music_slider = Slider(
-            x=left_x,
-            y=150,
+            x=center_x - slider_width // 2,
+            y=content_y,
             width=slider_width,
             min_val=0.0,
             max_val=1.0,
@@ -259,10 +302,9 @@ class SettingsState(State):
             label="Music Volume"
         )
 
-        # SFX volume slider
         self.sfx_slider = Slider(
-            x=left_x,
-            y=220,
+            x=center_x - slider_width // 2,
+            y=content_y + vertical_spacing,
             width=slider_width,
             min_val=0.0,
             max_val=1.0,
@@ -270,26 +312,10 @@ class SettingsState(State):
             label="SFX Volume"
         )
 
-        # Text speed slider
-        self.text_speed_slider = Slider(
-            x=left_x,
-            y=290,
-            width=slider_width,
-            min_val=0.0,
-            max_val=1.0,
-            initial_val=self.text_speed,
-            label="Text Speed"
-        )
-
-        # Right column (toggles and cycles)
-        right_x = 700
-        button_width = 240
-        button_height = 45
-
-        # Fullscreen toggle
+        # VIDEO TAB - Fullscreen toggle
         self.fullscreen_toggle = ToggleButton(
-            x=right_x,
-            y=135,
+            x=center_x - button_width // 2,
+            y=content_y,
             width=button_width,
             height=button_height,
             label="Fullscreen",
@@ -297,10 +323,20 @@ class SettingsState(State):
             callback=self._on_fullscreen_toggle
         )
 
-        # Battle animations toggle
+        # GAMEPLAY TAB - Text speed, battle animations, auto-save, difficulty
+        self.text_speed_slider = Slider(
+            x=center_x - slider_width // 2,
+            y=content_y,
+            width=slider_width,
+            min_val=0.0,
+            max_val=1.0,
+            initial_val=self.text_speed,
+            label="Text Speed"
+        )
+
         self.battle_animations_toggle = ToggleButton(
-            x=right_x,
-            y=195,
+            x=center_x - button_width // 2,
+            y=content_y + vertical_spacing,
             width=button_width,
             height=button_height,
             label="Battle Animations",
@@ -308,10 +344,9 @@ class SettingsState(State):
             callback=self._on_battle_animations_toggle
         )
 
-        # Auto-save toggle
         self.auto_save_toggle = ToggleButton(
-            x=right_x,
-            y=255,
+            x=center_x - button_width // 2,
+            y=content_y + vertical_spacing * 2,
             width=button_width,
             height=button_height,
             label="Auto-Save",
@@ -319,10 +354,9 @@ class SettingsState(State):
             callback=self._on_auto_save_toggle
         )
 
-        # Difficulty cycle button
         self.difficulty_cycle = CycleButton(
-            x=right_x,
-            y=315,
+            x=center_x - button_width // 2,
+            y=content_y + vertical_spacing * 3,
             width=button_width,
             height=button_height,
             label="Difficulty",
@@ -340,6 +374,11 @@ class SettingsState(State):
             text="Back to Menu",
             callback=self._on_back
         )
+
+    def _switch_tab(self, tab_name: str):
+        """Switch to a different settings tab."""
+        print(f"Switching to {tab_name} tab")
+        self.active_tab = tab_name
 
     def _on_fullscreen_toggle(self, enabled: bool):
         """Handle fullscreen toggle."""
@@ -384,53 +423,67 @@ class SettingsState(State):
                 self._on_back()
                 return
 
-        # Handle sliders
-        if self.music_slider.handle_event(event):
-            self.music_volume = self.music_slider.value
-            print(f"Music volume: {int(self.music_volume * 100)}%")
-            # TODO: Apply to actual music system when implemented
+        # Handle tab buttons
+        for tab_button in self.tab_buttons.values():
+            tab_button.handle_event(event)
 
-        if self.sfx_slider.handle_event(event):
-            self.sfx_volume = self.sfx_slider.value
-            print(f"SFX volume: {int(self.sfx_volume * 100)}%")
-            # TODO: Apply to actual SFX system when implemented
+        # Handle settings based on active tab
+        if self.active_tab == "Audio":
+            # Audio sliders
+            if self.music_slider.handle_event(event):
+                self.music_volume = self.music_slider.value
+                print(f"Music volume: {int(self.music_volume * 100)}%")
 
-        if self.text_speed_slider.handle_event(event):
-            self.text_speed = self.text_speed_slider.value
-            print(f"Text speed: {int(self.text_speed * 100)}%")
+            if self.sfx_slider.handle_event(event):
+                self.sfx_volume = self.sfx_slider.value
+                print(f"SFX volume: {int(self.sfx_volume * 100)}%")
 
-        # Handle toggle buttons
-        if self.fullscreen_toggle:
-            self.fullscreen_toggle.handle_event(event)
+        elif self.active_tab == "Video":
+            # Video settings
+            if self.fullscreen_toggle:
+                self.fullscreen_toggle.handle_event(event)
 
-        if self.battle_animations_toggle:
-            self.battle_animations_toggle.handle_event(event)
+        elif self.active_tab == "Gameplay":
+            # Gameplay settings
+            if self.text_speed_slider.handle_event(event):
+                self.text_speed = self.text_speed_slider.value
+                print(f"Text speed: {int(self.text_speed * 100)}%")
 
-        if self.auto_save_toggle:
-            self.auto_save_toggle.handle_event(event)
+            if self.battle_animations_toggle:
+                self.battle_animations_toggle.handle_event(event)
 
-        # Handle cycle button
-        if self.difficulty_cycle:
-            self.difficulty_cycle.handle_event(event)
+            if self.auto_save_toggle:
+                self.auto_save_toggle.handle_event(event)
 
-        # Handle back button
+            if self.difficulty_cycle:
+                self.difficulty_cycle.handle_event(event)
+
+        # Handle back button (always active)
         if self.back_button:
             self.back_button.handle_event(event)
 
     def update(self, dt: float):
         """Update state."""
-        if self.fullscreen_toggle:
-            self.fullscreen_toggle.update(dt)
+        # Update tab buttons
+        for tab_button in self.tab_buttons.values():
+            tab_button.update(dt)
 
-        if self.battle_animations_toggle:
-            self.battle_animations_toggle.update(dt)
+        # Update settings based on active tab
+        if self.active_tab == "Video":
+            if self.fullscreen_toggle:
+                self.fullscreen_toggle.update(dt)
 
-        if self.auto_save_toggle:
-            self.auto_save_toggle.update(dt)
+        elif self.active_tab == "Gameplay":
+            if self.battle_animations_toggle:
+                self.battle_animations_toggle.update(dt)
 
-        if self.difficulty_cycle:
-            self.difficulty_cycle.update(dt)
+            if self.auto_save_toggle:
+                self.auto_save_toggle.update(dt)
 
+            if self.difficulty_cycle:
+                self.difficulty_cycle.update(dt)
+
+        # Always update back button
         if self.back_button:
             self.back_button.update(dt)
 
@@ -442,42 +495,46 @@ class SettingsState(State):
         if self.title_text:
             self.title_text.render(screen)
 
-        # Draw column labels
-        font = pygame.font.Font(None, 28)
+        # Draw tab buttons with active indicator
+        for tab_name, tab_button in self.tab_buttons.items():
+            # Highlight active tab
+            if tab_name == self.active_tab:
+                # Draw golden highlight border around active tab
+                highlight_rect = pygame.Rect(
+                    tab_button.rect.x - 3,
+                    tab_button.rect.y - 3,
+                    tab_button.rect.width + 6,
+                    tab_button.rect.height + 6
+                )
+                pygame.draw.rect(screen, UI_HIGHLIGHT_COLOR, highlight_rect, 3)
 
-        # Left column label
-        audio_label = font.render("Audio & Display", True, UI_HIGHLIGHT_COLOR)
-        screen.blit(audio_label, (200, 115))
+            tab_button.render(screen)
 
-        # Right column label
-        gameplay_label = font.render("Gameplay", True, UI_HIGHLIGHT_COLOR)
-        screen.blit(gameplay_label, (700, 100))
+        # Render settings based on active tab
+        if self.active_tab == "Audio":
+            # Audio settings
+            if self.music_slider:
+                self.music_slider.render(screen)
+            if self.sfx_slider:
+                self.sfx_slider.render(screen)
 
-        # Draw sliders
-        if self.music_slider:
-            self.music_slider.render(screen)
+        elif self.active_tab == "Video":
+            # Video settings
+            if self.fullscreen_toggle:
+                self.fullscreen_toggle.render(screen)
 
-        if self.sfx_slider:
-            self.sfx_slider.render(screen)
+        elif self.active_tab == "Gameplay":
+            # Gameplay settings
+            if self.text_speed_slider:
+                self.text_speed_slider.render(screen)
+            if self.battle_animations_toggle:
+                self.battle_animations_toggle.render(screen)
+            if self.auto_save_toggle:
+                self.auto_save_toggle.render(screen)
+            if self.difficulty_cycle:
+                self.difficulty_cycle.render(screen)
 
-        if self.text_speed_slider:
-            self.text_speed_slider.render(screen)
-
-        # Draw toggle buttons
-        if self.fullscreen_toggle:
-            self.fullscreen_toggle.render(screen)
-
-        if self.battle_animations_toggle:
-            self.battle_animations_toggle.render(screen)
-
-        if self.auto_save_toggle:
-            self.auto_save_toggle.render(screen)
-
-        # Draw cycle button
-        if self.difficulty_cycle:
-            self.difficulty_cycle.render(screen)
-
-        # Draw back button
+        # Draw back button (always visible)
         if self.back_button:
             self.back_button.render(screen)
 
