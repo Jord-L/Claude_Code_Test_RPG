@@ -140,23 +140,22 @@ class LoadGameState(State):
                 centered=True
             )
         else:
-            # Create buttons for each save slot
+            # Create buttons for ALL save slots (show empty ones too)
             button_width = 600
             button_height = 60
             start_y = 200
             spacing = 80
 
             for i, save_data in enumerate(self.save_slots):
-                if save_data.get("exists", False):
-                    button = SaveSlotButton(
-                        x=SCREEN_WIDTH // 2 - button_width // 2,
-                        y=start_y + (i * spacing),
-                        width=button_width,
-                        height=button_height,
-                        save_data=save_data,
-                        callback=lambda sd=save_data: self._on_load_save(sd)
-                    )
-                    self.save_buttons.append(button)
+                button = SaveSlotButton(
+                    x=SCREEN_WIDTH // 2 - button_width // 2,
+                    y=start_y + (i * spacing),
+                    width=button_width,
+                    height=button_height,
+                    save_data=save_data,
+                    callback=lambda sd=save_data: self._on_load_save(sd)
+                )
+                self.save_buttons.append(button)
 
         # Back button
         self.back_button = Button(
@@ -175,6 +174,11 @@ class LoadGameState(State):
         Args:
             save_data: Dictionary with save file information
         """
+        # Check if slot is empty
+        if not save_data.get('exists', False):
+            print(f"Slot {save_data['slot']} is empty - cannot load")
+            return
+
         slot = save_data['slot']
         print(f"\n{'='*60}")
         print(f"LOADING SAVE FILE: Slot {slot}")
