@@ -411,13 +411,27 @@ class CharacterCreationState(State):
         print(f"   Level: {player.level}")
         print(f"   Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
 
-        # Save the character to save slot 1
+        # Save the character to next available slot
         print(f"\n💾 Saving character to save file...")
         save_manager = get_save_manager()
         character_data = player.to_dict()
 
-        if save_manager.save_game(character_data, slot=1):
-            print(f"✓ Character saved successfully!")
+        # Find first available slot
+        all_saves = save_manager.get_all_saves()
+        save_slot = None
+        for save_info in all_saves:
+            if not save_info['exists']:
+                save_slot = save_info['slot']
+                break
+
+        # If all slots are full, use slot 1 as fallback
+        if save_slot is None:
+            print(f"⚠ All save slots are full! Overwriting slot 1...")
+            save_slot = 1
+
+        print(f"   Using save slot {save_slot}")
+        if save_manager.save_game(character_data, slot=save_slot):
+            print(f"✓ Character saved successfully to slot {save_slot}!")
         else:
             print(f"✗ Failed to save character (game will continue)")
 

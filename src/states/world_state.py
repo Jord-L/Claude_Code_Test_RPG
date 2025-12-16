@@ -18,6 +18,7 @@ from ui.party_menu import PartyMenu
 from ui.inventory_menu import InventoryMenu
 from ui.equipment_menu import EquipmentMenu
 from ui.travel_menu import TravelMenu
+from ui.button import Button
 from utils.party_helpers import create_starter_crew
 from utils.item_helpers import add_starter_items
 from utils.constants import *
@@ -69,6 +70,31 @@ class WorldState(State):
         self.travel_menu = TravelMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.travel_menu.on_travel = self._on_travel_selected
         self.travel_menu.on_close = self._on_travel_menu_close
+
+        # Pause menu buttons
+        button_width = 300
+        button_height = 50
+        button_spacing = 20
+        center_x = SCREEN_WIDTH // 2 - button_width // 2
+        start_y = SCREEN_HEIGHT // 2 - 50
+
+        self.pause_resume_button = Button(
+            x=center_x,
+            y=start_y,
+            width=button_width,
+            height=button_height,
+            text="Resume",
+            callback=self._on_resume
+        )
+
+        self.pause_menu_button = Button(
+            x=center_x,
+            y=start_y + button_height + button_spacing,
+            width=button_width,
+            height=button_height,
+            text="Back to Main Menu",
+            callback=self._on_back_to_menu
+        )
 
         # Debug
         self.show_debug = True
@@ -261,20 +287,27 @@ class WorldState(State):
                 print("Manual battle trigger!")
                 self.battle_triggered = True
 
-        # Pass input to player controller
-        if not self.paused:
+        # Handle pause menu buttons when paused
+        if self.paused:
+            self.pause_resume_button.handle_event(event)
+            self.pause_menu_button.handle_event(event)
+        else:
+            # Pass input to player controller only when not paused
             self.player_controller.handle_event(event)
     
     def update(self, dt):
         """
         Update world state.
-        
+
         Args:
             dt: Delta time in seconds
         """
         if self.paused:
+            # Update pause menu buttons
+            self.pause_resume_button.update(dt)
+            self.pause_menu_button.update(dt)
             return
-        
+
         # Update player
         event = self.player_controller.update(dt)
         
@@ -427,11 +460,20 @@ class WorldState(State):
         pause_y = SCREEN_HEIGHT // 3
         surface.blit(pause_text, (pause_x, pause_y))
 
-        # Resume instruction
-        resume_text = self.font.render("Press ESC to resume", True, LIGHT_GRAY)
-        resume_x = (SCREEN_WIDTH - resume_text.get_width()) // 2
-        resume_y = pause_y + 100
-        surface.blit(resume_text, (resume_x, resume_y))
+        # Render pause menu buttons
+        self.pause_resume_button.render(surface)
+        self.pause_menu_button.render(surface)
+
+    def _on_resume(self):
+        """Resume game from pause menu."""
+        self.paused = False
+        print("Game resumed")
+
+    def _on_back_to_menu(self):
+        """Return to main menu from pause menu."""
+        print("Returning to main menu...")
+        self.paused = False
+        self.state_manager.change_state(STATE_MENU)
 
     def _on_party_menu_close(self):
         """Callback when party menu is closed."""
