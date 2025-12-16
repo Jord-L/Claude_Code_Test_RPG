@@ -1,8 +1,564 @@
 {
   "type": "Logia",
   "description": "Elemental intangibility Devil Fruits - most powerful type",
-  "fruits": [],
-  "total_count": 0,
+  "fruits": [
+    {
+      "id": "moku_moku",
+      "name": "Moku Moku no Mi",
+      "translation": "Smoke-Smoke Fruit",
+      "element": "Smoke",
+      "description": "Allows the user to create, control, and transform into smoke. Can trap enemies and create smokescreens.",
+      "rarity": "Legendary",
+      "starting_available": true,
+      "canon_user": "Smoker",
+      "intangibility": true,
+      "stat_bonuses": {
+        "speed": 20,
+        "defense": 15
+      },
+      "abilities": [
+        {
+          "name": "White Out",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Create a thick smokescreen that reduces enemy accuracy",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Accuracy Down -30%"]
+        },
+        {
+          "name": "White Snake",
+          "level_required": 3,
+          "ap_cost": 20,
+          "cooldown": 1,
+          "description": "Launch smoke tendrils to bind and damage enemies",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Bind", "Medium Damage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Haki"],
+      "strengths": ["Intangibility to non-Haki attacks", "Can disperse and reform", "Area control"],
+      "special_mechanics": {
+        "intangibility_evasion": 85,
+        "weakness_multiplier": 2.0,
+        "environmental_synergy": "Smoke can be used to fill rooms and obscure vision"
+      },
+      "mastery_bonuses": {
+        "level_3": "Smoke attacks deal 20% more damage",
+        "level_5": "Can maintain smokescreen for 2 turns",
+        "level_7": "Enhanced intangibility - 95% evasion",
+        "level_10_awakening": "Environmental Smoke Domination - control all smoke in area"
+      }
+    },
+    {
+      "id": "mera_mera",
+      "name": "Mera Mera no Mi",
+      "translation": "Flame-Flame Fruit",
+      "element": "Fire",
+      "description": "Allows the user to create, control, and transform into fire. One of the most powerful offensive Logia fruits.",
+      "rarity": "Legendary",
+      "starting_available": true,
+      "canon_user": "Portgas D. Ace, Sabo",
+      "intangibility": true,
+      "stat_bonuses": {
+        "attack": 30,
+        "speed": 20
+      },
+      "abilities": [
+        {
+          "name": "Fire Fist",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 0,
+          "description": "Launch a powerful fist of flames at the enemy",
+          "damage_type": "Elemental",
+          "target": "Single",
+          "effects": ["Heavy Fire Damage", "Burn 10%"]
+        },
+        {
+          "name": "Flame Pillar",
+          "level_required": 5,
+          "ap_cost": 35,
+          "cooldown": 2,
+          "description": "Create massive pillars of fire to engulf multiple enemies",
+          "damage_type": "Elemental",
+          "target": "Multi",
+          "effects": ["Massive Fire Damage", "Burn 15%"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Haki", "Magma (Magu Magu)"],
+      "strengths": ["Intangibility to non-Haki attacks", "Extremely high offensive power", "Can fly using fire propulsion"],
+      "special_mechanics": {
+        "intangibility_evasion": 90,
+        "weakness_multiplier": 2.0,
+        "environmental_synergy": "Fire attacks stronger in hot/dry areas, weaker in rain/water"
+      },
+      "mastery_bonuses": {
+        "level_3": "Fire attacks ignore 20% of enemy defense",
+        "level_5": "Can create fire walls for protection",
+        "level_7": "Enhanced intangibility and flight speed",
+        "level_10_awakening": "Great Flame Emperor - create and control massive fire constructs"
+      }
+    },
+    {
+      "id": "suna_suna",
+      "name": "Suna Suna no Mi",
+      "translation": "Sand-Sand Fruit",
+      "element": "Sand",
+      "description": "Allows the user to create, control, and transform into sand. Can absorb moisture and create sandstorms.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Crocodile",
+      "intangibility": true,
+      "stat_bonuses": {
+        "attack": 25,
+        "defense": 20
+      },
+      "abilities": [
+        {
+          "name": "Desert Spada",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 1,
+          "description": "Create a blade of sand to slice through enemies",
+          "damage_type": "Elemental",
+          "target": "Single",
+          "effects": ["Heavy Sand Damage"]
+        },
+        {
+          "name": "Ground Death",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Absorb all moisture from enemies, causing extreme dehydration",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Massive Damage", "Drain HP"]
+        }
+      ],
+      "weaknesses": ["Water (solidifies sand)", "Seastone", "Haki", "Liquids"],
+      "strengths": ["Intangibility to non-Haki/non-liquid attacks", "Can absorb moisture", "Desert environment mastery"],
+      "special_mechanics": {
+        "intangibility_evasion": 90,
+        "weakness_multiplier": 3.0,
+        "environmental_synergy": "Extremely powerful in deserts, vulnerable when wet"
+      },
+      "mastery_bonuses": {
+        "level_3": "Can create quicksand traps",
+        "level_5": "Moisture absorption heals user",
+        "level_7": "Enhanced sand manipulation range",
+        "level_10_awakening": "Desert Desertification - transform surroundings into desert"
+      }
+    },
+    {
+      "id": "goro_goro",
+      "name": "Goro Goro no Mi",
+      "translation": "Rumble-Rumble Fruit",
+      "element": "Lightning",
+      "description": "Allows the user to create, control, and transform into lightning. Considered one of the most powerful Devil Fruits.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Enel",
+      "intangibility": true,
+      "stat_bonuses": {
+        "attack": 35,
+        "speed": 40
+      },
+      "abilities": [
+        {
+          "name": "El Thor",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 1,
+          "description": "Strike enemies with a massive lightning bolt from above",
+          "damage_type": "Elemental",
+          "target": "Single",
+          "effects": ["Extreme Lightning Damage", "Paralysis 30%"]
+        },
+        {
+          "name": "Raigo",
+          "level_required": 8,
+          "ap_cost": 50,
+          "cooldown": 5,
+          "description": "Create a massive sphere of lightning to devastate the battlefield",
+          "damage_type": "Elemental",
+          "target": "All",
+          "effects": ["Catastrophic Lightning Damage", "Paralysis 50%"]
+        }
+      ],
+      "weaknesses": ["Rubber (complete immunity)", "Seastone", "Haki"],
+      "strengths": ["Intangibility to non-Haki/non-rubber attacks", "Lightning speed movement", "Extreme offensive power", "Can travel through conductive materials"],
+      "special_mechanics": {
+        "intangibility_evasion": 95,
+        "weakness_multiplier": 0.0,
+        "environmental_synergy": "Can restart heart if stopped, enhanced power in storms"
+      },
+      "mastery_bonuses": {
+        "level_3": "Lightning attacks have 40% paralysis chance",
+        "level_5": "Can move at lightning speed in short bursts",
+        "level_7": "Enhanced Mantra/Observation Haki-like sensing",
+        "level_10_awakening": "200 Million Volt Amaru - transform into massive lightning god form"
+      }
+    },
+    {
+      "id": "hie_hie",
+      "name": "Hie Hie no Mi",
+      "translation": "Ice-Ice Fruit",
+      "element": "Ice",
+      "description": "Allows the user to create, control, and transform into ice. Can freeze anything including the ocean itself.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Kuzan (Aokiji)",
+      "intangibility": true,
+      "stat_bonuses": {
+        "attack": 28,
+        "defense": 25
+      },
+      "abilities": [
+        {
+          "name": "Ice Saber",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 0,
+          "description": "Create a sword of ice to strike enemies",
+          "damage_type": "Elemental",
+          "target": "Single",
+          "effects": ["Heavy Ice Damage", "Freeze 20%"]
+        },
+        {
+          "name": "Ice Age",
+          "level_required": 7,
+          "ap_cost": 45,
+          "cooldown": 4,
+          "description": "Freeze the entire battlefield in ice",
+          "damage_type": "Elemental",
+          "target": "All",
+          "effects": ["Massive Ice Damage", "Freeze 40%", "Speed Down"]
+        }
+      ],
+      "weaknesses": ["Fire/Heat", "Seastone", "Haki"],
+      "strengths": ["Intangibility to non-Haki attacks", "Can freeze ocean", "Create ice constructs", "Temperature immunity"],
+      "special_mechanics": {
+        "intangibility_evasion": 90,
+        "weakness_multiplier": 2.0,
+        "environmental_synergy": "Can freeze water to create platforms, stronger in cold"
+      },
+      "mastery_bonuses": {
+        "level_3": "Ice attacks slow enemies for 2 turns",
+        "level_5": "Can freeze projectiles and attacks",
+        "level_7": "Enhanced intangibility and ice creation speed",
+        "level_10_awakening": "Ice Time Capsule - freeze time itself in localized areas"
+      }
+    },
+    {
+      "id": "yami_yami",
+      "name": "Yami Yami no Mi",
+      "translation": "Dark-Dark Fruit",
+      "element": "Darkness",
+      "description": "Allows the user to create, control, and transform into darkness. Unique ability to nullify other Devil Fruit powers and absorb attacks.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Marshall D. Teach (Blackbeard)",
+      "intangibility": false,
+      "stat_bonuses": {
+        "attack": 30,
+        "defense": -10
+      },
+      "abilities": [
+        {
+          "name": "Black Hole",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 2,
+          "description": "Create a vortex of darkness that pulls in enemies",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Heavy Damage", "Pull Effect", "Cannot Dodge"]
+        },
+        {
+          "name": "Liberation",
+          "level_required": 5,
+          "ap_cost": 35,
+          "cooldown": 3,
+          "description": "Release everything absorbed by darkness as a devastating attack",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Extreme Variable Damage"]
+        }
+      ],
+      "weaknesses": ["Takes DOUBLE damage from all sources", "Seastone", "Haki"],
+      "strengths": ["Can nullify Devil Fruit powers on touch", "Absorbs attacks including intangible ones", "Infinite gravity pull"],
+      "special_mechanics": {
+        "intangibility_evasion": 0,
+        "weakness_multiplier": 2.0,
+        "environmental_synergy": "Absorbs light and attacks, stronger in darkness",
+        "special_ability": "Devil Fruit Nullification - can disable enemy Devil Fruit on contact"
+      },
+      "mastery_bonuses": {
+        "level_3": "Can absorb and release smaller attacks",
+        "level_5": "Darkness pull range increased",
+        "level_7": "Can absorb one attack per turn without damage",
+        "level_10_awakening": "Kurouzu - massive black hole that consumes everything"
+      }
+    },
+    {
+      "id": "pika_pika",
+      "name": "Pika Pika no Mi",
+      "translation": "Glint-Glint Fruit",
+      "element": "Light",
+      "description": "Allows the user to create, control, and transform into light. Grants light-speed movement and powerful laser attacks.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Borsalino (Kizaru)",
+      "intangibility": true,
+      "stat_bonuses": {
+        "attack": 32,
+        "speed": 50
+      },
+      "abilities": [
+        {
+          "name": "Light Speed Kick",
+          "level_required": 1,
+          "ap_cost": 22,
+          "cooldown": 0,
+          "description": "Move at light speed and deliver a devastating kick",
+          "damage_type": "Elemental",
+          "target": "Single",
+          "effects": ["Extreme Physical Damage", "Always Hits First"]
+        },
+        {
+          "name": "Yasakani Sacred Jewel",
+          "level_required": 6,
+          "ap_cost": 40,
+          "cooldown": 3,
+          "description": "Fire countless light projectiles at enemies",
+          "damage_type": "Elemental",
+          "target": "All",
+          "effects": ["Massive Light Damage", "Multiple Hits"]
+        }
+      ],
+      "weaknesses": ["Seastone", "Haki", "Requires reflective surfaces for some techniques"],
+      "strengths": ["Intangibility to non-Haki attacks", "Light speed movement", "Powerful laser attacks", "Always strikes first"],
+      "special_mechanics": {
+        "intangibility_evasion": 95,
+        "weakness_multiplier": 2.0,
+        "environmental_synergy": "Can travel via reflection, faster in open areas",
+        "speed_priority": "Always moves first in turn order"
+      },
+      "mastery_bonuses": {
+        "level_3": "Can move between locations instantly",
+        "level_5": "Laser attacks pierce defenses",
+        "level_7": "Enhanced light speed combat",
+        "level_10_awakening": "Light Man - become pure light with perfect intangibility"
+      }
+    },
+    {
+      "id": "magu_magu",
+      "name": "Magu Magu no Mi",
+      "translation": "Magma-Magma Fruit",
+      "element": "Magma",
+      "description": "Allows the user to create, control, and transform into magma. Superior to fire-based abilities in offensive power.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Sakazuki (Akainu)",
+      "intangibility": true,
+      "stat_bonuses": {
+        "attack": 40,
+        "defense": 20
+      },
+      "abilities": [
+        {
+          "name": "Great Eruption",
+          "level_required": 1,
+          "ap_cost": 28,
+          "cooldown": 1,
+          "description": "Launch a massive fist of magma that explodes on impact",
+          "damage_type": "Elemental",
+          "target": "Single",
+          "effects": ["Extreme Magma Damage", "Burn 25%", "Splash Damage"]
+        },
+        {
+          "name": "Meteor Volcano",
+          "level_required": 8,
+          "ap_cost": 55,
+          "cooldown": 5,
+          "description": "Rain down countless magma fists from the sky",
+          "damage_type": "Elemental",
+          "target": "All",
+          "effects": ["Catastrophic Magma Damage", "Burn 40%", "Area Destruction"]
+        }
+      ],
+      "weaknesses": ["Seastone", "Haki"],
+      "strengths": ["Intangibility to non-Haki attacks", "Superior to fire abilities", "Highest offensive power", "Can melt almost anything"],
+      "special_mechanics": {
+        "intangibility_evasion": 92,
+        "weakness_multiplier": 2.0,
+        "environmental_synergy": "Magma can burn through most defenses",
+        "element_superiority": "Deals double damage to fire-based abilities"
+      },
+      "mastery_bonuses": {
+        "level_3": "Magma burns deal damage over 3 turns",
+        "level_5": "Can create magma barriers",
+        "level_7": "Enhanced offense - ignores 30% defense",
+        "level_10_awakening": "Ryusei Kazan - transform entire battlefield into volcanic hellscape"
+      }
+    },
+    {
+      "id": "gasu_gasu",
+      "name": "Gasu Gasu no Mi",
+      "translation": "Gas-Gas Fruit",
+      "element": "Gas",
+      "description": "Allows the user to create, control, and transform into various types of gas, including poisonous and combustible gases.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Caesar Clown",
+      "intangibility": true,
+      "stat_bonuses": {
+        "attack": 24,
+        "speed": 25
+      },
+      "abilities": [
+        {
+          "name": "Gas Robe",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Emit poisonous gas to damage and poison enemies",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Medium Damage", "Poison 20%"]
+        },
+        {
+          "name": "Shinokuni",
+          "level_required": 7,
+          "ap_cost": 45,
+          "cooldown": 5,
+          "description": "Release deadly petrifying gas that turns victims to stone",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Heavy Damage", "Petrify 35%", "Poison"]
+        }
+      ],
+      "weaknesses": ["Fire (can cause explosion)", "Seastone", "Haki", "Wind (disperses gas)"],
+      "strengths": ["Intangibility to non-Haki attacks", "Multiple gas types", "Poison effects", "Can remove oxygen"],
+      "special_mechanics": {
+        "intangibility_evasion": 88,
+        "weakness_multiplier": 3.0,
+        "environmental_synergy": "Stronger indoors, can suffocate enemies"
+      },
+      "mastery_bonuses": {
+        "level_3": "Can create combustible gas",
+        "level_5": "Poison damage increased by 50%",
+        "level_7": "Can remove oxygen from area",
+        "level_10_awakening": "Land of the Dead - create massive poison gas death zone"
+      }
+    },
+    {
+      "id": "yuki_yuki",
+      "name": "Yuki Yuki no Mi",
+      "translation": "Snow-Snow Fruit",
+      "element": "Snow",
+      "description": "Allows the user to create, control, and transform into snow. Can create snowstorms and freeze enemies.",
+      "rarity": "Legendary",
+      "starting_available": true,
+      "canon_user": "Monet",
+      "intangibility": true,
+      "stat_bonuses": {
+        "attack": 22,
+        "speed": 20,
+        "defense": 18
+      },
+      "abilities": [
+        {
+          "name": "Snow Sword",
+          "level_required": 1,
+          "ap_cost": 16,
+          "cooldown": 0,
+          "description": "Create blades of compressed snow to slash enemies",
+          "damage_type": "Elemental",
+          "target": "Single",
+          "effects": ["Medium Ice Damage", "Slow 15%"]
+        },
+        {
+          "name": "Blizzard",
+          "level_required": 5,
+          "ap_cost": 32,
+          "cooldown": 3,
+          "description": "Create a massive snowstorm to engulf the battlefield",
+          "damage_type": "Elemental",
+          "target": "All",
+          "effects": ["Heavy Ice Damage", "Freeze 25%", "Visibility Down"]
+        }
+      ],
+      "weaknesses": ["Fire/Heat", "Seastone", "Haki"],
+      "strengths": ["Intangibility to non-Haki attacks", "Snow is harder to melt than ice", "Area control", "Can create igloos"],
+      "special_mechanics": {
+        "intangibility_evasion": 87,
+        "weakness_multiplier": 2.5,
+        "environmental_synergy": "Extremely powerful in winter/cold, weaker in heat"
+      },
+      "mastery_bonuses": {
+        "level_3": "Snow attacks reduce enemy speed",
+        "level_5": "Can create snow clones",
+        "level_7": "Enhanced intangibility in snow form",
+        "level_10_awakening": "Eternal Winter - transform area into frozen wasteland"
+      }
+    },
+    {
+      "id": "numa_numa",
+      "name": "Numa Numa no Mi",
+      "translation": "Swamp-Swamp Fruit",
+      "element": "Swamp",
+      "description": "Allows the user to create, control, and transform into swamp/mud. Can absorb and store objects and people.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Caribou",
+      "intangibility": true,
+      "stat_bonuses": {
+        "defense": 25,
+        "attack": 18
+      },
+      "abilities": [
+        {
+          "name": "Swamp Sink",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 1,
+          "description": "Pull enemies into bottomless swamp",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Medium Damage", "Trap/Bind"]
+        },
+        {
+          "name": "Storage Release",
+          "level_required": 4,
+          "ap_cost": 25,
+          "cooldown": 2,
+          "description": "Release stored weapons/objects as projectiles",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Variable Damage based on stored items"]
+        }
+      ],
+      "weaknesses": ["Fire (dries mud)", "Seastone", "Haki"],
+      "strengths": ["Intangibility to non-Haki attacks", "Bottomless storage space", "Can trap enemies", "Absorb attacks"],
+      "special_mechanics": {
+        "intangibility_evasion": 85,
+        "weakness_multiplier": 2.0,
+        "environmental_synergy": "Can create quicksand traps",
+        "storage_capacity": "Unlimited storage in body swamp"
+      },
+      "mastery_bonuses": {
+        "level_3": "Can store more items and people",
+        "level_5": "Faster absorption and release",
+        "level_7": "Enhanced intangibility",
+        "level_10_awakening": "Swamp Domain - transform surroundings into massive swampland"
+      }
+    }
+  ],
+  "total_count": 11,
   "template": {
     "id": "unique_fruit_id",
     "name": "Fruit Name (Japanese)",

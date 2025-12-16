@@ -8,13 +8,13 @@
       "type": "Paramecia",
       "path": "Paramecia/index.json",
       "description": "Body-altering or manipulation abilities",
-      "count": 0
+      "count": 12
     },
     {
       "type": "Zoan",
       "path": "Zoan/index.json",
       "description": "Animal transformation abilities",
-      "count": 0,
+      "count": 15,
       "subtypes": [
         {
           "subtype": "Regular",
@@ -40,10 +40,10 @@
       "type": "Logia",
       "path": "Logia/index.json",
       "description": "Elemental intangibility abilities",
-      "count": 0
+      "count": 11
     }
   ],
-  "total_fruits": 0,
+  "total_fruits": 38,
   "notes": [
     "Each fruit file should be named: FruitName.json",
     "Example: GomuGomu.json, MeraMera.json",

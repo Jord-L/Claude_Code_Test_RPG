@@ -1,8 +1,491 @@
 {
   "type": "Paramecia",
   "description": "Body-altering or manipulation Devil Fruits",
-  "fruits": [],
-  "total_count": 0,
+  "fruits": [
+    {
+      "id": "gomu_gomu",
+      "name": "Gomu Gomu no Mi",
+      "translation": "Gum-Gum Fruit",
+      "description": "Grants the user's body the properties of rubber. Immune to blunt attacks and electricity.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "canon_user": "Monkey D. Luffy",
+      "stat_bonuses": {"attack": 15, "defense": 20, "speed": 10},
+      "abilities": [
+        {
+          "name": "Gum-Gum Pistol",
+          "level_required": 1,
+          "ap_cost": 10,
+          "cooldown": 0,
+          "description": "Stretch arm for a powerful punch",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Medium Damage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Bladed weapons"],
+      "strengths": ["Immune to blunt damage", "Immune to electricity", "Stretching abilities"],
+      "special_mechanics": {"blunt_immunity": true, "electricity_immunity": true},
+      "mastery_bonuses": {
+        "level_3": "Gear Second - Enhanced speed",
+        "level_5": "Gear Third - Giant attacks",
+        "level_7": "Gear Fourth - Bound Man",
+        "level_10_awakening": "Gear Fifth - Awakened form"
+      }
+    },
+    {
+      "id": "bara_bara",
+      "name": "Bara Bara no Mi",
+      "translation": "Chop-Chop Fruit",
+      "description": "Allows user to split their body into pieces and control them independently. Immune to slashing attacks.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "canon_user": "Buggy",
+      "stat_bonuses": {"defense": 20, "speed": 15},
+      "abilities": [
+        {
+          "name": "Bara Bara Cannon",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 1,
+          "description": "Launch body parts as projectiles",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Medium Damage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Feet cannot levitate"],
+      "strengths": ["Immune to slashing attacks", "Body part separation", "Hard to hit"],
+      "special_mechanics": {"slash_immunity": true, "body_separation": true},
+      "mastery_bonuses": {
+        "level_3": "Wider separation range",
+        "level_5": "Split into smaller pieces",
+        "level_7": "Enhanced coordination",
+        "level_10_awakening": "Split environment into pieces"
+      }
+    },
+    {
+      "id": "ope_ope",
+      "name": "Ope Ope no Mi",
+      "translation": "Op-Op Fruit",
+      "description": "Creates a spherical domain where user can manipulate anything. Can perform miraculous surgeries.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Trafalgar D. Water Law",
+      "stat_bonuses": {"attack": 30, "speed": 20},
+      "abilities": [
+        {
+          "name": "Room",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 0,
+          "description": "Create spherical operating room for manipulation",
+          "damage_type": "Special",
+          "target": "Self",
+          "effects": ["Create ROOM field"]
+        },
+        {
+          "name": "Shambles",
+          "level_required": 2,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Swap positions of objects within ROOM",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Position swap", "Tactical advantage"]
+        },
+        {
+          "name": "Gamma Knife",
+          "level_required": 7,
+          "ap_cost": 40,
+          "cooldown": 4,
+          "description": "Destroy internal organs without external wounds",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Massive Internal Damage", "Ignores Defense"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "High stamina cost for large ROOMs"],
+      "strengths": ["Spatial manipulation", "Internal attacks", "Tactical versatility", "Can grant immortality (at cost of user's life)"],
+      "special_mechanics": {"room_creation": true, "spatial_control": true, "surgery": true},
+      "mastery_bonuses": {
+        "level_3": "Larger ROOM size",
+        "level_5": "Can use multiple techniques in succession",
+        "level_7": "Enhanced cutting and swapping speed",
+        "level_10_awakening": "KROOM - manipulate objects from inside"
+      }
+    },
+    {
+      "id": "gura_gura",
+      "name": "Gura Gura no Mi",
+      "translation": "Tremor-Tremor Fruit",
+      "description": "Allows user to create devastating earthquakes and shockwaves. Called the strongest Paramecia.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Edward Newgate (Whitebeard), Marshall D. Teach",
+      "stat_bonuses": {"attack": 50, "defense": 15},
+      "abilities": [
+        {
+          "name": "Quake Punch",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 1,
+          "description": "Punch with earthquake power",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Extreme Damage", "Shockwave"]
+        },
+        {
+          "name": "Shima Yurashi",
+          "level_required": 8,
+          "ap_cost": 50,
+          "cooldown": 5,
+          "description": "Tilt entire battlefield with massive quake",
+          "damage_type": "Physical",
+          "target": "All",
+          "effects": ["Catastrophic Damage", "Environmental destruction"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Strongest Paramecia", "Massive AOE damage", "Can create tsunamis", "Destroys everything"],
+      "special_mechanics": {"earthquake_generation": true, "shockwave_attacks": true},
+      "mastery_bonuses": {
+        "level_3": "Create air quakes",
+        "level_5": "Enhance weapon with quake power",
+        "level_7": "Create tsunamis",
+        "level_10_awakening": "World-breaking earthquake"
+      }
+    },
+    {
+      "id": "mero_mero",
+      "name": "Mero Mero no Mi",
+      "translation": "Love-Love Fruit",
+      "description": "Allows user to turn those attracted to them into stone. Can shoot love-based beams.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "canon_user": "Boa Hancock",
+      "stat_bonuses": {"attack": 25, "speed": 20},
+      "abilities": [
+        {
+          "name": "Mero Mero Mellow",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Heart-shaped beam that petrifies attracted enemies",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Petrify 40%", "Medium Damage"]
+        },
+        {
+          "name": "Pistol Kiss",
+          "level_required": 3,
+          "ap_cost": 18,
+          "cooldown": 1,
+          "description": "Shoot petrifying heart-shaped bullets",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Petrify 30%"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Enemies without attraction"],
+      "strengths": ["Petrification", "Works on most enemies", "Beauty-based power"],
+      "special_mechanics": {"petrification": true, "attraction_based": true},
+      "mastery_bonuses": {
+        "level_3": "Increased petrification chance",
+        "level_5": "Can petrify without attraction",
+        "level_7": "Enhanced Haki kicks",
+        "level_10_awakening": "Mass petrification field"
+      }
+    },
+    {
+      "id": "doku_doku",
+      "name": "Doku Doku no Mi",
+      "translation": "Venom-Venom Fruit",
+      "description": "Allows user to generate and control various types of poison. Immune to all toxins.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Magellan",
+      "stat_bonuses": {"attack": 35, "defense": 20},
+      "abilities": [
+        {
+          "name": "Hydra",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Create poison dragon heads to attack",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Heavy Damage", "Poison 50%"]
+        },
+        {
+          "name": "Venom Demon",
+          "level_required": 8,
+          "ap_cost": 45,
+          "cooldown": 5,
+          "description": "Transform into massive poison demon",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Extreme Damage", "Deadly Poison", "Environmental contamination"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Wax (Doru Doru)", "Constant diarrhea from poison production"],
+      "strengths": ["Immune to all poisons", "Multiple poison types", "Extremely lethal", "Area denial"],
+      "special_mechanics": {"poison_immunity": true, "poison_varieties": "multiple types from mild to deadly"},
+      "mastery_bonuses": {
+        "level_3": "Create more deadly poisons",
+        "level_5": "Poison lasts longer",
+        "level_7": "Kinjite poison - most deadly",
+        "level_10_awakening": "Poison-filled environment"
+      }
+    },
+    {
+      "id": "horo_horo",
+      "name": "Horo Horo no Mi",
+      "translation": "Hollow-Hollow Fruit",
+      "description": "Allows user to create and control ghosts that drain willpower and create negativity.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "canon_user": "Perona",
+      "stat_bonuses": {"speed": 25, "defense": 15},
+      "abilities": [
+        {
+          "name": "Negative Hollow",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Send ghosts that make enemies extremely negative",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Depression debuff", "Cannot act for 1 turn"]
+        },
+        {
+          "name": "Kamikaze Raptor",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Create explosive ghost that detonates on contact",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Massive Damage", "Knockback"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Already negative enemies (immune)"],
+      "strengths": ["Intangibility via astral projection", "Mental attacks", "Explosive ghosts", "Hard to counter"],
+      "special_mechanics": {"ghost_creation": true, "mental_attacks": true, "astral_projection": true},
+      "mastery_bonuses": {
+        "level_3": "Create more ghosts at once",
+        "level_5": "Larger explosive ghosts",
+        "level_7": "Enhanced astral form",
+        "level_10_awakening": "Turn surroundings into ghost realm"
+      }
+    },
+    {
+      "id": "nikyu_nikyu",
+      "name": "Nikyu Nikyu no Mi",
+      "translation": "Paw-Paw Fruit",
+      "description": "Grants paw pads that can repel anything including air, attacks, and even abstract concepts like pain.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Bartholomew Kuma",
+      "stat_bonuses": {"defense": 35, "attack": 25},
+      "abilities": [
+        {
+          "name": "Pad Cannon",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 1,
+          "description": "Repel air at light speed creating devastating shockwave",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Extreme Damage", "Knockback"]
+        },
+        {
+          "name": "Ursus Shock",
+          "level_required": 7,
+          "ap_cost": 40,
+          "cooldown": 4,
+          "description": "Compress massive amount of air and release as giant paw-shaped shockwave",
+          "damage_type": "Physical",
+          "target": "All",
+          "effects": ["Catastrophic Damage", "Massive AOE"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Can repel anything", "Extract abstract concepts", "Teleportation", "Light-speed attacks"],
+      "special_mechanics": {"repulsion": true, "concept_manipulation": true, "teleportation": true},
+      "mastery_bonuses": {
+        "level_3": "Repel damage taken",
+        "level_5": "Extract pain and fatigue",
+        "level_7": "Instant teleportation",
+        "level_10_awakening": "Repel reality itself"
+      }
+    },
+    {
+      "id": "suna_suna_para",
+      "name": "Hobi Hobi no Mi",
+      "translation": "Hobby-Hobby Fruit",
+      "description": "Allows user to turn people into toys and erase memories of them. User stops aging.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Sugar",
+      "stat_bonuses": {"attack": 15, "speed": 20},
+      "abilities": [
+        {
+          "name": "Toy Transformation",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "Turn touched enemy into toy, erasing memories",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Transform to toy", "Memory erasure", "Mind control"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Loses consciousness = all toys revert", "Touch required"],
+      "strengths": ["Eternal youth", "Memory manipulation", "Mind control over toys", "Instant defeat on touch"],
+      "special_mechanics": {"toy_transformation": true, "memory_erasure": true, "eternal_youth": true},
+      "mastery_bonuses": {
+        "level_3": "Faster transformation",
+        "level_5": "Better toy control",
+        "level_7": "Create toy army",
+        "level_10_awakening": "Transform environment into toy world"
+      }
+    },
+    {
+      "id": "ito_ito",
+      "name": "Ito Ito no Mi",
+      "translation": "String-String Fruit",
+      "description": "Allows user to create and control razor-sharp strings for offense, defense, and manipulation.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "canon_user": "Donquixote Doflamingo",
+      "stat_bonuses": {"attack": 28, "speed": 22, "defense": 15},
+      "abilities": [
+        {
+          "name": "Five Color Strings",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 1,
+          "description": "Slash enemies with five sharp string whips",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Slashing Damage"]
+        },
+        {
+          "name": "Parasite",
+          "level_required": 4,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "Control enemy movements with strings",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Mind Control", "Movement restriction"]
+        },
+        {
+          "name": "Bird Cage",
+          "level_required": 8,
+          "ap_cost": 50,
+          "cooldown": 5,
+          "description": "Create inescapable cage of strings that slowly shrinks",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Massive Damage over time", "Trap", "Cuts through everything"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Fire can burn strings"],
+      "strengths": ["Versatile combat", "Mind control", "Can fly via sky-walking", "Create clones"],
+      "special_mechanics": {"string_creation": true, "puppet_control": true, "sky_walk": true},
+      "mastery_bonuses": {
+        "level_3": "Create string clones",
+        "level_5": "Internal organ repair with strings",
+        "level_7": "Enhanced string durability",
+        "level_10_awakening": "Transform environment into strings"
+      }
+    },
+    {
+      "id": "bari_bari",
+      "name": "Bari Bari no Mi",
+      "translation": "Barrier-Barrier Fruit",
+      "description": "Allows user to create indestructible barriers of various shapes and sizes.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "canon_user": "Bartolomeo",
+      "stat_bonuses": {"defense": 40, "attack": 10},
+      "abilities": [
+        {
+          "name": "Barrier",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 0,
+          "description": "Create indestructible barrier to block attacks",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Block all damage", "Unbreakable"]
+        },
+        {
+          "name": "Barrier Crash",
+          "level_required": 4,
+          "ap_cost": 25,
+          "cooldown": 2,
+          "description": "Push barrier forward to crush enemies",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Heavy Damage", "Push back"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Limited size", "Can't protect from all directions at once"],
+      "strengths": ["Indestructible defense", "Versatile shapes", "Offensive use", "Platform creation"],
+      "special_mechanics": {"indestructible_barriers": true, "shape_control": true},
+      "mastery_bonuses": {
+        "level_3": "Larger barriers",
+        "level_5": "Multiple barriers at once",
+        "level_7": "Barrier stairs and platforms",
+        "level_10_awakening": "Turn environment into barriers"
+      }
+    },
+    {
+      "id": "mochi_mochi",
+      "name": "Mochi Mochi no Mi",
+      "translation": "Mochi-Mochi Fruit",
+      "description": "Special Paramecia that functions like Logia. User can create, control, and become mochi.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "canon_user": "Charlotte Katakuri",
+      "stat_bonuses": {"attack": 30, "defense": 25, "speed": 20},
+      "abilities": [
+        {
+          "name": "Muso Donuts",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 1,
+          "description": "Create mochi donuts that launch giant mochi fists",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Stickiness"]
+        },
+        {
+          "name": "Zan Giri Mochi",
+          "level_required": 6,
+          "ap_cost": 35,
+          "cooldown": 3,
+          "description": "Harden mochi arm into spiked mace for devastating attack",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Massive Damage", "Armor piercing"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Liquids (dissolve mochi)"],
+      "strengths": ["Pseudo-intangibility", "Can harden like rubber", "Sticky traps", "Long-range attacks", "Future sight"],
+      "special_mechanics": {"special_paramecia": true, "pseudo_intangibility": 85, "shapeshifting": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced mochi control",
+        "level_5": "Future sight (Observation Haki)",
+        "level_7": "Peerless Donuts - multiple giant fists",
+        "level_10_awakening": "Transform surroundings into mochi"
+      }
+    }
+  ],
+  "total_count": 12,
   "template": {
     "id": "unique_fruit_id",
     "name": "Fruit Name (Japanese)",
