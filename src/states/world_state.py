@@ -76,16 +76,23 @@ class WorldState(State):
     def startup(self, persistent):
         """
         Called when state becomes active.
-        
+
         Args:
             persistent: Data from previous state
         """
-        print("World State: Starting up...")
-        
+        print("\n" + "="*60)
+        print("WORLD STATE STARTUP - Initializing game world")
+        print("="*60)
+        print(f"Received persistent data keys: {list(persistent.keys())}")
+
         # Get player from persistent data or create new
         if "player" in persistent:
             player = persistent["player"]
+            print(f"✓ Using player from character creation: {player.name}")
+            print(f"   Level: {player.level}")
+            print(f"   Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
         else:
+            print("⚠ No player in persistent data - creating test player")
             # Create test player
             player = Player("Alex")
             player.level = 5
@@ -142,9 +149,9 @@ class WorldState(State):
 
         # Initialize equipment slots for all party members
         equipment_manager = EquipmentManager()
-        equipment_manager.initialize_character_equipment(player)
+        equipment_manager.get_or_create_slots(player)
         for member in player.party_manager.get_all_members():
-            equipment_manager.initialize_character_equipment(member)
+            equipment_manager.get_or_create_slots(member)
 
         # Set inventory and equipment menus
         self.inventory_menu.set_inventory(player.inventory, player)
@@ -164,9 +171,13 @@ class WorldState(State):
         # Reset flags
         self.paused = False
         self.battle_triggered = False
-        
-        print(f"World State: Loaded map '{self.current_map.name}'")
-        print(f"World State: Player at {self.player_controller.get_tile_position()}")
+
+        print(f"\n✓ World State: Loaded map '{self.current_map.name}'")
+        print(f"✓ World State: Player at {self.player_controller.get_tile_position()}")
+        print(f"✓ World State: Camera centered on player")
+        print("="*60)
+        print("✅ WORLD STATE INITIALIZATION COMPLETE")
+        print("="*60 + "\n")
     
     def cleanup(self):
         """

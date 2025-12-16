@@ -13,6 +13,7 @@ from ui.text_box import CenteredText
 from ui.panel import Panel
 from ui.character_preview import CharacterPreview
 from ui.stat_display import StatDisplay
+from utils.save_manager import get_save_manager
 from utils.constants import *
 
 
@@ -180,7 +181,7 @@ class CharacterCreationState(State):
         """Set up UI for name input stage."""
         self.stage = "name"
         self.input_active = True
-        
+
         # Instruction text
         self.instruction_text = CenteredText(
             x=SCREEN_WIDTH // 2,
@@ -190,7 +191,7 @@ class CharacterCreationState(State):
             color=UI_TEXT_COLOR,
             centered=True
         )
-        
+
         # Name input box
         self.name_input_box = CenteredText(
             x=SCREEN_WIDTH // 2,
@@ -200,10 +201,11 @@ class CharacterCreationState(State):
             color=WHITE if self.player_name else GRAY,
             centered=True
         )
-        
-        # Show only continue button
+
+        # Show continue and exit buttons
         self.continue_button.visible = True
-        self.back_button.visible = False
+        self.back_button.visible = True  # Exit button
+        self.back_button.text = "Exit"  # Change text to "Exit" for name stage
         self.confirm_button.visible = False
         self.cancel_button.visible = False
     
@@ -264,6 +266,7 @@ class CharacterCreationState(State):
         # Show back and continue buttons
         self.continue_button.visible = True
         self.back_button.visible = True
+        self.back_button.text = "Back"  # Change text back to "Back" for devil fruit stage
         self.confirm_button.visible = False
         self.cancel_button.visible = False
     
@@ -378,45 +381,78 @@ class CharacterCreationState(State):
             # Go back to name entry
             self._setup_name_stage()
         elif self.stage == "name":
-            # Go back to main menu
+            # Exit to main menu
+            print("Character creation: Exiting to main menu")
             self.state_manager.change_state(STATE_MENU)
     
     def _on_confirm(self):
         """Handle confirm button - create character and start game."""
+        print("\n" + "="*60)
+        print("CONFIRM BUTTON CLICKED - Starting character creation...")
+        print("="*60)
+
         # Create the player
         player = Player(self.player_name, level=1)
-        
+        print(f"✓ Player object created: {player.name}")
+
         # Equip Devil Fruit if selected
         if self.selected_fruit_data:
             player.equip_devil_fruit(self.selected_fruit_data)
-            print(f"{player.name} ate the {self.selected_fruit_data.get('name')}!")
+            print(f"✓ {player.name} ate the {self.selected_fruit_data.get('name')}!")
         else:
-            print(f"{player.name} starts without a Devil Fruit!")
-        
-        # Store player in game state (or wherever it should go)
-        # For now, we'll just print success
-        print(f"Character created successfully!")
-        print(f"Name: {player.name}")
-        print(f"Level: {player.level}")
-        print(f"Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
-        
-        # Transition to world state
-        self.done = True
-        self.next_state = "world"
-        self.persist = {"player": player}
-    
+            print(f"✓ {player.name} starts without a Devil Fruit!")
+
+        # Store player for cleanup to pass to world state
+        self.created_player = player
+        print(f"✓ Player stored in self.created_player")
+
+        print(f"\n📋 Character Summary:")
+        print(f"   Name: {player.name}")
+        print(f"   Level: {player.level}")
+        print(f"   Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
+
+        # Save the character to save slot 1
+        print(f"\n💾 Saving character to save file...")
+        save_manager = get_save_manager()
+        character_data = player.to_dict()
+
+        if save_manager.save_game(character_data, slot=1):
+            print(f"✓ Character saved successfully!")
+        else:
+            print(f"✗ Failed to save character (game will continue)")
+
+        print(f"\n🎮 Transitioning to world state...")
+        print("="*60 + "\n")
+
+        # Transition to world state - player data will be passed via cleanup()
+        self.state_manager.change_state("world")
+
     def _on_cancel(self):
-        """Handle cancel button - go back to fruit selection."""
+        """Handle cancel button - go back to previous stage or main menu."""
         if self.stage == "confirm":
+            # Go back to devil fruit selection
             self._setup_devil_fruit_stage()
+        elif self.stage == "devil_fruit":
+            # Go back to name entry
+            self._setup_name_stage()
+        elif self.stage == "name":
+            # Go back to main menu
+            self.state_manager.change_state(STATE_MENU)
     
     def handle_event(self, event: pygame.event.Event):
         """
         Handle input events.
-        
+
         Args:
             event: Pygame event
         """
+        # ESC key - return to main menu
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                print("Character creation: ESC pressed - returning to main menu")
+                self.state_manager.change_state(STATE_MENU)
+                return
+
         # Handle text input for name
         if self.stage == "name" and self.input_active:
             if event.type == pygame.KEYDOWN:
@@ -826,5 +862,18 @@ class CharacterCreationState(State):
     
     def cleanup(self):
         """Called when state is removed."""
-        print("Exiting Character Creation")
-        return {}
+        print("\n" + "="*60)
+        print("CHARACTER CREATION CLEANUP - Preparing data for next state")
+        print("="*60)
+
+        # Return created player if it exists
+        if hasattr(self, 'created_player'):
+            print(f"✓ Returning player data: {self.created_player.name}")
+            print(f"   Level: {self.created_player.level}")
+            print(f"   Devil Fruit: {self.created_player.devil_fruit.name if self.created_player.devil_fruit else 'None'}")
+            print("="*60 + "\n")
+            return {"player": self.created_player}
+        else:
+            print("⚠ No player data to return (character creation was cancelled)")
+            print("="*60 + "\n")
+            return {}
