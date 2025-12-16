@@ -545,9 +545,60 @@
         "level_7": "Enhanced intangibility",
         "level_10_awakening": "Swamp Domain - transform surroundings into massive swampland"
       }
+    },
+    {
+      "id": "mori_mori",
+      "name": "Mori Mori no Mi",
+      "translation": "Woods-Woods Fruit",
+      "element": "Plant/Forest",
+      "description": "Allows the user to create, control, and transform into plant life and forests. Can absorb nutrients and photosynthesize.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "intangibility": true,
+      "stat_bonuses": {
+        "defense": 30,
+        "attack": 25,
+        "hp": 50
+      },
+      "abilities": [
+        {
+          "name": "Forbidden Hatred",
+          "level_required": 1,
+          "ap_cost": 22,
+          "cooldown": 1,
+          "description": "Create massive plant constructs to pierce and bind enemies",
+          "damage_type": "Elemental",
+          "target": "Multi",
+          "effects": ["Heavy Plant Damage", "Bind", "Drain HP"]
+        },
+        {
+          "name": "Flourishing Forest",
+          "level_required": 6,
+          "ap_cost": 40,
+          "cooldown": 4,
+          "description": "Transform the battlefield into a massive forest under your control",
+          "damage_type": "Elemental",
+          "target": "All",
+          "effects": ["Massive Damage", "Continuous HP Drain", "Mobility Down"]
+        }
+      ],
+      "weaknesses": ["Fire (burns plants)", "Seastone", "Haki", "Poison/Defoliants"],
+      "strengths": ["Intangibility to non-Haki attacks", "Photosynthesis for regeneration", "Nutrient absorption", "Massive area control"],
+      "special_mechanics": {
+        "intangibility_evasion": 88,
+        "weakness_multiplier": 2.5,
+        "environmental_synergy": "Can absorb nutrients from soil, sunlight heals user",
+        "photosynthesis": "Regenerate HP in sunlight"
+      },
+      "mastery_bonuses": {
+        "level_3": "Plants drain enemy HP to heal user",
+        "level_5": "Can create impenetrable forest barriers",
+        "level_7": "Enhanced regeneration and growth speed",
+        "level_10_awakening": "Ryokurin - transform entire region into controlled forest ecosystem"
+      }
     }
   ],
-  "total_count": 11,
+  "total_count": 12,
   "template": {
     "id": "unique_fruit_id",
     "name": "Fruit Name (Japanese)",

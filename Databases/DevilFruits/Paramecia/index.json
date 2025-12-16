@@ -471,9 +471,2709 @@
         "level_7": "Peerless Donuts - multiple giant fists",
         "level_10_awakening": "Transform surroundings into mochi"
       }
+    },
+    {
+      "id": "sube_sube",
+      "name": "Sube Sube no Mi",
+      "translation": "Slip-Slip Fruit",
+      "description": "Makes the user's skin perfectly smooth, causing everything to slip off. Grants beauty and slipperiness.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 20, "speed": 15},
+      "abilities": [
+        {
+          "name": "Smooth Slide",
+          "level_required": 1,
+          "ap_cost": 10,
+          "cooldown": 1,
+          "description": "Deflect attacks with slippery skin",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Deflect 50% of attacks", "Counter damage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Sticky substances"],
+      "strengths": ["Deflects most attacks", "Enhanced beauty", "Friction immunity"],
+      "special_mechanics": {"deflection": true, "friction_immunity": true},
+      "mastery_bonuses": {
+        "level_3": "Higher deflection rate",
+        "level_5": "Can slide at high speeds",
+        "level_7": "Perfect deflection",
+        "level_10_awakening": "Make surroundings perfectly smooth"
+      }
+    },
+    {
+      "id": "bomu_bomu",
+      "name": "Bomu Bomu no Mi",
+      "translation": "Bomb-Bomb Fruit",
+      "description": "Allows user to make any part of their body explode and regenerate. Immune to explosions.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"attack": 30, "defense": 15},
+      "abilities": [
+        {
+          "name": "Nose Fancy Cannon",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Explosive booger projectile",
+          "damage_type": "Explosive",
+          "target": "Single",
+          "effects": ["Heavy Explosive Damage"]
+        },
+        {
+          "name": "Breeze Breath Bomb",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Explosive breath attack",
+          "damage_type": "Explosive",
+          "target": "Multi",
+          "effects": ["Massive Explosive Damage", "Knockback"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Immune to explosions", "Any body part can explode", "Regeneration"],
+      "special_mechanics": {"explosion_immunity": true, "body_regeneration": true},
+      "mastery_bonuses": {
+        "level_3": "Larger explosions",
+        "level_5": "Chain explosions",
+        "level_7": "Nuclear-level blasts",
+        "level_10_awakening": "Turn surroundings into bombs"
+      }
+    },
+    {
+      "id": "kilo_kilo",
+      "name": "Kilo Kilo no Mi",
+      "translation": "Kilo-Kilo Fruit",
+      "description": "Allows user to change their weight from 1 to 10,000 kilograms at will.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"attack": 15, "defense": 10},
+      "abilities": [
+        {
+          "name": "10,000 Kilo Press",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Increase weight to maximum and crush enemies",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Crush"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Limited to 10,000 kg"],
+      "strengths": ["Variable weight", "Powerful crushing attacks", "Can float at 1 kg"],
+      "special_mechanics": {"weight_control": "1-10000 kg"},
+      "mastery_bonuses": {
+        "level_3": "Faster weight changes",
+        "level_5": "More precise control",
+        "level_7": "Enhanced crushing power",
+        "level_10_awakening": "Manipulate weight of surroundings"
+      }
+    },
+    {
+      "id": "hana_hana",
+      "name": "Hana Hana no Mi",
+      "translation": "Flower-Flower Fruit",
+      "description": "Allows user to sprout copies of their body parts on any surface.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 20, "speed": 15},
+      "abilities": [
+        {
+          "name": "Dos Fleur",
+          "level_required": 1,
+          "ap_cost": 10,
+          "cooldown": 0,
+          "description": "Sprout two arms anywhere",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Medium Damage", "Grapple"]
+        },
+        {
+          "name": "Mil Fleur",
+          "level_required": 7,
+          "ap_cost": 40,
+          "cooldown": 3,
+          "description": "Sprout one thousand arms",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Massive Damage", "Restrain All"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Damage to sprouted parts = damage to user"],
+      "strengths": ["Extreme versatility", "Reconnaissance", "Restraint", "Can create giant limbs"],
+      "special_mechanics": {"body_part_sprouting": true, "shared_damage": true},
+      "mastery_bonuses": {
+        "level_3": "Sprout more parts simultaneously",
+        "level_5": "Create giant body parts",
+        "level_7": "Sprout full clone",
+        "level_10_awakening": "Demonio Fleur - giant demon form"
+      }
+    },
+    {
+      "id": "doru_doru",
+      "name": "Doru Doru no Mi",
+      "translation": "Wax-Wax Fruit",
+      "description": "Allows user to create and control wax. Wax can be harder than steel when hardened.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 25, "attack": 15},
+      "abilities": [
+        {
+          "name": "Wax Wall",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 1,
+          "description": "Create steel-hard wax wall",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Block attacks", "Create barriers"]
+        },
+        {
+          "name": "Candle Lock",
+          "level_required": 3,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Trap enemies in hardened wax",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Immobilize", "Bind"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Fire/Heat (melts wax)"],
+      "strengths": ["Steel-hard wax", "Versatile construction", "Can counter poison"],
+      "special_mechanics": {"wax_hardness": "steel-level", "fire_weakness": true},
+      "mastery_bonuses": {
+        "level_3": "Faster wax production",
+        "level_5": "Create wax constructs",
+        "level_7": "Diamond-hard wax",
+        "level_10_awakening": "Turn environment into wax"
+      }
+    },
+    {
+      "id": "baku_baku",
+      "name": "Baku Baku no Mi",
+      "translation": "Munch-Munch Fruit",
+      "description": "Allows user to eat anything and transform into it or combine consumed objects.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"attack": 20, "defense": 20},
+      "abilities": [
+        {
+          "name": "Baku Baku Factory",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Consume objects and transform body into them",
+          "damage_type": "Special",
+          "target": "Self",
+          "effects": ["Transform", "Gain eaten properties"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Can eat anything", "Transformation", "Combine abilities", "Expanding mouth"],
+      "special_mechanics": {"consumption": true, "transformation": true, "combination": true},
+      "mastery_bonuses": {
+        "level_3": "Eat larger objects",
+        "level_5": "Combine multiple eaten objects",
+        "level_7": "Enhanced transformations",
+        "level_10_awakening": "Consume and transform surroundings"
+      }
+    },
+    {
+      "id": "mane_mane",
+      "name": "Mane Mane no Mi",
+      "translation": "Clone-Clone Fruit",
+      "description": "Allows user to transform into a perfect copy of anyone they touch, including memories of their abilities.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 15},
+      "abilities": [
+        {
+          "name": "Transform",
+          "level_required": 1,
+          "ap_cost": 10,
+          "cooldown": 0,
+          "description": "Transform into anyone previously touched",
+          "damage_type": "Status",
+          "target": "Self",
+          "effects": ["Perfect disguise", "Copy stats"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Must touch face to copy"],
+      "strengths": ["Perfect copying", "Infinite stored forms", "Copy physical abilities"],
+      "special_mechanics": {"perfect_mimicry": true, "touch_required": true, "stat_copying": true},
+      "mastery_bonuses": {
+        "level_3": "Copy abilities better",
+        "level_5": "Instant transformation",
+        "level_7": "Copy Devil Fruit appearance",
+        "level_10_awakening": "Mass transformation of others"
+      }
+    },
+    {
+      "id": "supa_supa",
+      "name": "Supa Supa no Mi",
+      "translation": "Dice-Dice Fruit",
+      "description": "Allows user to turn any part of their body into steel blades. Body becomes steel.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"attack": 25, "defense": 30},
+      "abilities": [
+        {
+          "name": "Spiral Hollow",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Spin body blades to create devastating drilling attack",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Slashing Damage", "Armor Pierce"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Rust"],
+      "strengths": ["Steel body", "Immune to slashing", "Blade attacks", "Flight via blade propulsion"],
+      "special_mechanics": {"steel_body": true, "slash_immunity": true},
+      "mastery_bonuses": {
+        "level_3": "Sharper blades",
+        "level_5": "Full body blade transformation",
+        "level_7": "Diamond-hard blades",
+        "level_10_awakening": "Turn surroundings into blades"
+      }
+    },
+    {
+      "id": "toge_toge",
+      "name": "Toge Toge no Mi",
+      "translation": "Spike-Spike Fruit",
+      "description": "Allows user to grow spikes from any part of their body.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"attack": 20, "defense": 25},
+      "abilities": [
+        {
+          "name": "Toge Toge Spur",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 1,
+          "description": "Grow spikes to attack enemies",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Medium Piercing Damage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Spike defense", "Piercing attacks", "Counter damage", "Can grow to giant size"],
+      "special_mechanics": {"spike_growth": true, "counter_damage": true},
+      "mastery_bonuses": {
+        "level_3": "Longer spikes",
+        "level_5": "Full body spike coverage",
+        "level_7": "Giant spike form",
+        "level_10_awakening": "Turn environment into spikes"
+      }
+    },
+    {
+      "id": "ori_ori",
+      "name": "Ori Ori no Mi",
+      "translation": "Bind-Bind Fruit",
+      "description": "Allows user to bind and shackle opponents by passing through them.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 20, "attack": 15},
+      "abilities": [
+        {
+          "name": "Binding Net",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Pass through enemies to bind them",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Immobilize", "Binding"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Strong physical force can break bindings"],
+      "strengths": ["Instant binding", "Create metal restraints", "Mass restraint"],
+      "special_mechanics": {"instant_binding": true, "metal_creation": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger bindings",
+        "level_5": "Bind multiple enemies",
+        "level_7": "Unbreakable shackles",
+        "level_10_awakening": "Turn environment into binding prison"
+      }
+    },
+    {
+      "id": "bane_bane",
+      "name": "Bane Bane no Mi",
+      "translation": "Spring-Spring Fruit",
+      "description": "Allows user to turn body parts into springs for enhanced mobility and attacks.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"speed": 25, "attack": 20},
+      "abilities": [
+        {
+          "name": "Spring Sniper",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 0,
+          "description": "Launch spring-powered punch",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Knockback"]
+        },
+        {
+          "name": "Spring Hopper",
+          "level_required": 3,
+          "ap_cost": 10,
+          "cooldown": 0,
+          "description": "Jump to extreme heights with spring legs",
+          "damage_type": "Movement",
+          "target": "Self",
+          "effects": ["Enhanced mobility", "Dodge"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Enhanced mobility", "Powerful spring attacks", "High jumps"],
+      "special_mechanics": {"spring_body": true, "enhanced_mobility": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger spring force",
+        "level_5": "Multiple spring attacks",
+        "level_7": "Full body spring mode",
+        "level_10_awakening": "Turn surroundings into springs"
+      }
+    },
+    {
+      "id": "noro_noro",
+      "name": "Noro Noro no Mi",
+      "translation": "Slow-Slow Fruit",
+      "description": "Allows user to emit beams that slow down anything for 30 seconds.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 20},
+      "abilities": [
+        {
+          "name": "Noro Noro Beam",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Emit beam that slows enemy movement",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Slow 80%", "30 second duration"]
+        },
+        {
+          "name": "Noro Noro Beam Sword",
+          "level_required": 4,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Concentrated slow beam for intense slowdown",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Extreme Slow 95%"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Beams can be reflected"],
+      "strengths": ["Extreme slowdown", "Area effect", "Can store slow particles"],
+      "special_mechanics": {"slow_beam": true, "reflectable": true, "duration": "30 seconds"},
+      "mastery_bonuses": {
+        "level_3": "Longer slow duration",
+        "level_5": "Wider beam",
+        "level_7": "Multiple beams",
+        "level_10_awakening": "Slow time in area"
+      }
+    },
+    {
+      "id": "doa_doa",
+      "name": "Doa Doa no Mi",
+      "translation": "Door-Door Fruit",
+      "description": "Allows user to create doors on any surface, including air, for travel and attack.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 25, "defense": 15},
+      "abilities": [
+        {
+          "name": "Air Door",
+          "level_required": 1,
+          "ap_cost": 10,
+          "cooldown": 0,
+          "description": "Create door in air for instant travel",
+          "damage_type": "Movement",
+          "target": "Self",
+          "effects": ["Teleportation", "Escape"]
+        },
+        {
+          "name": "Revolving Door",
+          "level_required": 3,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Create door on enemy to access their body",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Internal damage", "Bypass armor"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Dimension travel", "Perfect infiltration", "Pocket dimension", "Instant escape"],
+      "special_mechanics": {"door_creation": true, "dimension_travel": true, "pocket_dimension": true},
+      "mastery_bonuses": {
+        "level_3": "Larger doors",
+        "level_5": "Faster door creation",
+        "level_7": "Door to anywhere dimension",
+        "level_10_awakening": "Turn environment into door network"
+      }
+    },
+    {
+      "id": "awa_awa",
+      "name": "Awa Awa no Mi",
+      "translation": "Bubble-Bubble Fruit",
+      "description": "Allows user to create and control soap bubbles that can clean anything, including strength.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 15, "speed": 20},
+      "abilities": [
+        {
+          "name": "Soap Sheep",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 1,
+          "description": "Create soap bubbles that wash away enemy power",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Reduce Attack 50%", "Slippery"]
+        },
+        {
+          "name": "Relaxation Foam",
+          "level_required": 4,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Wash away all strength and will to fight",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Severe Attack/Defense Down", "Drowsiness"]
+        }
+      ],
+      "weaknesses": ["Water (dilutes bubbles)", "Seastone"],
+      "strengths": ["Clean anything", "Power reduction", "Slippery terrain", "Can clean wounds"],
+      "special_mechanics": {"cleaning": true, "power_reduction": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger cleaning effect",
+        "level_5": "Create bubble barriers",
+        "level_7": "Wash away Devil Fruit effects temporarily",
+        "level_10_awakening": "Turn environment into soap"
+      }
+    },
+    {
+      "id": "beri_beri",
+      "name": "Beri Beri no Mi",
+      "translation": "Berry-Berry Fruit",
+      "description": "Allows user to split body into grape-like spherical segments.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 20, "speed": 15},
+      "abilities": [
+        {
+          "name": "Beri Beri Bomber",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 1,
+          "description": "Split into berry spheres and attack",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Medium Damage", "Hard to dodge"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Evasion", "Multi-directional attacks", "Spherical defense"],
+      "special_mechanics": {"sphere_splitting": true, "enhanced_evasion": true},
+      "mastery_bonuses": {
+        "level_3": "More spheres",
+        "level_5": "Faster reassembly",
+        "level_7": "Enhanced sphere control",
+        "level_10_awakening": "Turn environment into spheres"
+      }
+    },
+    {
+      "id": "shari_shari",
+      "name": "Shari Shari no Mi",
+      "translation": "Wheel-Wheel Fruit",
+      "description": "Allows user to turn body parts into wheels for enhanced speed and attacks.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"speed": 30, "attack": 15},
+      "abilities": [
+        {
+          "name": "Wheel Charge",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 0,
+          "description": "Transform limbs into wheels for high-speed attacks",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Medium Damage", "Speed boost"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Rough terrain"],
+      "strengths": ["Enhanced speed", "Rotation attacks", "Mobility"],
+      "special_mechanics": {"wheel_transformation": true, "speed_boost": true},
+      "mastery_bonuses": {
+        "level_3": "Faster wheel rotation",
+        "level_5": "Multiple wheels",
+        "level_7": "Rocket-powered wheels",
+        "level_10_awakening": "Turn environment into wheels"
+      }
+    },
+    {
+      "id": "kage_kage",
+      "name": "Kage Kage no Mi",
+      "translation": "Shadow-Shadow Fruit",
+      "description": "Allows user to control shadows, steal them, and create zombie armies.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 30, "defense": 20},
+      "abilities": [
+        {
+          "name": "Shadow Box",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Trap enemies in shadow box",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Trap", "Darkness damage"]
+        },
+        {
+          "name": "Shadows Asgard",
+          "level_required": 8,
+          "ap_cost": 50,
+          "cooldown": 5,
+          "description": "Absorb 1000 shadows for massive power boost",
+          "damage_type": "Buff",
+          "target": "Self",
+          "effects": ["Extreme stat boost", "Giant form"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Salt purifies zombies", "Sunlight"],
+      "strengths": ["Shadow manipulation", "Create zombies", "Steal shadows", "Shadow clones"],
+      "special_mechanics": {"shadow_theft": true, "zombie_creation": true, "salt_weakness": true},
+      "mastery_bonuses": {
+        "level_3": "Control more shadows",
+        "level_5": "Create stronger zombies",
+        "level_7": "Doppelman - shadow clone",
+        "level_10_awakening": "World of Shadows"
+      }
+    },
+    {
+      "id": "yomi_yomi",
+      "name": "Yomi Yomi no Mi",
+      "translation": "Revive-Revive Fruit",
+      "description": "Grants a second life. After awakening, can use soul energy and see through walls.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 25, "defense": 20},
+      "abilities": [
+        {
+          "name": "Soul Solid",
+          "level_required": 5,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Manifest soul as freezing energy",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Heavy Ice Damage", "Freeze 30%"]
+        },
+        {
+          "name": "Yomi Yomi no Ice World",
+          "level_required": 8,
+          "ap_cost": 40,
+          "cooldown": 4,
+          "description": "Release massive soul-freezing aura",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Extreme Ice Damage", "Soul freeze"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Only works once (resurrection)"],
+      "strengths": ["One resurrection", "Soul manipulation", "Astral projection", "Freezing soul energy"],
+      "special_mechanics": {"resurrection": "one-time", "soul_energy": true, "astral_projection": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced soul energy",
+        "level_5": "Soul Solid attacks",
+        "level_7": "Astral form combat",
+        "level_10_awakening": "Soul King - full soul mastery"
+      }
+    },
+    {
+      "id": "suke_suke",
+      "name": "Suke Suke no Mi",
+      "translation": "Clear-Clear Fruit",
+      "description": "Allows user to become invisible and make anything they touch invisible.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 20, "attack": 15},
+      "abilities": [
+        {
+          "name": "Invisible Assault",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 0,
+          "description": "Attack while invisible for guaranteed surprise",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Cannot be dodged"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Observation Haki can detect", "Leaves footprints"],
+      "strengths": ["Perfect invisibility", "Stealth", "Make objects invisible", "Surprise attacks"],
+      "special_mechanics": {"invisibility": true, "object_invisibility": true},
+      "mastery_bonuses": {
+        "level_3": "Silent movement",
+        "level_5": "Invisible projectiles",
+        "level_7": "Mass invisibility",
+        "level_10_awakening": "Turn environment invisible"
+      }
+    },
+    {
+      "id": "nikyu_nikyu_kuma",
+      "name": "Kuma Kuma no Mi",
+      "translation": "Bear-Bear Fruit",
+      "description": "Allows user to absorb and release shockwaves through bear paw pads.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 25, "defense": 25},
+      "abilities": [
+        {
+          "name": "Bear Impact",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 1,
+          "description": "Release absorbed damage as shockwave",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Heavy Damage", "Shockwave"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Damage absorption", "Shockwave attacks", "Enhanced strength"],
+      "special_mechanics": {"damage_absorption": true, "shockwave_release": true},
+      "mastery_bonuses": {
+        "level_3": "Absorb more damage",
+        "level_5": "Larger shockwaves",
+        "level_7": "Perfect absorption",
+        "level_10_awakening": "Shockwave World"
+      }
+    },
+    {
+      "id": "fuwa_fuwa",
+      "name": "Fuwa Fuwa no Mi",
+      "translation": "Float-Float Fruit",
+      "description": "Allows user to levitate themselves and non-living objects they touch.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 30, "attack": 25},
+      "abilities": [
+        {
+          "name": "Lion's Menace",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Levitate and control massive objects as weapons",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Massive Damage", "Crushing"]
+        },
+        {
+          "name": "Sky Island",
+          "level_required": 6,
+          "ap_cost": 35,
+          "cooldown": 3,
+          "description": "Lift entire islands into the sky",
+          "damage_type": "Environmental",
+          "target": "Area",
+          "effects": ["Terrain manipulation", "Mass levitation"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Cannot levitate living things"],
+      "strengths": ["Flight", "Mass levitation", "Control multiple objects", "Island lifting"],
+      "special_mechanics": {"levitation": true, "living_thing_limit": true, "mass_control": true},
+      "mastery_bonuses": {
+        "level_3": "Levitate larger objects",
+        "level_5": "Control more objects simultaneously",
+        "level_7": "Island-level control",
+        "level_10_awakening": "Atmospheric manipulation"
+      }
+    },
+    {
+      "id": "woshu_woshu",
+      "name": "Woshu Woshu no Mi",
+      "translation": "Wash-Wash Fruit",
+      "description": "Allows user to wash and hang anything to dry, including people and their evil hearts.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 15, "speed": 15},
+      "abilities": [
+        {
+          "name": "Heart Wash",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 3,
+          "description": "Wash evil from enemy's heart",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Reduce aggression", "Pacify"]
+        }
+      ],
+      "weaknesses": ["Water (ironically)", "Seastone"],
+      "strengths": ["Clean anything", "Flatten objects", "Purify hearts", "Size manipulation"],
+      "special_mechanics": {"washing": true, "flattening": true, "purification": true},
+      "mastery_bonuses": {
+        "level_3": "Wash larger objects",
+        "level_5": "Purify stronger evil",
+        "level_7": "Mass washing",
+        "level_10_awakening": "Cleanse environment"
+      }
+    },
+    {
+      "id": "hobi_hobi",
+      "name": "Shiro Shiro no Mi",
+      "translation": "Castle-Castle Fruit",
+      "description": "Allows user to become a living fortress. Can store armies and weapons inside body.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 40, "hp": 100},
+      "abilities": [
+        {
+          "name": "Castle Tank",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Transform into massive castle tank",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Heavy Damage", "Defense boost"]
+        },
+        {
+          "name": "Army Inside Me",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 4,
+          "description": "Deploy stored army from body castle",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Summon allies", "Overwhelming force"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Massive storage", "Living fortress", "Army deployment", "Weapon cache"],
+      "special_mechanics": {"body_fortress": true, "infinite_storage": true, "miniaturization": true},
+      "mastery_bonuses": {
+        "level_3": "Larger castle form",
+        "level_5": "Store more troops",
+        "level_7": "Fortress weapons",
+        "level_10_awakening": "Mega Fortress"
+      }
+    },
+    {
+      "id": "pamu_pamu",
+      "name": "Pamu Pamu no Mi",
+      "translation": "Rupture-Rupture Fruit",
+      "description": "Allows user to cause anything they touch to rupture and explode, including their own body.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 40, "speed": 20},
+      "abilities": [
+        {
+          "name": "Puncture Wille",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 2,
+          "description": "Make touched object explode violently",
+          "damage_type": "Explosive",
+          "target": "Single",
+          "effects": ["Extreme Explosive Damage", "Armor ignore"]
+        },
+        {
+          "name": "Puncture Kill",
+          "level_required": 7,
+          "ap_cost": 45,
+          "cooldown": 4,
+          "description": "Detonate own arm for devastating explosion",
+          "damage_type": "Explosive",
+          "target": "All",
+          "effects": ["Catastrophic Damage", "Self-damage", "Mass destruction"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Inorganic explosion", "Expand body parts", "Massive destruction", "Armor bypass"],
+      "special_mechanics": {"rupture_touch": true, "body_expansion": true, "self_detonation": true},
+      "mastery_bonuses": {
+        "level_3": "Larger explosions",
+        "level_5": "Chain ruptures",
+        "level_7": "Expand to giant size",
+        "level_10_awakening": "Detonate environment"
+      }
+    },
+    {
+      "id": "guru_guru",
+      "name": "Guru Guru no Mi",
+      "translation": "Spin-Spin Fruit",
+      "description": "Allows user to turn any part of their body into a propeller for flight and attacks.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"speed": 25, "attack": 15},
+      "abilities": [
+        {
+          "name": "Propeller Drill",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Spin body part as propeller drill",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Piercing Damage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Flight", "Drilling attacks", "Rotation defense", "Wind generation"],
+      "special_mechanics": {"propeller_body": true, "flight": true, "wind_creation": true},
+      "mastery_bonuses": {
+        "level_3": "Faster rotation",
+        "level_5": "Multiple propellers",
+        "level_7": "Tornado generation",
+        "level_10_awakening": "Turn environment into propellers"
+      }
+    },
+    {
+      "id": "buki_buki",
+      "name": "Buki Buki no Mi",
+      "translation": "Arms-Arms Fruit",
+      "description": "Allows user to transform any part of their body into any weapon.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 35, "defense": 20},
+      "abilities": [
+        {
+          "name": "Weapon Morph",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 0,
+          "description": "Transform body parts into weapons",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Variable Damage"]
+        },
+        {
+          "name": "Full Arsenal",
+          "level_required": 6,
+          "ap_cost": 35,
+          "cooldown": 3,
+          "description": "Transform entire body into weapons arsenal",
+          "damage_type": "Physical",
+          "target": "All",
+          "effects": ["Massive Damage", "Multi-weapon barrage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Any weapon transformation", "Versatile combat", "Built-in arsenal", "Surprise attacks"],
+      "special_mechanics": {"weapon_transformation": true, "unlimited_arsenal": true},
+      "mastery_bonuses": {
+        "level_3": "Transform into modern weapons",
+        "level_5": "Multiple weapons simultaneously",
+        "level_7": "Heavy artillery transformation",
+        "level_10_awakening": "Turn environment into weapons"
+      }
+    },
+    {
+      "id": "beta_beta",
+      "name": "Beta Beta no Mi",
+      "translation": "Sticky-Sticky Fruit",
+      "description": "Allows user to create and control an incredibly sticky mucus.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 25, "attack": 15},
+      "abilities": [
+        {
+          "name": "Sticky Launcher",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Launch sticky mucus to trap enemies",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Immobilize", "Bind", "Speed Down 80%"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Fire can burn mucus"],
+      "strengths": ["Extreme stickiness", "Trap enemies", "Defensive coating", "Climb walls"],
+      "special_mechanics": {"mucus_creation": true, "extreme_adhesion": true},
+      "mastery_bonuses": {
+        "level_3": "Stickier mucus",
+        "level_5": "Mucus constructs",
+        "level_7": "Inescapable binding",
+        "level_10_awakening": "Turn environment sticky"
+      }
+    },
+    {
+      "id": "giro_giro",
+      "name": "Giro Giro no Mi",
+      "translation": "Stare-Stare Fruit",
+      "description": "Allows user to see through everything, read minds, and see into the future.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 20},
+      "abilities": [
+        {
+          "name": "Mind Read",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Read enemy thoughts and intentions",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Reveal weakness", "Predict moves"]
+        },
+        {
+          "name": "Peep Tears",
+          "level_required": 5,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "See through all defenses and illusions",
+          "damage_type": "Special",
+          "target": "Self",
+          "effects": ["True sight", "Detect invisibility"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Not combat-focused"],
+      "strengths": ["X-ray vision", "Mind reading", "See vast distances", "Limited future sight"],
+      "special_mechanics": {"x_ray_vision": true, "telepathy": true, "clairvoyance": true},
+      "mastery_bonuses": {
+        "level_3": "See further",
+        "level_5": "Read deeper thoughts",
+        "level_7": "See brief future",
+        "level_10_awakening": "Omniscient vision in area"
+      }
+    },
+    {
+      "id": "ato_ato",
+      "name": "Ato Ato no Mi",
+      "translation": "Art-Art Fruit",
+      "description": "Allows user to transform people and objects into abstract art.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 20, "speed": 15},
+      "abilities": [
+        {
+          "name": "Art Transformation",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Transform enemy into flat artwork",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Flatten", "Immobilize", "Reduce to 2D"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Transform into art", "Flatten enemies", "Abstract manipulation", "Creative combat"],
+      "special_mechanics": {"art_transformation": true, "dimension_reduction": true},
+      "mastery_bonuses": {
+        "level_3": "Transform larger targets",
+        "level_5": "Living artwork soldiers",
+        "level_7": "Abstract art reality",
+        "level_10_awakening": "Turn environment into art museum"
+      }
+    },
+    {
+      "id": "jake_jake",
+      "name": "Jake Jake no Mi",
+      "translation": "Jacket-Jacket Fruit",
+      "description": "Allows user to become a jacket and control whoever wears them.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"attack": 15, "defense": 20},
+      "abilities": [
+        {
+          "name": "Jacket Control",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 3,
+          "description": "Transform into jacket and control wearer",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Mind control", "Use wearer's body"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Need someone to wear", "Vulnerable when not worn"],
+      "strengths": ["Body possession", "Use stronger bodies", "Perfect control"],
+      "special_mechanics": {"jacket_form": true, "body_control": true},
+      "mastery_bonuses": {
+        "level_3": "Control stronger opponents",
+        "level_5": "Partial control",
+        "level_7": "Enhance controlled body",
+        "level_10_awakening": "Turn others into controllable clothing"
+      }
+    },
+    {
+      "id": "sui_sui",
+      "name": "Sui Sui no Mi",
+      "translation": "Swim-Swim Fruit",
+      "description": "Allows user to swim through solid surfaces as if they were water.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 30, "defense": 15},
+      "abilities": [
+        {
+          "name": "Ground Swim",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 0,
+          "description": "Swim through walls and floors",
+          "damage_type": "Movement",
+          "target": "Self",
+          "effects": ["Phase through solid matter", "Enhanced mobility"]
+        },
+        {
+          "name": "Ambush Strike",
+          "level_required": 3,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Attack from within solid objects",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Surprise attack", "Cannot be blocked"]
+        }
+      ],
+      "weaknesses": ["Water (actual water)", "Seastone"],
+      "strengths": ["Phase through solids", "Perfect infiltration", "Underground movement", "Ambush tactics"],
+      "special_mechanics": {"solid_swimming": true, "phasing": true},
+      "mastery_bonuses": {
+        "level_3": "Swim faster through solids",
+        "level_5": "Drag objects while swimming",
+        "level_7": "Create temporary swim holes",
+        "level_10_awakening": "Liquify solid surroundings"
+      }
+    },
+    {
+      "id": "ton_ton",
+      "name": "Ton Ton no Mi",
+      "translation": "Ton-Ton Fruit",
+      "description": "Superior version of Kilo Kilo. Allows user to change weight from 1 to 10,000 tons.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 30, "defense": 20},
+      "abilities": [
+        {
+          "name": "10,000 Ton Guillotine",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 2,
+          "description": "Increase to maximum tonnage and drop on enemy",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Catastrophic Crushing Damage", "Armor Break"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Extreme weight control", "Devastating crushing power", "Can float at 1 kg"],
+      "special_mechanics": {"weight_control": "1kg-10000 tons"},
+      "mastery_bonuses": {
+        "level_3": "Faster weight changes",
+        "level_5": "Precise weight control",
+        "level_7": "Weight momentum attacks",
+        "level_10_awakening": "Manipulate weight of surroundings"
+      }
+    },
+    {
+      "id": "hiso_hiso",
+      "name": "Hiso Hiso no Mi",
+      "translation": "Whisper-Whisper Fruit",
+      "description": "Allows user to communicate with and command animals.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"speed": 15},
+      "abilities": [
+        {
+          "name": "Animal Command",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 3,
+          "description": "Command nearby animals to attack",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Summon animal allies", "Coordinated attacks"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "No direct combat power"],
+      "strengths": ["Animal communication", "Command all animals", "Scout network", "Beast army"],
+      "special_mechanics": {"animal_telepathy": true, "beast_command": true},
+      "mastery_bonuses": {
+        "level_3": "Command larger animals",
+        "level_5": "Control Sea Kings briefly",
+        "level_7": "Mass animal coordination",
+        "level_10_awakening": "Become one with animal kingdom"
+      }
+    },
+    {
+      "id": "kachi_kachi",
+      "name": "Kachi Kachi no Mi",
+      "translation": "Hard-Hard Fruit",
+      "description": "Allows user to harden their body to extreme levels and heat it up.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 35, "attack": 20},
+      "abilities": [
+        {
+          "name": "Iron Body",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Harden body to steel-like hardness",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Extreme defense boost", "Reflect attacks"]
+        },
+        {
+          "name": "Heat Up",
+          "level_required": 4,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Heat hardened body to burning temperatures",
+          "damage_type": "Elemental",
+          "target": "Contact",
+          "effects": ["Fire damage on contact", "Burn status"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Slow when fully hardened"],
+      "strengths": ["Extreme hardness", "Heat generation", "Perfect defense", "Counter damage"],
+      "special_mechanics": {"body_hardening": true, "heat_generation": true},
+      "mastery_bonuses": {
+        "level_3": "Harder body",
+        "level_5": "Hotter temperatures",
+        "level_7": "Maintain mobility while hard",
+        "level_10_awakening": "Harden and heat environment"
+      }
+    },
+    {
+      "id": "nemu_nemu",
+      "name": "Nemu Nemu no Mi",
+      "translation": "Sleep-Sleep Fruit",
+      "description": "Allows user to put enemies to sleep and enter their dreams.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 15},
+      "abilities": [
+        {
+          "name": "Sleep Mist",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 3,
+          "description": "Emit mist that causes instant sleep",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Sleep 80%", "Unconscious"]
+        },
+        {
+          "name": "Dream Manipulation",
+          "level_required": 5,
+          "ap_cost": 25,
+          "cooldown": 4,
+          "description": "Enter and control enemy dreams",
+          "damage_type": "Mental",
+          "target": "Single",
+          "effects": ["Psychological damage", "Nightmare", "Mental break"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Pain wakes targets"],
+      "strengths": ["Instant sleep", "Dream control", "Mental attacks", "Crowd control"],
+      "special_mechanics": {"sleep_induction": true, "dream_walking": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger sleep effect",
+        "level_5": "Control multiple dreams",
+        "level_7": "Eternal slumber",
+        "level_10_awakening": "Dreamscape reality"
+      }
+    },
+    {
+      "id": "mini_mini",
+      "name": "Mini Mini no Mi",
+      "translation": "Mini-Mini Fruit",
+      "description": "Allows user to shrink themselves and others to tiny sizes.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"speed": 25},
+      "abilities": [
+        {
+          "name": "Miniaturization",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 0,
+          "description": "Shrink to tiny size for stealth and evasion",
+          "damage_type": "Status",
+          "target": "Self",
+          "effects": ["Become tiny", "Enhanced evasion", "Stealth boost"]
+        },
+        {
+          "name": "Tiny Touch",
+          "level_required": 3,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Shrink touched enemy",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Shrink enemy", "Reduce stats 70%"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Vulnerable when tiny"],
+      "strengths": ["Perfect stealth", "Infiltration", "Evasion", "Shrink enemies"],
+      "special_mechanics": {"size_manipulation": true, "miniaturization": true},
+      "mastery_bonuses": {
+        "level_3": "Shrink smaller",
+        "level_5": "Shrink multiple targets",
+        "level_7": "Microscopic size",
+        "level_10_awakening": "Shrink entire area"
+      }
+    },
+    {
+      "id": "atsu_atsu",
+      "name": "Atsu Atsu no Mi",
+      "translation": "Heat-Heat Fruit",
+      "description": "Allows user to generate and control extreme heat from their body.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 30, "defense": 15},
+      "abilities": [
+        {
+          "name": "Heat Wave",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Emit wave of extreme heat",
+          "damage_type": "Elemental",
+          "target": "Multi",
+          "effects": ["Heavy Fire Damage", "Burn 30%"]
+        },
+        {
+          "name": "10,000 Degree Oven",
+          "level_required": 7,
+          "ap_cost": 40,
+          "cooldown": 4,
+          "description": "Heat body to 10,000 degrees",
+          "damage_type": "Elemental",
+          "target": "Area",
+          "effects": ["Extreme Heat Damage", "Melt surroundings"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Cold"],
+      "strengths": ["Extreme heat generation", "Melt metal", "Heat immunity", "Area denial"],
+      "special_mechanics": {"heat_generation": "up to 10000 degrees", "heat_immunity": true},
+      "mastery_bonuses": {
+        "level_3": "Higher temperatures",
+        "level_5": "Heat manipulation",
+        "level_7": "Heat vision",
+        "level_10_awakening": "Superheat environment"
+      }
+    },
+    {
+      "id": "kuku_kuku",
+      "name": "Kuku Kuku no Mi",
+      "translation": "Cook-Cook Fruit",
+      "description": "Allows user to transform enemies and objects into food.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 20},
+      "abilities": [
+        {
+          "name": "Food Transformation",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Transform touched object into food",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Transform to food", "Incapacitate"]
+        },
+        {
+          "name": "Gourmet Menu",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 4,
+          "description": "Transform multiple enemies into elaborate dishes",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Mass food transformation"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Transformation can be reversed"],
+      "strengths": ["Transform into food", "Instant defeat if eaten", "Creative attacks", "Heal allies with food"],
+      "special_mechanics": {"food_transformation": true, "culinary_mastery": true},
+      "mastery_bonuses": {
+        "level_3": "Transform larger objects",
+        "level_5": "Create gourmet dishes",
+        "level_7": "Food that grants buffs",
+        "level_10_awakening": "Turn environment into food paradise"
+      }
+    },
+    {
+      "id": "gocha_gocha",
+      "name": "Gocha Gocha no Mi",
+      "translation": "Mix-Mix Fruit",
+      "description": "Allows user to merge with other people and objects to gain their abilities.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 20, "defense": 20, "speed": 20},
+      "abilities": [
+        {
+          "name": "Fusion",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 4,
+          "description": "Merge with ally or object to combine powers",
+          "damage_type": "Status",
+          "target": "Self",
+          "effects": ["Fusion form", "Combined stats", "Dual abilities"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Requires willing participant"],
+      "strengths": ["Combine powers", "Stat multiplication", "Gain abilities", "Synergy boost"],
+      "special_mechanics": {"fusion": true, "ability_combination": true},
+      "mastery_bonuses": {
+        "level_3": "Better ability integration",
+        "level_5": "Three-way fusion",
+        "level_7": "Perfect synchronization",
+        "level_10_awakening": "Fuse with environment"
+      }
+    },
+    {
+      "id": "chiyu_chiyu",
+      "name": "Chiyu Chiyu no Mi",
+      "translation": "Heal-Heal Fruit",
+      "description": "Allows user to heal any injury instantly by manipulating bodies like toys.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 20},
+      "abilities": [
+        {
+          "name": "Repair",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Heal ally's wounds instantly",
+          "damage_type": "Healing",
+          "target": "Single",
+          "effects": ["Restore HP", "Remove status effects"]
+        },
+        {
+          "name": "Body Modification",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Modify body structure for enhancements",
+          "damage_type": "Buff",
+          "target": "Single",
+          "effects": ["Stat boost", "Body enhancement", "Remove disabilities"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Not combat-focused"],
+      "strengths": ["Perfect healing", "Cure anything", "Body enhancement", "Revive fallen allies"],
+      "special_mechanics": {"instant_healing": true, "body_manipulation": true},
+      "mastery_bonuses": {
+        "level_3": "Heal multiple targets",
+        "level_5": "Cure diseases",
+        "level_7": "Enhance beyond normal limits",
+        "level_10_awakening": "Area-wide healing field"
+      }
+    },
+    {
+      "id": "soru_soru",
+      "name": "Soru Soru no Mi",
+      "translation": "Soul-Soul Fruit",
+      "description": "Allows user to extract and manipulate souls, giving life to objects and stealing lifespan.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 35, "defense": 25},
+      "abilities": [
+        {
+          "name": "Soul Pocus",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Extract lifespan from frightened enemies",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Steal lifespan", "Instant death if afraid"]
+        },
+        {
+          "name": "Homie Creation",
+          "level_required": 3,
+          "ap_cost": 25,
+          "cooldown": 4,
+          "description": "Give life to objects using souls",
+          "damage_type": "Summon",
+          "target": "Area",
+          "effects": ["Create sentient servants", "Animate objects"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Cannot affect own soul", "Requires fear for lifespan theft"],
+      "strengths": ["Soul manipulation", "Create homies", "Steal lifespan", "Immortality via stolen souls"],
+      "special_mechanics": {"soul_extraction": true, "homie_creation": true, "lifespan_manipulation": true},
+      "mastery_bonuses": {
+        "level_3": "Create stronger homies",
+        "level_5": "Special homies (Zeus, Prometheus, etc)",
+        "level_7": "Soul infusion without fear",
+        "level_10_awakening": "Incarnation of Death - absolute soul control"
+      }
+    },
+    {
+      "id": "mira_mira",
+      "name": "Mira Mira no Mi",
+      "translation": "Mirror-Mirror Fruit",
+      "description": "Allows user to create and control mirrors, travel through them, and create reflections.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 25, "defense": 20},
+      "abilities": [
+        {
+          "name": "Mirror World",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 0,
+          "description": "Enter mirror dimension for travel and hiding",
+          "damage_type": "Movement",
+          "target": "Self",
+          "effects": ["Dimension travel", "Perfect hiding"]
+        },
+        {
+          "name": "Mirror Clone",
+          "level_required": 4,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "Create perfect copy of enemy from mirror",
+          "damage_type": "Summon",
+          "target": "Single",
+          "effects": ["Clone enemy", "Same stats and abilities"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Breaking mirrors disrupts power"],
+      "strengths": ["Mirror dimension", "Perfect clones", "Instant travel", "Reflection attacks"],
+      "special_mechanics": {"mirror_world": true, "perfect_cloning": true, "dimension_travel": true},
+      "mastery_bonuses": {
+        "level_3": "Create more mirrors",
+        "level_5": "Clone multiple enemies",
+        "level_7": "Mirror labyrinth",
+        "level_10_awakening": "Turn world into mirror dimension"
+      }
+    },
+    {
+      "id": "bisu_bisu",
+      "name": "Bisu Bisu no Mi",
+      "translation": "Biscuit-Biscuit Fruit",
+      "description": "Allows user to generate and control biscuits harder than steel.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 35, "attack": 25},
+      "abilities": [
+        {
+          "name": "Biscuit Soldiers",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Create steel-hard biscuit soldiers to fight",
+          "damage_type": "Summon",
+          "target": "Area",
+          "effects": ["Summon biscuit army", "Heavy Damage"]
+        },
+        {
+          "name": "Pretzel Roll",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Create massive biscuit sword for devastating attacks",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Massive Slashing Damage", "Armor Pierce"]
+        }
+      ],
+      "weaknesses": ["Water (soggy biscuits)", "Seastone", "Liquids weaken biscuits"],
+      "strengths": ["Steel-hard biscuits", "Infinite generation", "Army creation", "Powerful constructs"],
+      "special_mechanics": {"biscuit_generation": true, "hardness": "steel-level", "liquid_weakness": true},
+      "mastery_bonuses": {
+        "level_3": "Harder biscuits",
+        "level_5": "Create biscuit armor",
+        "level_7": "Infinite biscuit soldiers",
+        "level_10_awakening": "Turn environment into biscuits"
+      }
+    },
+    {
+      "id": "pero_pero",
+      "name": "Pero Pero no Mi",
+      "translation": "Lick-Lick Fruit",
+      "description": "Allows user to generate and control infinite candy.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 25, "attack": 20},
+      "abilities": [
+        {
+          "name": "Candy Maiden",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Create candy to trap enemies",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Sticky trap", "Immobilize", "Bind"]
+        },
+        {
+          "name": "Candy Wall",
+          "level_required": 3,
+          "ap_cost": 20,
+          "cooldown": 1,
+          "description": "Create iron-hard candy wall",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Block attacks", "Iron-hard barrier"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Heat melts candy", "Liquids"],
+      "strengths": ["Infinite candy", "Iron-hard when solidified", "Sticky traps", "Versatile constructs"],
+      "special_mechanics": {"candy_generation": true, "hardness": "iron-level", "heat_weakness": true},
+      "mastery_bonuses": {
+        "level_3": "Harder candy",
+        "level_5": "Candy weapons and armor",
+        "level_7": "Candy ocean",
+        "level_10_awakening": "Turn environment into candy world"
+      }
+    },
+    {
+      "id": "shibo_shibo",
+      "name": "Shibo Shibo no Mi",
+      "translation": "Wring-Wring Fruit",
+      "description": "Allows user to wring out liquids from any object or person.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 25},
+      "abilities": [
+        {
+          "name": "Dehydration Wring",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Wring all moisture from enemy",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Massive Damage", "Dehydration", "Shrivel"]
+        },
+        {
+          "name": "Moisture Manipulation",
+          "level_required": 4,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "Extract and weaponize liquids",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Liquid extraction", "Pressurized attacks"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Dehydration attacks", "Extract any liquid", "One-hit potential", "Liquid manipulation"],
+      "special_mechanics": {"liquid_extraction": true, "dehydration": true},
+      "mastery_bonuses": {
+        "level_3": "Extract more liquids",
+        "level_5": "Selective extraction",
+        "level_7": "Instant dehydration",
+        "level_10_awakening": "Wring moisture from environment"
+      }
+    },
+    {
+      "id": "memo_memo",
+      "name": "Memo Memo no Mi",
+      "translation": "Memo-Memo Fruit",
+      "description": "Allows user to manipulate memories of anyone they touch.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 15},
+      "abilities": [
+        {
+          "name": "Memory Extraction",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Extract and view memories from target",
+          "damage_type": "Mental",
+          "target": "Single",
+          "effects": ["Memory read", "Intel gathering"]
+        },
+        {
+          "name": "Memory Manipulation",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 4,
+          "description": "Alter or erase memories",
+          "damage_type": "Mental",
+          "target": "Single",
+          "effects": ["Memory alteration", "Mind control", "Confusion"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Must touch target"],
+      "strengths": ["Memory manipulation", "Perfect intelligence", "Mind control", "Erase trauma"],
+      "special_mechanics": {"memory_manipulation": true, "touch_required": true},
+      "mastery_bonuses": {
+        "level_3": "Extract more memories",
+        "level_5": "Implant false memories",
+        "level_7": "Mass memory manipulation",
+        "level_10_awakening": "Collective memory control"
+      }
+    },
+    {
+      "id": "juku_juku",
+      "name": "Juku Juku no Mi",
+      "translation": "Ripe-Ripe Fruit",
+      "description": "Allows user to age or de-age anything they touch.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 30},
+      "abilities": [
+        {
+          "name": "Aging Touch",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "Rapidly age touched object or person",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Rapid aging", "Decay", "Weakness"]
+        },
+        {
+          "name": "De-aging Touch",
+          "level_required": 4,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Reverse aging of target",
+          "damage_type": "Healing",
+          "target": "Single",
+          "effects": ["Youth restoration", "Heal", "Buff"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Must touch target"],
+      "strengths": ["Age manipulation", "Decay attacks", "Youth restoration", "Object deterioration"],
+      "special_mechanics": {"age_manipulation": true, "touch_required": true},
+      "mastery_bonuses": {
+        "level_3": "Faster aging/de-aging",
+        "level_5": "Selective aging of body parts",
+        "level_7": "Instant decay",
+        "level_10_awakening": "Age environment itself"
+      }
+    },
+    {
+      "id": "maki_maki",
+      "name": "Maki Maki no Mi",
+      "translation": "Scroll-Scroll Fruit",
+      "description": "Allows user to create scrolls that can store and release anything.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 20, "speed": 15},
+      "abilities": [
+        {
+          "name": "Scroll Storage",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 0,
+          "description": "Store objects and attacks in scrolls",
+          "damage_type": "Special",
+          "target": "Self",
+          "effects": ["Storage", "Defense"]
+        },
+        {
+          "name": "Scroll Release",
+          "level_required": 3,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Release stored objects as attacks",
+          "damage_type": "Variable",
+          "target": "Multi",
+          "effects": ["Variable Damage", "Surprise attacks"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Scrolls can be destroyed"],
+      "strengths": ["Infinite storage", "Store attacks", "Tactical versatility", "Seal enemies"],
+      "special_mechanics": {"scroll_creation": true, "infinite_storage": true, "attack_storage": true},
+      "mastery_bonuses": {
+        "level_3": "Larger scrolls",
+        "level_5": "Store living beings",
+        "level_7": "Seal powerful attacks",
+        "level_10_awakening": "Seal reality itself"
+      }
+    },
+    {
+      "id": "toki_toki",
+      "name": "Toki Toki no Mi",
+      "translation": "Time-Time Fruit",
+      "description": "Allows user to send themselves and others forward in time.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 30},
+      "abilities": [
+        {
+          "name": "Time Leap",
+          "level_required": 1,
+          "ap_cost": 30,
+          "cooldown": 5,
+          "description": "Send target forward in time",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Time skip", "Remove from battle"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Cannot go backward", "One-way time travel"],
+      "strengths": ["Time manipulation", "Future travel", "Escape", "Strategic positioning"],
+      "special_mechanics": {"time_travel": "forward only", "one_way": true},
+      "mastery_bonuses": {
+        "level_3": "Send further into future",
+        "level_5": "Send multiple targets",
+        "level_7": "Controlled time jumps",
+        "level_10_awakening": "Temporal zone creation"
+      }
+    },
+    {
+      "id": "hoya_hoya",
+      "name": "Hoya Hoya no Mi",
+      "translation": "Lamp-Lamp Fruit",
+      "description": "Allows user to summon and control a genie that grants wishes.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 30, "defense": 25},
+      "abilities": [
+        {
+          "name": "Genie Summon",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 4,
+          "description": "Summon genie to grant combat wishes",
+          "damage_type": "Special",
+          "target": "Variable",
+          "effects": ["Variable effects", "Wish granting"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Genie has limitations"],
+      "strengths": ["Wish granting", "Versatile powers", "Genie combat support", "Reality warping"],
+      "special_mechanics": {"genie_summon": true, "wish_granting": "limited", "reality_manipulation": true},
+      "mastery_bonuses": {
+        "level_3": "More powerful wishes",
+        "level_5": "Multiple wishes per summon",
+        "level_7": "Greater reality manipulation",
+        "level_10_awakening": "Unlimited genie form"
+      }
+    },
+    {
+      "id": "netsu_netsu",
+      "name": "Netsu Netsu no Mi",
+      "translation": "Heat-Heat Fruit",
+      "description": "Allows user to manipulate heat, raising or lowering temperature of anything.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 28, "defense": 18},
+      "abilities": [
+        {
+          "name": "Heat Manipulation",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Superheat or freeze objects and enemies",
+          "damage_type": "Elemental",
+          "target": "Single",
+          "effects": ["Temperature manipulation", "Burn or Freeze"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Temperature control", "Heat attacks", "Cold attacks", "Environmental control"],
+      "special_mechanics": {"temperature_manipulation": true, "dual_element": "heat and cold"},
+      "mastery_bonuses": {
+        "level_3": "Extreme temperatures",
+        "level_5": "Area temperature control",
+        "level_7": "Instant temperature shifts",
+        "level_10_awakening": "Climate manipulation"
+      }
+    },
+    {
+      "id": "kiro_kiro",
+      "name": "Kibi Kibi no Mi",
+      "translation": "Millet-Millet Fruit",
+      "description": "Allows user to create dango that tames animals who eat them.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"attack": 15},
+      "abilities": [
+        {
+          "name": "Dango Taming",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 3,
+          "description": "Feed dango to animals to make them allies",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Tame animal", "Loyal servant"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Only works on animals"],
+      "strengths": ["Animal taming", "Beast army", "Tame any animal", "Instant loyalty"],
+      "special_mechanics": {"dango_creation": true, "animal_taming": true},
+      "mastery_bonuses": {
+        "level_3": "Tame stronger beasts",
+        "level_5": "Dango affects multiple animals",
+        "level_7": "Tame Sea Kings",
+        "level_10_awakening": "Universal taming"
+      }
+    },
+    {
+      "id": "oshi_oshi",
+      "name": "Oshi Oshi no Mi",
+      "translation": "Push-Push Fruit",
+      "description": "Allows user to push through any obstacle and terrain.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"attack": 20, "speed": 20},
+      "abilities": [
+        {
+          "name": "Unstoppable Charge",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Charge through anything in path",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Knockback", "Ignore obstacles"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Push through anything", "Unstoppable charges", "Terrain immunity", "Momentum attacks"],
+      "special_mechanics": {"terrain_phasing": true, "unstoppable": true},
+      "mastery_bonuses": {
+        "level_3": "Faster charges",
+        "level_5": "Push larger objects",
+        "level_7": "Multi-direction pushing",
+        "level_10_awakening": "Push reality itself"
+      }
+    },
+    {
+      "id": "jiki_jiki",
+      "name": "Jiki Jiki no Mi",
+      "translation": "Magnet-Magnet Fruit",
+      "description": "Allows user to control magnetism and manipulate metal.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 35, "defense": 30},
+      "abilities": [
+        {
+          "name": "Magnetic Force",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Control metal objects with magnetism",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Metal control", "Heavy Damage", "Disarm"]
+        },
+        {
+          "name": "Punk Rotten",
+          "level_required": 7,
+          "ap_cost": 40,
+          "cooldown": 4,
+          "description": "Create giant metal construct",
+          "damage_type": "Physical",
+          "target": "All",
+          "effects": ["Massive Damage", "Metal giant form"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Non-metallic attacks"],
+      "strengths": ["Metal manipulation", "Magnetic control", "Create metal constructs", "Disarm enemies"],
+      "special_mechanics": {"magnetism": true, "metal_control": true, "construct_creation": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger magnetic force",
+        "level_5": "Railgun attacks",
+        "level_7": "Electromagnetic pulse",
+        "level_10_awakening": "Planetary magnetism control"
+      }
+    },
+    {
+      "id": "nagi_nagi",
+      "name": "Nagi Nagi no Mi",
+      "translation": "Calm-Calm Fruit",
+      "description": "Allows user to create soundproof barriers and silence all sounds.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 25, "speed": 15},
+      "abilities": [
+        {
+          "name": "Silent Zone",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Create area where no sound can exist",
+          "damage_type": "Status",
+          "target": "Area",
+          "effects": ["Silence", "Stealth", "Communication block"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Visual detection still works"],
+      "strengths": ["Perfect silence", "Stealth operations", "Block communication", "Soundproof barriers"],
+      "special_mechanics": {"sound_negation": true, "silence_zones": true},
+      "mastery_bonuses": {
+        "level_3": "Larger silence zones",
+        "level_5": "Selective sound blocking",
+        "level_7": "Silence specific sounds",
+        "level_10_awakening": "Absolute silence domain"
+      }
+    },
+    {
+      "id": "ame_ame",
+      "name": "Ame Ame no Mi",
+      "translation": "Candy-Candy Fruit",
+      "description": "Allows user to create and control various types of candy syrup.",
+      "rarity": "Rare",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 20, "attack": 20},
+      "abilities": [
+        {
+          "name": "Syrup Trap",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 2,
+          "description": "Create sticky syrup to trap enemies",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Sticky trap", "Slow", "Bind"]
+        }
+      ],
+      "weaknesses": ["Water (dilutes syrup)", "Seastone", "Heat"],
+      "strengths": ["Sticky syrup", "Hardening", "Versatile candy forms", "Sweet constructs"],
+      "special_mechanics": {"syrup_creation": true, "hardening": true, "heat_weakness": true},
+      "mastery_bonuses": {
+        "level_3": "Harder candy",
+        "level_5": "Syrup ocean",
+        "level_7": "Candy armor",
+        "level_10_awakening": "Turn environment into candy"
+      }
+    },
+    {
+      "id": "gasha_gasha",
+      "name": "Gasha Gasha no Mi",
+      "translation": "Clank-Clank Fruit",
+      "description": "Allows user to merge with and control any inorganic object.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 25, "defense": 25},
+      "abilities": [
+        {
+          "name": "Object Fusion",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Merge with objects to gain their properties",
+          "damage_type": "Special",
+          "target": "Self",
+          "effects": ["Object fusion", "Stat boost", "Abilities"]
+        },
+        {
+          "name": "Construct Creation",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 4,
+          "description": "Combine multiple objects into powerful constructs",
+          "damage_type": "Physical",
+          "target": "Area",
+          "effects": ["Giant construct", "Massive power"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Only inorganic objects"],
+      "strengths": ["Object fusion", "Create constructs", "Gain object properties", "Versatile combinations"],
+      "special_mechanics": {"object_fusion": true, "inorganic_only": true, "construct_creation": true},
+      "mastery_bonuses": {
+        "level_3": "Fuse with larger objects",
+        "level_5": "Multiple object fusion",
+        "level_7": "Complex constructs",
+        "level_10_awakening": "Fuse with landscape"
+      }
+    },
+    {
+      "id": "uta_uta",
+      "name": "Uta Uta no Mi",
+      "translation": "Song-Song Fruit",
+      "description": "Allows user to trap people in an alternate dimension through song.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 20},
+      "abilities": [
+        {
+          "name": "Uta World",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 5,
+          "description": "Trap listeners in song dimension",
+          "damage_type": "Mental",
+          "target": "All",
+          "effects": ["Dimension trap", "Control reality within"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Must sing", "User vulnerable while singing"],
+      "strengths": ["Dimensional trap", "Reality control in Uta World", "Mass control", "Inescapable (while singing)"],
+      "special_mechanics": {"dimensional_trap": true, "reality_control": "in song world", "singing_required": true},
+      "mastery_bonuses": {
+        "level_3": "Longer songs",
+        "level_5": "Greater control in Uta World",
+        "level_7": "Manifest song creations in reality",
+        "level_10_awakening": "Merge Uta World with reality"
+      }
+    },
+    {
+      "id": "zushi_zushi",
+      "name": "Zushi Zushi no Mi",
+      "translation": "Gravity-Gravity Fruit",
+      "description": "Allows user to control gravity at will.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 40, "defense": 30},
+      "abilities": [
+        {
+          "name": "Gravity Blade",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 1,
+          "description": "Enhance weapon with gravity",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Extreme Damage", "Crushing force"]
+        },
+        {
+          "name": "Raging Tiger",
+          "level_required": 5,
+          "ap_cost": 35,
+          "cooldown": 3,
+          "description": "Send horizontal gravity wave",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Massive Damage", "Knockback"]
+        },
+        {
+          "name": "Meteor Drop",
+          "level_required": 8,
+          "ap_cost": 50,
+          "cooldown": 5,
+          "description": "Pull down meteors from space",
+          "damage_type": "Physical",
+          "target": "All",
+          "effects": ["Catastrophic Damage", "Area destruction"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Gravity control", "Pull meteors", "Crush enemies", "Environmental destruction"],
+      "special_mechanics": {"gravity_manipulation": true, "meteor_summoning": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger gravity",
+        "level_5": "Create gravity wells",
+        "level_7": "Anti-gravity zones",
+        "level_10_awakening": "Planetary gravity control"
+      }
+    },
+    {
+      "id": "horu_horu",
+      "name": "Horu Horu no Mi",
+      "translation": "Hormone-Hormone Fruit",
+      "description": "Allows user to create and control hormones to alter bodies and minds.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 25, "speed": 20},
+      "abilities": [
+        {
+          "name": "Emporio Healing Hormone",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Inject hormones to heal and energize",
+          "damage_type": "Healing",
+          "target": "Single",
+          "effects": ["Restore HP", "Cure ailments", "Energy boost"]
+        },
+        {
+          "name": "Death Wink",
+          "level_required": 3,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Massive explosive wink attack",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Heavy Damage", "Knockback"]
+        },
+        {
+          "name": "Gender Transformation",
+          "level_required": 5,
+          "ap_cost": 25,
+          "cooldown": 4,
+          "description": "Change target's biological gender",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Gender change", "Stat redistribution"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Hormone control", "Body modification", "Gender change", "Healing", "Stat manipulation"],
+      "special_mechanics": {"hormone_creation": true, "body_modification": true, "gender_change": true},
+      "mastery_bonuses": {
+        "level_3": "More hormone varieties",
+        "level_5": "Enhanced modifications",
+        "level_7": "Permanent changes",
+        "level_10_awakening": "Mass hormone manipulation"
+      }
+    },
+    {
+      "id": "choki_choki",
+      "name": "Choki Choki no Mi",
+      "translation": "Snip-Snip Fruit",
+      "description": "Allows user to turn hands into scissors and cut anything like paper.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 25, "speed": 20},
+      "abilities": [
+        {
+          "name": "Scissor Hands",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Cut through anything as if it were paper",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Cut through defenses", "Ignore armor"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Cut anything", "Manipulate cut objects", "Defensive nullification", "Reshape reality"],
+      "special_mechanics": {"universal_cutting": true, "object_manipulation": true},
+      "mastery_bonuses": {
+        "level_3": "Cut larger objects",
+        "level_5": "Manipulate cut pieces",
+        "level_7": "Cut intangible things",
+        "level_10_awakening": "Cut space itself"
+      }
+    },
+    {
+      "id": "gutsu_gutsu",
+      "name": "Gutsu Gutsu no Mi",
+      "translation": "Smelt-Smelt Fruit",
+      "description": "Allows user to melt and combine objects in their body like a furnace.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 30, "defense": 25},
+      "abilities": [
+        {
+          "name": "Body Furnace",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Melt objects in body and reform them",
+          "damage_type": "Special",
+          "target": "Self",
+          "effects": ["Melt and combine", "Create weapons"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Extreme cold"],
+      "strengths": ["Melt anything", "Combine materials", "Create weapons", "Internal furnace"],
+      "special_mechanics": {"body_furnace": true, "material_combination": true},
+      "mastery_bonuses": {
+        "level_3": "Higher melting temperature",
+        "level_5": "Complex combinations",
+        "level_7": "Instant smelting",
+        "level_10_awakening": "Turn environment into furnace"
+      }
+    },
+    {
+      "id": "poke_poke",
+      "name": "Poke Poke no Mi",
+      "translation": "Pocket-Pocket Fruit",
+      "description": "Allows user to create pockets on any surface for storage.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 20},
+      "abilities": [
+        {
+          "name": "Pocket Creation",
+          "level_required": 1,
+          "ap_cost": 10,
+          "cooldown": 0,
+          "description": "Create dimensional pockets for storage",
+          "damage_type": "Special",
+          "target": "Self",
+          "effects": ["Infinite storage", "Quick access"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Infinite storage", "Create pockets anywhere", "Hide objects", "Strategic storage"],
+      "special_mechanics": {"pocket_creation": true, "dimensional_storage": true},
+      "mastery_bonuses": {
+        "level_3": "Larger pockets",
+        "level_5": "Pockets on living things",
+        "level_7": "Trap enemies in pockets",
+        "level_10_awakening": "Pocket dimension"
+      }
+    },
+    {
+      "id": "mogu_mogu",
+      "name": "Mogu Mogu no Mi",
+      "translation": "Mole-Mole Fruit",
+      "description": "Allows user to transform into a mole-human hybrid and burrow underground.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"speed": 25, "defense": 15},
+      "abilities": [
+        {
+          "name": "Underground Travel",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 0,
+          "description": "Burrow underground for stealth and ambush",
+          "damage_type": "Movement",
+          "target": "Self",
+          "effects": ["Burrow", "Stealth", "Ambush"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Underground travel", "Stealth", "Ambush attacks", "Terrain manipulation"],
+      "special_mechanics": {"burrowing": true, "underground_navigation": true},
+      "mastery_bonuses": {
+        "level_3": "Faster burrowing",
+        "level_5": "Create underground networks",
+        "level_7": "Sense vibrations",
+        "level_10_awakening": "Soften all ground"
+      }
+    },
+    {
+      "id": "supesupe",
+      "name": "Sube Sube no Mi",
+      "translation": "Age-Age Fruit",
+      "description": "Allows user to accelerate or decelerate aging of objects.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 25},
+      "abilities": [
+        {
+          "name": "Rust Touch",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Age objects to rust and decay",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Decay", "Rust", "Weaken"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Age manipulation", "Rust attacks", "Decay weapons", "Weaken structures"],
+      "special_mechanics": {"aging_touch": true, "decay_induction": true},
+      "mastery_bonuses": {
+        "level_3": "Faster aging",
+        "level_5": "Age living things",
+        "level_7": "Instant rust",
+        "level_10_awakening": "Age entire area"
+      }
+    },
+    {
+      "id": "gol_gol",
+      "name": "Gol Gol no Mi",
+      "translation": "Gold-Gold Fruit",
+      "description": "Allows user to manipulate gold and turn things into gold.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 30, "defense": 35},
+      "abilities": [
+        {
+          "name": "Golden Touch",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "Turn touched objects into gold",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Transform to gold", "Immobilize"]
+        },
+        {
+          "name": "Gold Armor",
+          "level_required": 4,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Create golden armor for defense",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Extreme defense", "Reflect attacks"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Gold is heavy"],
+      "strengths": ["Create gold", "Golden transmutation", "Wealth generation", "Golden constructs"],
+      "special_mechanics": {"gold_creation": true, "transmutation": true, "weight_burden": true},
+      "mastery_bonuses": {
+        "level_3": "Create more gold",
+        "level_5": "Lighter gold",
+        "level_7": "Golden weapons",
+        "level_10_awakening": "Midas Touch - turn anything to gold"
+      }
+    },
+    {
+      "id": "moa_moa",
+      "name": "Moa Moa no Mi",
+      "translation": "More-More Fruit",
+      "description": "Allows user to increase size and speed of objects by up to 100x.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 35, "speed": 30},
+      "abilities": [
+        {
+          "name": "Moa Moa 100x",
+          "level_required": 1,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Increase size and speed of object by 100x",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Massive size/speed boost", "Extreme power"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Cannot affect self directly"],
+      "strengths": ["100x multiplication", "Size increase", "Speed increase", "Power multiplication"],
+      "special_mechanics": {"multiplication": "up to 100x", "object_only": true},
+      "mastery_bonuses": {
+        "level_3": "Higher multiplication",
+        "level_5": "Affect multiple objects",
+        "level_7": "Partial self-enhancement",
+        "level_10_awakening": "Unlimited multiplication"
+      }
+    },
+    {
+      "id": "zuma_zuma",
+      "name": "Zuma Zuma no Mi",
+      "translation": "Plasma-Plasma Fruit",
+      "description": "Allows user to create and control plasma.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 38, "speed": 25},
+      "abilities": [
+        {
+          "name": "Plasma Blast",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 2,
+          "description": "Fire superheated plasma at enemies",
+          "damage_type": "Elemental",
+          "target": "Multi",
+          "effects": ["Extreme Heat Damage", "Burn", "Vaporize"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Extreme energy drain"],
+      "strengths": ["Plasma generation", "Extreme heat", "Energy attacks", "Vaporization"],
+      "special_mechanics": {"plasma_control": true, "extreme_heat": true},
+      "mastery_bonuses": {
+        "level_3": "Hotter plasma",
+        "level_5": "Plasma constructs",
+        "level_7": "Sustained plasma",
+        "level_10_awakening": "Plasma field"
+      }
+    },
+    {
+      "id": "raki_raki",
+      "name": "Raki Raki no Mi",
+      "translation": "Luck-Luck Fruit",
+      "description": "Allows user to steal and redistribute luck.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 25},
+      "abilities": [
+        {
+          "name": "Luck Steal",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 3,
+          "description": "Steal enemy's luck for yourself",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Steal luck", "Enemy misfortune", "Self fortune"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Luck manipulation", "Probability control", "Cause misfortune", "Guarantee success"],
+      "special_mechanics": {"luck_manipulation": true, "probability_alteration": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger luck effects",
+        "level_5": "Affect multiple targets",
+        "level_7": "Extreme fortune/misfortune",
+        "level_10_awakening": "Control fate itself"
+      }
+    },
+    {
+      "id": "kira_kira",
+      "name": "Kira Kira no Mi",
+      "translation": "Twinkle-Twinkle Fruit",
+      "description": "Allows user to turn body into diamond for ultimate defense.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 50, "attack": 30},
+      "abilities": [
+        {
+          "name": "Diamond Form",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Transform body into indestructible diamond",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Nearly invulnerable", "Reflect attacks", "Enhanced striking"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Cannot move well when fully diamond"],
+      "strengths": ["Diamond body", "Nearly indestructible", "Highest defense", "Light refraction"],
+      "special_mechanics": {"diamond_body": true, "near_invulnerability": true, "mobility_trade": true},
+      "mastery_bonuses": {
+        "level_3": "Partial diamond form",
+        "level_5": "Maintain mobility",
+        "level_7": "Diamond weapons",
+        "level_10_awakening": "Turn environment into diamond"
+      }
+    },
+    {
+      "id": "ryu_ryu_para",
+      "name": "Ryu Ryu no Mi, Model: Dragon",
+      "translation": "Dragon-Dragon Fruit (Paramecia variant)",
+      "description": "Allows user to control and manipulate dragons.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 35, "defense": 30},
+      "abilities": [
+        {
+          "name": "Dragon Summon",
+          "level_required": 1,
+          "ap_cost": 30,
+          "cooldown": 4,
+          "description": "Summon and control dragons",
+          "damage_type": "Summon",
+          "target": "Area",
+          "effects": ["Summon dragons", "Fire breath", "Flight"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Dragon control", "Summon dragons", "Fire attacks", "Flight"],
+      "special_mechanics": {"dragon_summoning": true, "dragon_control": true},
+      "mastery_bonuses": {
+        "level_3": "Summon stronger dragons",
+        "level_5": "Multiple dragons",
+        "level_7": "Ancient dragons",
+        "level_10_awakening": "Dragon King form"
+      }
+    },
+    {
+      "id": "hira_hira",
+      "name": "Hira Hira no Mi",
+      "translation": "Ripple-Ripple Fruit",
+      "description": "Allows user to make objects ripple and flutter like flags.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 25, "defense": 20},
+      "abilities": [
+        {
+          "name": "Flag Form",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Make objects flutter and ripple",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Deflect attacks", "Weapon enhancement", "Fluid movement"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Object rippling", "Deflection", "Enhanced mobility", "Weapon augmentation"],
+      "special_mechanics": {"ripple_induction": true, "deflection": true},
+      "mastery_bonuses": {
+        "level_3": "Ripple larger objects",
+        "level_5": "Perfect deflection",
+        "level_7": "Ripple ground",
+        "level_10_awakening": "Ripple reality"
+      }
+    },
+    {
+      "id": "ishi_ishi",
+      "name": "Ishi Ishi no Mi",
+      "translation": "Stone-Stone Fruit",
+      "description": "Allows user to merge with and control stone.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 35, "attack": 25},
+      "abilities": [
+        {
+          "name": "Stone Merge",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Merge with stone for defense and attacks",
+          "damage_type": "Physical",
+          "target": "Self",
+          "effects": ["Stone form", "Enhanced defense", "Earth control"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Explosives"],
+      "strengths": ["Stone merging", "Extreme defense", "Earth manipulation", "Stone constructs"],
+      "special_mechanics": {"stone_merger": true, "earth_control": true},
+      "mastery_bonuses": {
+        "level_3": "Control more stone",
+        "level_5": "Stone armor",
+        "level_7": "Stone golems",
+        "level_10_awakening": "Petrify environment"
+      }
+    },
+    {
+      "id": "noko_noko",
+      "name": "Noko Noko no Mi",
+      "translation": "Spore-Spore Fruit",
+      "description": "Allows user to generate and control poisonous spores.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 28, "speed": 20},
+      "abilities": [
+        {
+          "name": "Spore Cloud",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Release toxic spore cloud",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Poison", "Paralysis", "Area denial"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Fire", "Wind"],
+      "strengths": ["Spore generation", "Poison attacks", "Area control", "Paralysis"],
+      "special_mechanics": {"spore_creation": true, "toxin_variety": true},
+      "mastery_bonuses": {
+        "level_3": "More toxic spores",
+        "level_5": "Control spore spread",
+        "level_7": "Hallucinogenic spores",
+        "level_10_awakening": "Spore forest"
+      }
+    },
+    {
+      "id": "nepa_nepa",
+      "name": "Nepa Nepa no Mi",
+      "translation": "Sleep-Sleep Fruit",
+      "description": "Allows user to induce deep sleep and manipulate dreams.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 18},
+      "abilities": [
+        {
+          "name": "Lullaby",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 3,
+          "description": "Put enemies into deep sleep",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Sleep", "Unconscious", "Vulnerable"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Loud noises"],
+      "strengths": ["Sleep induction", "Dream walking", "Crowd control", "Nightmare attacks"],
+      "special_mechanics": {"sleep_induction": true, "dream_walking": true},
+      "mastery_bonuses": {
+        "level_3": "Deeper sleep",
+        "level_5": "Control dreams",
+        "level_7": "Eternal slumber",
+        "level_10_awakening": "Dream world reality"
+      }
+    },
+    {
+      "id": "ami_ami",
+      "name": "Ami Ami no Mi",
+      "translation": "Net-Net Fruit",
+      "description": "Allows user to produce nets from their body.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 20, "attack": 15},
+      "abilities": [
+        {
+          "name": "Net Trap",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 1,
+          "description": "Create nets to trap enemies",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Trap", "Bind", "Immobilize"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Sharp blades"],
+      "strengths": ["Net creation", "Trap enemies", "Defensive barriers", "Versatile capture"],
+      "special_mechanics": {"net_generation": true, "adaptive_nets": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger nets",
+        "level_5": "Steel nets",
+        "level_7": "Explosive nets",
+        "level_10_awakening": "Net domain"
+      }
+    },
+    {
+      "id": "kopi_kopi",
+      "name": "Kopi Kopi no Mi",
+      "translation": "Copy-Copy Fruit",
+      "description": "Allows user to copy and store the appearance and abilities of others.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 20},
+      "abilities": [
+        {
+          "name": "Perfect Copy",
+          "level_required": 1,
+          "ap_cost": 25,
+          "cooldown": 4,
+          "description": "Copy target's appearance and abilities",
+          "damage_type": "Status",
+          "target": "Single",
+          "effects": ["Perfect mimicry", "Copy abilities", "Transform"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Must touch target"],
+      "strengths": ["Perfect copying", "Ability theft", "Infinite storage", "Versatility"],
+      "special_mechanics": {"perfect_copying": true, "ability_replication": true, "touch_required": true},
+      "mastery_bonuses": {
+        "level_3": "Copy multiple people",
+        "level_5": "Copy Devil Fruits temporarily",
+        "level_7": "Combine copied abilities",
+        "level_10_awakening": "Ultimate Mimic - copy anything"
+      }
+    },
+    {
+      "id": "modo_modo",
+      "name": "Modo Modo no Mi",
+      "translation": "Return-Return Fruit",
+      "description": "Allows user to rewind time on objects and people.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 25},
+      "abilities": [
+        {
+          "name": "Time Rewind",
+          "level_required": 1,
+          "ap_cost": 30,
+          "cooldown": 4,
+          "description": "Rewind target to previous state",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Rewind time", "Undo damage", "De-age"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Limited rewind time"],
+      "strengths": ["Time reversal", "Undo damage", "Youth restoration", "Reset state"],
+      "special_mechanics": {"time_reversal": true, "limited_duration": "recent past only"},
+      "mastery_bonuses": {
+        "level_3": "Rewind further back",
+        "level_5": "Rewind multiple targets",
+        "level_7": "Selective rewinding",
+        "level_10_awakening": "Temporal reset zone"
+      }
     }
   ],
-  "total_count": 12,
+  "total_count": 90,
   "template": {
     "id": "unique_fruit_id",
     "name": "Fruit Name (Japanese)",
