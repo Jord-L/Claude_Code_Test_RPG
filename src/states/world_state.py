@@ -162,9 +162,7 @@ class WorldState(State):
         if not hasattr(player, 'party_manager') or player.party_manager is None:
             player.party_manager = PartyManager(player)
             print(f"Initialized party manager for {player.name}")
-
-            # Add starter crew for testing/demo
-            create_starter_crew(player.party_manager)
+            print(f"Starting solo - no party members added")
 
             # Add starter items for testing/demo
             print("\nAdding starter items...")
