@@ -11,6 +11,8 @@ from states.state import State
 from ui.button import Button
 from ui.text_box import CenteredText
 from utils.constants import *
+from utils.save_manager import get_save_manager
+from entities.player import Player
 
 
 class SaveSlotButton(Button):
@@ -54,8 +56,8 @@ class LoadGameState(State):
     def __init__(self, game):
         super().__init__(game)
 
-        # Save file directory
-        self.saves_dir = "saves"
+        # Save manager
+        self.save_manager = get_save_manager()
 
         # UI elements
         self.title_text = None
@@ -67,58 +69,52 @@ class LoadGameState(State):
         self.save_slots = []
         self.has_saves = False
 
-        self._ensure_saves_directory()
         self._load_save_data()
         self._setup_ui()
-
-    def _ensure_saves_directory(self):
-        """Create saves directory if it doesn't exist."""
-        if not os.path.exists(self.saves_dir):
-            os.makedirs(self.saves_dir)
-            print(f"Created saves directory: {self.saves_dir}")
 
     def _load_save_data(self):
         """Load information about all save files."""
         self.save_slots = []
+        self.has_saves = False
 
-        # Check for save files (save_1.json, save_2.json, etc.)
-        for slot in range(1, 4):  # 3 save slots
-            save_path = os.path.join(self.saves_dir, f"save_{slot}.json")
+        # Get all save slot information from save manager
+        all_saves = self.save_manager.get_all_saves()
 
-            if os.path.exists(save_path):
+        for save_info in all_saves:
+            if save_info['exists']:
+                # Format playtime
+                playtime_seconds = save_info.get('playtime', 0)
+                hours = int(playtime_seconds // 3600)
+                minutes = int((playtime_seconds % 3600) // 60)
+                playtime_str = f"{hours}h {minutes}m"
+
+                # Format timestamp
+                timestamp = save_info.get('timestamp', 'Unknown')
                 try:
-                    with open(save_path, 'r') as f:
-                        data = json.load(f)
+                    if timestamp != 'Unknown':
+                        dt = datetime.fromisoformat(timestamp)
+                        timestamp_str = dt.strftime("%Y-%m-%d %H:%M")
+                    else:
+                        timestamp_str = "Unknown"
+                except:
+                    timestamp_str = "Unknown"
 
-                    # Extract key information
-                    save_info = {
-                        "slot": slot,
-                        "exists": True,
-                        "path": save_path,
-                        "player_name": data.get("player", {}).get("name", "Unknown"),
-                        "level": data.get("player", {}).get("level", 1),
-                        "location": data.get("location", "Unknown"),
-                        "playtime": data.get("playtime", "0h 0m"),
-                        "timestamp": data.get("timestamp", "Unknown"),
-                        "data": data
-                    }
-                    self.save_slots.append(save_info)
-                    self.has_saves = True
-
-                except Exception as e:
-                    print(f"Error loading save file {save_path}: {e}")
-                    # Add empty slot
-                    self.save_slots.append({
-                        "slot": slot,
-                        "exists": False,
-                        "path": save_path
-                    })
+                slot_data = {
+                    "slot": save_info['slot'],
+                    "exists": True,
+                    "player_name": save_info.get('character_name', 'Unknown'),
+                    "level": save_info.get('level', 1),
+                    "location": save_info.get('location', 'Tutorial Island'),
+                    "playtime": playtime_str,
+                    "timestamp": timestamp_str
+                }
+                self.save_slots.append(slot_data)
+                self.has_saves = True
             else:
                 # Empty slot
                 self.save_slots.append({
-                    "slot": slot,
-                    "exists": False,
-                    "path": save_path
+                    "slot": save_info['slot'],
+                    "exists": False
                 })
 
     def _setup_ui(self):
@@ -179,15 +175,43 @@ class LoadGameState(State):
         Args:
             save_data: Dictionary with save file information
         """
-        print(f"Loading save file: Slot {save_data['slot']}")
+        slot = save_data['slot']
+        print(f"\n{'='*60}")
+        print(f"LOADING SAVE FILE: Slot {slot}")
+        print(f"{'='*60}")
         print(f"  Player: {save_data['player_name']} (Level {save_data['level']})")
         print(f"  Location: {save_data['location']}")
         print(f"  Playtime: {save_data['playtime']}")
 
-        # TODO: Actually load the game data and transition to world state
-        # For now, just show a message
-        print("TODO: Implement actual save loading")
-        print("  Would pass player data to world state via persistent dict")
+        # Load the save file data
+        loaded_data = self.save_manager.load_game(slot)
+
+        if loaded_data:
+            try:
+                # Extract character data
+                character_data = loaded_data.get('character', {})
+
+                # Reconstruct the player from saved data
+                player = Player.from_dict(character_data)
+
+                print(f"✓ Player loaded: {player.name}")
+                print(f"✓ Level: {player.level}")
+                print(f"✓ Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
+                print(f"\n🎮 Transitioning to world state...")
+                print(f"{'='*60}\n")
+
+                # Store the loaded player to pass to world state
+                self.loaded_player = player
+
+                # Transition to world state
+                self.state_manager.change_state("world")
+
+            except Exception as e:
+                print(f"✗ Error loading save file: {e}")
+                import traceback
+                traceback.print_exc()
+        else:
+            print(f"✗ Failed to load save file from slot {slot}")
 
     def _on_back(self):
         """Return to main menu."""
@@ -273,4 +297,10 @@ class LoadGameState(State):
     def cleanup(self):
         """Called when leaving state."""
         print("Load Game menu cleanup")
+
+        # If we loaded a player, pass it to the next state
+        if hasattr(self, 'loaded_player'):
+            print(f"Passing loaded player to next state: {self.loaded_player.name}")
+            return {'player': self.loaded_player}
+
         return {}

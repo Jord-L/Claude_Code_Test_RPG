@@ -13,6 +13,7 @@ from ui.text_box import CenteredText
 from ui.panel import Panel
 from ui.character_preview import CharacterPreview
 from ui.stat_display import StatDisplay
+from utils.save_manager import get_save_manager
 from utils.constants import *
 
 
@@ -409,6 +410,16 @@ class CharacterCreationState(State):
         print(f"   Name: {player.name}")
         print(f"   Level: {player.level}")
         print(f"   Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
+
+        # Save the character to save slot 1
+        print(f"\n💾 Saving character to save file...")
+        save_manager = get_save_manager()
+        character_data = player.to_dict()
+
+        if save_manager.save_game(character_data, slot=1):
+            print(f"✓ Character saved successfully!")
+        else:
+            print(f"✗ Failed to save character (game will continue)")
 
         print(f"\n🎮 Transitioning to world state...")
         print("="*60 + "\n")
