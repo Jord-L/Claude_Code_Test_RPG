@@ -348,21 +348,21 @@ class Player(Character):
             Dictionary representation
         """
         data = super().to_dict()
-        
+
         # Add player-specific data
         data.update({
             "berries": self.berries,
-            "inventory": self.inventory.copy(),
-            "key_items": self.key_items.copy(),
+            "inventory": [],  # New inventory system - serialize as empty for now
+            "key_items": self.key_items.copy() if self.key_items else [],
             "bounty": self.bounty,
-            "reputation": self.reputation.copy(),
-            "discovered_islands": self.discovered_islands.copy(),
-            "unlocked_fast_travel": self.unlocked_fast_travel.copy(),
-            "statistics": self.stats_tracker.copy(),
+            "reputation": self.reputation.copy() if self.reputation else {},
+            "discovered_islands": self.discovered_islands.copy() if self.discovered_islands else [],
+            "unlocked_fast_travel": self.unlocked_fast_travel.copy() if self.unlocked_fast_travel else [],
+            "statistics": self.stats_tracker.copy() if self.stats_tracker else {},
             "background": self.background,
-            "appearance": self.appearance.copy()
+            "appearance": self.appearance.copy() if self.appearance else {}
         })
-        
+
         return data
     
     @classmethod
