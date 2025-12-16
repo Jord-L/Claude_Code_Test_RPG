@@ -395,7 +395,8 @@ class Player(Character):
         
         # Restore player-specific data
         player.berries = data.get("berries", STARTING_BERRIES)
-        player.inventory = data.get("inventory", [])
+        # Note: Inventory is already initialized as Inventory() object, skip loading for now
+        # player.inventory is already set up in __init__
         player.key_items = data.get("key_items", [])
         player.bounty = data.get("bounty", 0)
         player.reputation = data.get("reputation", {"pirates": 0, "marines": 0, "civilians": 0})
@@ -406,11 +407,31 @@ class Player(Character):
         player.appearance = data.get("appearance", {})
         
         # Restore Devil Fruit if present
-        if "devil_fruit" in data:
-            # Note: Would need to load fruit_data from devil_fruit_manager
-            # This is just the save structure
-            pass
-        
+        if "devil_fruit" in data and data["devil_fruit"]:
+            try:
+                from systems.devil_fruit_manager import devil_fruit_manager
+                from entities.devil_fruit import DevilFruit
+
+                saved_fruit = data["devil_fruit"]
+                fruit_id = saved_fruit.get("id")
+
+                if fruit_id:
+                    # Load the fruit data from manager
+                    fruit_data = devil_fruit_manager.get_fruit_by_id(fruit_id)
+
+                    if fruit_data:
+                        # Reconstruct the devil fruit with saved state
+                        player.devil_fruit = DevilFruit.from_dict(saved_fruit, fruit_data)
+                        player._apply_devil_fruit_bonuses()
+                    else:
+                        print(f"Warning: Could not find devil fruit data for {fruit_id}")
+                else:
+                    print("Warning: Saved devil fruit has no ID")
+            except Exception as e:
+                print(f"Error restoring devil fruit: {e}")
+                import traceback
+                traceback.print_exc()
+
         return player
     
     def __str__(self) -> str:
