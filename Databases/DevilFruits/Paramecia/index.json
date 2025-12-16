@@ -9,7 +9,6 @@
       "description": "Grants the user's body the properties of rubber. Immune to blunt attacks and electricity.",
       "rarity": "Rare",
       "starting_available": true,
-      "canon_user": "Monkey D. Luffy",
       "stat_bonuses": {"attack": 15, "defense": 20, "speed": 10},
       "abilities": [
         {
@@ -40,7 +39,6 @@
       "description": "Allows user to split their body into pieces and control them independently. Immune to slashing attacks.",
       "rarity": "Uncommon",
       "starting_available": true,
-      "canon_user": "Buggy",
       "stat_bonuses": {"defense": 20, "speed": 15},
       "abilities": [
         {
@@ -71,7 +69,6 @@
       "description": "Creates a spherical domain where user can manipulate anything. Can perform miraculous surgeries.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Trafalgar D. Water Law",
       "stat_bonuses": {"attack": 30, "speed": 20},
       "abilities": [
         {
@@ -122,7 +119,6 @@
       "description": "Allows user to create devastating earthquakes and shockwaves. Called the strongest Paramecia.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Edward Newgate (Whitebeard), Marshall D. Teach",
       "stat_bonuses": {"attack": 50, "defense": 15},
       "abilities": [
         {
@@ -163,7 +159,6 @@
       "description": "Allows user to turn those attracted to them into stone. Can shoot love-based beams.",
       "rarity": "Rare",
       "starting_available": true,
-      "canon_user": "Boa Hancock",
       "stat_bonuses": {"attack": 25, "speed": 20},
       "abilities": [
         {
@@ -204,7 +199,6 @@
       "description": "Allows user to generate and control various types of poison. Immune to all toxins.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Magellan",
       "stat_bonuses": {"attack": 35, "defense": 20},
       "abilities": [
         {
@@ -245,7 +239,6 @@
       "description": "Allows user to create and control ghosts that drain willpower and create negativity.",
       "rarity": "Rare",
       "starting_available": true,
-      "canon_user": "Perona",
       "stat_bonuses": {"speed": 25, "defense": 15},
       "abilities": [
         {
@@ -286,7 +279,6 @@
       "description": "Grants paw pads that can repel anything including air, attacks, and even abstract concepts like pain.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Bartholomew Kuma",
       "stat_bonuses": {"defense": 35, "attack": 25},
       "abilities": [
         {
@@ -327,7 +319,6 @@
       "description": "Allows user to turn people into toys and erase memories of them. User stops aging.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Sugar",
       "stat_bonuses": {"attack": 15, "speed": 20},
       "abilities": [
         {
@@ -358,7 +349,6 @@
       "description": "Allows user to create and control razor-sharp strings for offense, defense, and manipulation.",
       "rarity": "Rare",
       "starting_available": false,
-      "canon_user": "Donquixote Doflamingo",
       "stat_bonuses": {"attack": 28, "speed": 22, "defense": 15},
       "abilities": [
         {
@@ -409,7 +399,6 @@
       "description": "Allows user to create indestructible barriers of various shapes and sizes.",
       "rarity": "Rare",
       "starting_available": true,
-      "canon_user": "Bartolomeo",
       "stat_bonuses": {"defense": 40, "attack": 10},
       "abilities": [
         {
@@ -450,7 +439,6 @@
       "description": "Special Paramecia that functions like Logia. User can create, control, and become mochi.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Charlotte Katakuri",
       "stat_bonuses": {"attack": 30, "defense": 25, "speed": 20},
       "abilities": [
         {

@@ -18,7 +18,7 @@
       "description": "Legendary creatures"
     }
   ],
-  "total_count": 15,
+  "total_count": 25,
   "fruits": [
     {
       "id": "ushi_ushi_bison",
@@ -29,7 +29,6 @@
       "description": "Transform into a bison or human-bison hybrid. Grants immense strength.",
       "rarity": "Common",
       "starting_available": true,
-      "canon_user": "Dalton",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 25, "defense": 20, "speed": 10}},
@@ -65,7 +64,6 @@
       "description": "Transform into a dachshund. Can merge with objects like guns.",
       "rarity": "Common",
       "starting_available": true,
-      "canon_user": "Lassoo (Mr. 4's gun)",
       "forms": {
         "object": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"speed": 20, "attack": 15}},
@@ -102,7 +100,6 @@
       "description": "Transform into a falcon or human-falcon hybrid. Grants flight.",
       "rarity": "Uncommon",
       "starting_available": true,
-      "canon_user": "Pell",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"speed": 35, "attack": 20}},
@@ -139,7 +136,6 @@
       "description": "Transform into a horse. Grants incredible speed and endurance.",
       "rarity": "Common",
       "starting_available": true,
-      "canon_user": "Pierre",
       "forms": {
         "object": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"speed": 30, "defense": 15}},
@@ -175,7 +171,6 @@
       "description": "Transform into a leopard. Grants enhanced agility and predatory instincts.",
       "rarity": "Uncommon",
       "starting_available": true,
-      "canon_user": "Rob Lucci",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 30, "speed": 35, "defense": 20}},
@@ -214,6 +209,415 @@
       }
     },
     {
+      "id": "inu_inu_wolf",
+      "name": "Inu Inu no Mi, Model: Wolf",
+      "translation": "Dog-Dog Fruit, Model: Wolf",
+      "model": "Wolf",
+      "subtype": "Regular",
+      "description": "Transform into a wolf. Grants pack hunter instincts and enhanced senses.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 28, "speed": 32, "defense": 18}},
+        "full_beast": {"stat_modifiers": {"attack": 38, "speed": 42, "defense": 15}}
+      },
+      "abilities": [
+        {
+          "name": "Fang Rush",
+          "level_required": 1,
+          "ap_cost": 14,
+          "form_required": "Full Beast",
+          "description": "Charge and bite with powerful wolf jaws",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Bleed"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Pack tactics bonus", "Enhanced smell and hearing", "Night vision", "High speed"],
+      "special_mechanics": {"pack_hunter": true, "enhanced_senses": true},
+      "mastery_bonuses": {
+        "level_3": "Pack coordination with allies",
+        "level_5": "+25% speed at night",
+        "level_7": "Alpha wolf aura - boosts ally stats",
+        "level_10_awakening": "Awakened Zoan - dire wolf form"
+      }
+    },
+    {
+      "id": "kuma_kuma_grizzly",
+      "name": "Kuma Kuma no Mi, Model: Grizzly Bear",
+      "translation": "Bear-Bear Fruit, Model: Grizzly",
+      "model": "Grizzly Bear",
+      "subtype": "Regular",
+      "description": "Transform into a grizzly bear. Grants immense strength and ferocity.",
+      "rarity": "Common",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 35, "defense": 28, "speed": 8}},
+        "full_beast": {"stat_modifiers": {"attack": 50, "defense": 40, "speed": 5}}
+      },
+      "abilities": [
+        {
+          "name": "Bear Maul",
+          "level_required": 1,
+          "ap_cost": 18,
+          "form_required": "Hybrid",
+          "description": "Savage claw and bite attack",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Knockback"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Slow speed"],
+      "strengths": ["Massive physical power", "High durability", "Intimidation", "Can stand upright"],
+      "mastery_bonuses": {
+        "level_3": "Berserker rage - increased attack when HP low",
+        "level_5": "+30% defense boost",
+        "level_7": "Hibernate - recover HP over time",
+        "level_10_awakening": "Awakened Zoan - massive dire bear"
+      }
+    },
+    {
+      "id": "tori_tori_eagle",
+      "name": "Tori Tori no Mi, Model: Eagle",
+      "translation": "Bird-Bird Fruit, Model: Eagle",
+      "model": "Eagle",
+      "subtype": "Regular",
+      "description": "Transform into an eagle. Grants powerful talons and superior aerial combat.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 25, "speed": 38, "defense": 15}},
+        "full_beast": {"stat_modifiers": {"attack": 20, "speed": 52, "defense": 12}}
+      },
+      "abilities": [
+        {
+          "name": "Talon Strike",
+          "level_required": 1,
+          "ap_cost": 16,
+          "form_required": "Full Beast",
+          "description": "Swoop down and grab enemy with sharp talons",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Grab"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Superior flight speed", "Eagle eye - perfect vision", "Powerful grip", "Dive attacks"],
+      "special_mechanics": {"flight": true, "enhanced_vision": true, "dive_bonus": 50},
+      "mastery_bonuses": {
+        "level_3": "Enhanced vision - see weaknesses",
+        "level_5": "Dive attacks deal double damage",
+        "level_7": "Can carry heavy objects/allies",
+        "level_10_awakening": "Awakened Zoan - giant golden eagle"
+      }
+    },
+    {
+      "id": "hebi_hebi_cobra",
+      "name": "Hebi Hebi no Mi, Model: King Cobra",
+      "translation": "Snake-Snake Fruit, Model: King Cobra",
+      "model": "King Cobra",
+      "subtype": "Regular",
+      "description": "Transform into a king cobra. Grants venomous bite and constriction abilities.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 22, "speed": 35, "defense": 20}},
+        "full_beast": {"stat_modifiers": {"attack": 30, "speed": 40, "defense": 25}}
+      },
+      "abilities": [
+        {
+          "name": "Venom Fang",
+          "level_required": 1,
+          "ap_cost": 15,
+          "form_required": "Full Beast",
+          "description": "Bite with deadly venom",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Medium Damage", "Poison 40%"]
+        },
+        {
+          "name": "Constrict",
+          "level_required": 4,
+          "ap_cost": 20,
+          "form_required": "Full Beast",
+          "description": "Wrap around enemy and squeeze",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage over time", "Bind", "Crush"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Cold temperatures"],
+      "strengths": ["Venomous attacks", "Constriction", "Can unhinge jaw", "Scale armor"],
+      "special_mechanics": {"poison_immunity": true, "flexible_body": true},
+      "mastery_bonuses": {
+        "level_3": "More potent venom",
+        "level_5": "Can spit venom at range",
+        "level_7": "Hypnotic gaze - confuse enemies",
+        "level_10_awakening": "Awakened Zoan - massive serpent king"
+      }
+    },
+    {
+      "id": "wani_wani_crocodile",
+      "name": "Wani Wani no Mi, Model: Crocodile",
+      "translation": "Croc-Croc Fruit, Model: Crocodile",
+      "model": "Crocodile",
+      "subtype": "Regular",
+      "description": "Transform into a crocodile. Grants powerful jaws and amphibious abilities.",
+      "rarity": "Common",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 32, "defense": 30, "speed": 12}},
+        "full_beast": {"stat_modifiers": {"attack": 42, "defense": 40, "speed": 8}}
+      },
+      "abilities": [
+        {
+          "name": "Death Roll",
+          "level_required": 1,
+          "ap_cost": 20,
+          "form_required": "Full Beast",
+          "description": "Bite and spin violently",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Extreme Damage", "Stun"]
+        }
+      ],
+      "weaknesses": ["Seastone", "Slow on land"],
+      "strengths": ["Strongest bite force", "Armored scales", "Can breathe underwater", "Ambush predator"],
+      "special_mechanics": {"aquatic": true, "armored": true, "bite_force": "extreme"},
+      "mastery_bonuses": {
+        "level_3": "Enhanced armor - +20% defense",
+        "level_5": "Tail whip attacks",
+        "level_7": "Can hold breath indefinitely",
+        "level_10_awakening": "Awakened Zoan - prehistoric crocodilian"
+      }
+    },
+    {
+      "id": "saru_saru_gorilla",
+      "name": "Saru Saru no Mi, Model: Gorilla",
+      "translation": "Monkey-Monkey Fruit, Model: Gorilla",
+      "model": "Gorilla",
+      "subtype": "Regular",
+      "description": "Transform into a gorilla. Grants incredible strength and agility.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 38, "defense": 25, "speed": 22}},
+        "full_beast": {"stat_modifiers": {"attack": 52, "defense": 35, "speed": 18}}
+      },
+      "abilities": [
+        {
+          "name": "Kong Gun",
+          "level_required": 1,
+          "ap_cost": 18,
+          "form_required": "Hybrid",
+          "description": "Powerful punch with gorilla strength",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Knockback"]
+        },
+        {
+          "name": "Chest Beat",
+          "level_required": 5,
+          "ap_cost": 15,
+          "form_required": "Full Beast",
+          "description": "Beat chest to intimidate and boost power",
+          "damage_type": "Status",
+          "target": "Self",
+          "effects": ["Attack boost +30%", "Intimidate enemies"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Massive strength", "Intelligent combat", "Can use tools/weapons", "Agile climber"],
+      "special_mechanics": {"tool_use": true, "climbing": true},
+      "mastery_bonuses": {
+        "level_3": "Tool mastery - use weapons better",
+        "level_5": "+40% strength boost",
+        "level_7": "King Kong Fury - berserk mode",
+        "level_10_awakening": "Awakened Zoan - titanic silverback"
+      }
+    },
+    {
+      "id": "kame_kame_turtle",
+      "name": "Kame Kame no Mi, Model: Snapping Turtle",
+      "translation": "Turtle-Turtle Fruit, Model: Snapping Turtle",
+      "model": "Snapping Turtle",
+      "subtype": "Regular",
+      "description": "Transform into a snapping turtle. Grants incredible defense and powerful bite.",
+      "rarity": "Common",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 22, "defense": 40, "speed": -5}},
+        "full_beast": {"stat_modifiers": {"attack": 28, "defense": 55, "speed": -10}}
+      },
+      "abilities": [
+        {
+          "name": "Shell Shield",
+          "level_required": 1,
+          "ap_cost": 10,
+          "form_required": "Full Beast",
+          "description": "Retreat into shell for ultimate defense",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Block 90% damage", "Cannot attack while active"]
+        },
+        {
+          "name": "Snap Bite",
+          "level_required": 3,
+          "ap_cost": 18,
+          "form_required": "Hybrid",
+          "description": "Lightning-fast bite attack",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Cannot dodge"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Very slow"],
+      "strengths": ["Extreme defense", "Impenetrable shell", "Strong bite", "Can breathe underwater"],
+      "special_mechanics": {"shell_defense": true, "aquatic": true},
+      "mastery_bonuses": {
+        "level_3": "Shell becomes harder - 95% damage reduction",
+        "level_5": "Can attack while in shell",
+        "level_7": "Shell spike - damage attackers",
+        "level_10_awakening": "Awakened Zoan - ancient turtle fortress"
+      }
+    },
+    {
+      "id": "taka_taka_hawk",
+      "name": "Taka Taka no Mi, Model: Hawk",
+      "translation": "Hawk-Hawk Fruit, Model: Hawk",
+      "model": "Hawk",
+      "subtype": "Regular",
+      "description": "Transform into a hawk. Grants incredible speed and precision strikes.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 28, "speed": 42, "defense": 14}},
+        "full_beast": {"stat_modifiers": {"attack": 24, "speed": 58, "defense": 10}}
+      },
+      "abilities": [
+        {
+          "name": "Hawk Dive",
+          "level_required": 1,
+          "ap_cost": 20,
+          "form_required": "Full Beast",
+          "description": "Precision dive strike at extreme speed",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Extreme Damage", "Critical hit chance +50%"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Fastest flyer", "Hawk eyes - perfect accuracy", "Precision strikes", "Aerial superiority"],
+      "special_mechanics": {"flight": true, "perfect_accuracy": true},
+      "mastery_bonuses": {
+        "level_3": "Never miss attacks",
+        "level_5": "Critical hits deal triple damage",
+        "level_7": "Can attack while flying at full speed",
+        "level_10_awakening": "Awakened Zoan - legendary war hawk"
+      }
+    },
+    {
+      "id": "batto_batto_bat",
+      "name": "Batto Batto no Mi, Model: Vampire Bat",
+      "translation": "Bat-Bat Fruit, Model: Vampire Bat",
+      "model": "Vampire Bat",
+      "subtype": "Regular",
+      "description": "Transform into a vampire bat. Grants flight, echolocation, and blood drain.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 20, "speed": 38, "defense": 16}},
+        "full_beast": {"stat_modifiers": {"attack": 18, "speed": 48, "defense": 14}}
+      },
+      "abilities": [
+        {
+          "name": "Blood Drain",
+          "level_required": 1,
+          "ap_cost": 16,
+          "form_required": "Full Beast",
+          "description": "Bite and drain enemy blood to heal",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Medium Damage", "Lifesteal 50%"]
+        },
+        {
+          "name": "Ultrasonic Screech",
+          "level_required": 4,
+          "ap_cost": 22,
+          "form_required": "Hybrid",
+          "description": "Emit powerful ultrasonic waves",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Medium Damage", "Confusion", "Stun 30%"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Sunlight (reduced stats in day)"],
+      "strengths": ["Flight", "Echolocation - fight in darkness", "Lifesteal", "Stealth", "Night vision"],
+      "special_mechanics": {"flight": true, "echolocation": true, "nocturnal": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced echolocation - see invisible enemies",
+        "level_5": "Lifesteal increased to 75%",
+        "level_7": "Sonic flight - extreme speed at night",
+        "level_10_awakening": "Awakened Zoan - dire bat swarm form"
+      }
+    },
+    {
+      "id": "mogu_mogu_mole",
+      "name": "Mogu Mogu no Mi, Model: Mole",
+      "translation": "Mole-Mole Fruit, Model: Mole",
+      "model": "Mole",
+      "subtype": "Regular",
+      "description": "Transform into a mole. Grants powerful digging and underground movement.",
+      "rarity": "Common",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 24, "defense": 22, "speed": 18}},
+        "full_beast": {"stat_modifiers": {"attack": 30, "defense": 28, "speed": 15}}
+      },
+      "abilities": [
+        {
+          "name": "Burrow Strike",
+          "level_required": 1,
+          "ap_cost": 18,
+          "form_required": "Full Beast",
+          "description": "Burrow underground and strike from below",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Cannot dodge", "Surprise attack"]
+        },
+        {
+          "name": "Earthquake Dig",
+          "level_required": 5,
+          "ap_cost": 28,
+          "form_required": "Hybrid",
+          "description": "Dig rapidly to cause ground tremors",
+          "damage_type": "Physical",
+          "target": "All",
+          "effects": ["Medium AOE Damage", "Knockdown"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Poor eyesight above ground"],
+      "strengths": ["Underground travel", "Powerful claws", "Tremor sense", "Ambush attacks"],
+      "special_mechanics": {"burrowing": true, "tremor_sense": true},
+      "mastery_bonuses": {
+        "level_3": "Burrow speed increased",
+        "level_5": "Can breathe underground",
+        "level_7": "Create underground tunnels and traps",
+        "level_10_awakening": "Awakened Zoan - titan mole form"
+      }
+    },
+    {
       "id": "zou_zou_mammoth",
       "name": "Zou Zou no Mi, Model: Mammoth",
       "translation": "Elephant-Elephant Fruit, Model: Mammoth",
@@ -222,7 +626,6 @@
       "description": "Transform into an ancient mammoth. Grants massive size and overwhelming strength.",
       "rarity": "Rare",
       "starting_available": false,
-      "canon_user": "Jack",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 45, "defense": 40, "speed": -10}},
@@ -269,7 +672,6 @@
       "description": "Transform into a spinosaurus. Grants massive jaws and aquatic abilities.",
       "rarity": "Rare",
       "starting_available": false,
-      "canon_user": "Page One",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 40, "defense": 35, "speed": 15}},
@@ -306,7 +708,6 @@
       "description": "Transform into a pteranodon. Grants ancient flight and incredible beak attacks.",
       "rarity": "Rare",
       "starting_available": false,
-      "canon_user": "King",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 42, "speed": 40, "defense": 35}},
@@ -353,7 +754,6 @@
       "description": "Transform into an allosaurus. Grants predatory power and incredible bite force.",
       "rarity": "Rare",
       "starting_available": false,
-      "canon_user": "X Drake",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 43, "defense": 38, "speed": 18}},
@@ -390,7 +790,6 @@
       "description": "Transform into a phoenix. Grants flight and incredible regeneration via blue flames.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Marco",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 35, "defense": 30, "speed": 40}},
@@ -437,7 +836,6 @@
       "description": "Transform into a giant golden Buddha. Grants wisdom and devastating shockwaves.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Sengoku",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 45, "defense": 50, "speed": 15}},
@@ -484,7 +882,6 @@
       "description": "Transform into a divine wolf. Grants fire generation and deity powers.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Yamato",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 42, "defense": 35, "speed": 38}},
@@ -531,7 +928,6 @@
       "description": "Transform into the legendary eight-headed dragon. Grants multiple lives.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Kurozumi Orochi",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 30, "defense": 40, "speed": 15}},
@@ -568,7 +964,6 @@
       "description": "Transform into a massive azure dragon. Grants flight and elemental control.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Kaido",
       "forms": {
         "human": {"stat_modifiers": {}},
         "hybrid": {"stat_modifiers": {"attack": 55, "defense": 50, "speed": 30}},
@@ -625,7 +1020,6 @@
       "description": "The most ridiculous power. Transform into the Sun God Nika with reality-warping rubber abilities.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Monkey D. Luffy",
       "forms": {
         "human": {"stat_modifiers": {}},
         "gear5": {"stat_modifiers": {"attack": 60, "defense": 45, "speed": 55, "freedom": 100}}

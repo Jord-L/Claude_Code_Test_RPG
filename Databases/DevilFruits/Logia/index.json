@@ -10,7 +10,6 @@
       "description": "Allows the user to create, control, and transform into smoke. Can trap enemies and create smokescreens.",
       "rarity": "Legendary",
       "starting_available": true,
-      "canon_user": "Smoker",
       "intangibility": true,
       "stat_bonuses": {
         "speed": 20,
@@ -60,7 +59,6 @@
       "description": "Allows the user to create, control, and transform into fire. One of the most powerful offensive Logia fruits.",
       "rarity": "Legendary",
       "starting_available": true,
-      "canon_user": "Portgas D. Ace, Sabo",
       "intangibility": true,
       "stat_bonuses": {
         "attack": 30,
@@ -110,7 +108,6 @@
       "description": "Allows the user to create, control, and transform into sand. Can absorb moisture and create sandstorms.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Crocodile",
       "intangibility": true,
       "stat_bonuses": {
         "attack": 25,
@@ -160,7 +157,6 @@
       "description": "Allows the user to create, control, and transform into lightning. Considered one of the most powerful Devil Fruits.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Enel",
       "intangibility": true,
       "stat_bonuses": {
         "attack": 35,
@@ -210,7 +206,6 @@
       "description": "Allows the user to create, control, and transform into ice. Can freeze anything including the ocean itself.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Kuzan (Aokiji)",
       "intangibility": true,
       "stat_bonuses": {
         "attack": 28,
@@ -260,7 +255,6 @@
       "description": "Allows the user to create, control, and transform into darkness. Unique ability to nullify other Devil Fruit powers and absorb attacks.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Marshall D. Teach (Blackbeard)",
       "intangibility": false,
       "stat_bonuses": {
         "attack": 30,
@@ -311,7 +305,6 @@
       "description": "Allows the user to create, control, and transform into light. Grants light-speed movement and powerful laser attacks.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Borsalino (Kizaru)",
       "intangibility": true,
       "stat_bonuses": {
         "attack": 32,
@@ -362,7 +355,6 @@
       "description": "Allows the user to create, control, and transform into magma. Superior to fire-based abilities in offensive power.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Sakazuki (Akainu)",
       "intangibility": true,
       "stat_bonuses": {
         "attack": 40,
@@ -413,7 +405,6 @@
       "description": "Allows the user to create, control, and transform into various types of gas, including poisonous and combustible gases.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Caesar Clown",
       "intangibility": true,
       "stat_bonuses": {
         "attack": 24,
@@ -463,7 +454,6 @@
       "description": "Allows the user to create, control, and transform into snow. Can create snowstorms and freeze enemies.",
       "rarity": "Legendary",
       "starting_available": true,
-      "canon_user": "Monet",
       "intangibility": true,
       "stat_bonuses": {
         "attack": 22,
@@ -514,7 +504,6 @@
       "description": "Allows the user to create, control, and transform into swamp/mud. Can absorb and store objects and people.",
       "rarity": "Legendary",
       "starting_available": false,
-      "canon_user": "Caribou",
       "intangibility": true,
       "stat_bonuses": {
         "defense": 25,

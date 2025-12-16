@@ -14,7 +14,7 @@
       "type": "Zoan",
       "path": "Zoan/index.json",
       "description": "Animal transformation abilities",
-      "count": 15,
+      "count": 25,
       "subtypes": [
         {
           "subtype": "Regular",
@@ -43,7 +43,7 @@
       "count": 11
     }
   ],
-  "total_fruits": 38,
+  "total_fruits": 48,
   "notes": [
     "Each fruit file should be named: FruitName.json",
     "Example: GomuGomu.json, MeraMera.json",
