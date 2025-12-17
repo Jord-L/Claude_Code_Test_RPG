@@ -3171,9 +3171,409 @@
         "level_7": "Selective rewinding",
         "level_10_awakening": "Temporal reset zone"
       }
+    },
+    {
+      "id": "jiku_jiku",
+      "name": "Jiku Jiku no Mi",
+      "translation": "Space-Space Fruit",
+      "description": "Allows user to manipulate space, creating portals and warping distance.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 30},
+      "abilities": [
+        {
+          "name": "Portal Creation",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Create portals to teleport",
+          "damage_type": "Special",
+          "target": "Location",
+          "effects": ["Instant teleportation", "Bypass obstacles"]
+        },
+        {
+          "name": "Spatial Slash",
+          "level_required": 5,
+          "ap_cost": 28,
+          "cooldown": 3,
+          "description": "Tear space itself to damage enemies",
+          "damage_type": "Special",
+          "target": "Multi",
+          "effects": ["Massive Damage", "Ignores armor", "Space tear"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Instant teleportation", "Space manipulation", "Bypass defenses", "Strategic repositioning"],
+      "special_mechanics": {"teleportation": true, "space_warping": true},
+      "mastery_bonuses": {
+        "level_3": "Larger portals",
+        "level_5": "Long-distance warping",
+        "level_7": "Warp others",
+        "level_10_awakening": "Spatial domain - control all space"
+      }
+    },
+    {
+      "id": "kusa_kusa",
+      "name": "Kusa Kusa no Mi",
+      "translation": "Grass-Grass Fruit",
+      "description": "Allows user to create and control all types of grass and plants.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 20, "attack": 15},
+      "abilities": [
+        {
+          "name": "Grass Bind",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Summon grass to bind enemies",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Bind", "Slow", "Damage over time"]
+        },
+        {
+          "name": "Grass Armor",
+          "level_required": 3,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Create protective grass armor",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Defense boost", "HP regeneration"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Fire"],
+      "strengths": ["Plant control", "Battlefield manipulation", "Healing", "Versatility"],
+      "special_mechanics": {"plant_creation": true, "nature_control": true},
+      "mastery_bonuses": {
+        "level_3": "Create larger plants",
+        "level_5": "Poisonous plants",
+        "level_7": "Create trees",
+        "level_10_awakening": "Forest domain"
+      }
+    },
+    {
+      "id": "tetsu_tetsu",
+      "name": "Tetsu Tetsu no Mi",
+      "translation": "Iron-Iron Fruit",
+      "description": "Allows user to turn their body into iron, granting extreme defense.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"defense": 40, "attack": 25},
+      "abilities": [
+        {
+          "name": "Iron Fist",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 0,
+          "description": "Punch with iron-hard fists",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Armor Break"]
+        },
+        {
+          "name": "Iron Wall",
+          "level_required": 4,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Create iron barrier",
+          "damage_type": "Defense",
+          "target": "Self/Allies",
+          "effects": ["Block", "Extreme defense"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Heat/Fire", "Rust"],
+      "strengths": ["Extreme defense", "Heavy attacks", "Cannot be cut easily", "Magnetic properties"],
+      "special_mechanics": {"metal_body": true, "magnetic": true},
+      "mastery_bonuses": {
+        "level_3": "Harder iron",
+        "level_5": "Steel transformation",
+        "level_7": "Magnetic manipulation",
+        "level_10_awakening": "Transform environment to metal"
+      }
+    },
+    {
+      "id": "koe_koe",
+      "name": "Koe Koe no Mi",
+      "translation": "Voice-Voice Fruit",
+      "description": "Allows user to manipulate their voice in various ways for attacks and effects.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"speed": 20, "attack": 25},
+      "abilities": [
+        {
+          "name": "Sonic Scream",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 1,
+          "description": "Release powerful sonic waves",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Heavy Damage", "Stun", "Deafen"]
+        },
+        {
+          "name": "Hypnotic Voice",
+          "level_required": 5,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "Hypnotize enemies with voice",
+          "damage_type": "Status",
+          "target": "Multi",
+          "effects": ["Charm", "Control", "Suggestion"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Silence", "Deafened enemies immune"],
+      "strengths": ["Sonic attacks", "Hypnosis", "Voice mimicry", "Long range", "AOE attacks"],
+      "special_mechanics": {"voice_manipulation": true, "sound_based": true, "hypnosis": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced range",
+        "level_5": "Perfect voice mimicry",
+        "level_7": "Destructive resonance",
+        "level_10_awakening": "Sound domain - control all sound"
+      }
+    },
+    {
+      "id": "kasai_kasai",
+      "name": "Kasai Kasai no Mi",
+      "translation": "Disaster-Disaster Fruit",
+      "description": "Allows user to summon and control various natural disasters.",
+      "rarity": "Legendary",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 50},
+      "abilities": [
+        {
+          "name": "Earthquake",
+          "level_required": 1,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Create localized earthquake",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Massive Damage", "Knockdown", "AOE"]
+        },
+        {
+          "name": "Typhoon",
+          "level_required": 6,
+          "ap_cost": 40,
+          "cooldown": 4,
+          "description": "Summon devastating typhoon",
+          "damage_type": "Elemental",
+          "target": "All",
+          "effects": ["Catastrophic Damage", "Continuous damage", "Battlefield destruction"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Requires time to build up"],
+      "strengths": ["Disaster summoning", "AOE devastation", "Environmental control", "Unstoppable force"],
+      "special_mechanics": {"disaster_control": true, "environmental_destruction": true},
+      "mastery_bonuses": {
+        "level_3": "Faster disaster summoning",
+        "level_5": "Multiple disasters at once",
+        "level_7": "Control disaster intensity",
+        "level_10_awakening": "Apocalypse - ultimate disaster"
+      }
+    },
+    {
+      "id": "nui_nui",
+      "name": "Nui Nui no Mi",
+      "translation": "Stitch-Stitch Fruit",
+      "description": "Allows user to stitch anything together, including people and objects.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "stat_bonuses": {"speed": 25, "attack": 15},
+      "abilities": [
+        {
+          "name": "Stitch Bind",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Stitch enemy to ground or object",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Immobilize", "Bind", "Cannot move"]
+        },
+        {
+          "name": "Body Stitch",
+          "level_required": 4,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Stitch wounds to heal",
+          "damage_type": "Healing",
+          "target": "Single",
+          "effects": ["Heal", "Stop bleeding", "Close wounds"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Can be cut"],
+      "strengths": ["Binding", "Healing", "Creative combinations", "Versatile utility"],
+      "special_mechanics": {"stitching": true, "binding": true, "healing": true},
+      "mastery_bonuses": {
+        "level_3": "Stitch objects together",
+        "level_5": "Unbreakable stitches",
+        "level_7": "Stitch space itself",
+        "level_10_awakening": "Universal stitching"
+      }
+    },
+    {
+      "id": "hogo_hogo",
+      "name": "Hogo Hogo no Mi",
+      "translation": "Shield-Shield Fruit",
+      "description": "Allows user to create various types of shields and barriers.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"defense": 50},
+      "abilities": [
+        {
+          "name": "Shield Wall",
+          "level_required": 1,
+          "ap_cost": 16,
+          "cooldown": 1,
+          "description": "Create large defensive shield",
+          "damage_type": "Defense",
+          "target": "Self/Allies",
+          "effects": ["Block", "Reflect projectiles"]
+        },
+        {
+          "name": "Barrier Dome",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Create protective dome around area",
+          "damage_type": "Defense",
+          "target": "Area",
+          "effects": ["Total protection", "AOE defense", "Temporary invulnerability"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Limited duration"],
+      "strengths": ["Extreme defense", "Protect allies", "Reflect attacks", "Versatile barriers"],
+      "special_mechanics": {"shield_creation": true, "barrier_mastery": true, "reflection": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger shields",
+        "level_5": "Mobile shields",
+        "level_7": "Offensive shields",
+        "level_10_awakening": "Absolute defense domain"
+      }
+    },
+    {
+      "id": "kyofu_kyofu",
+      "name": "Kyofu Kyofu no Mi",
+      "translation": "Fear-Fear Fruit",
+      "description": "Allows user to manipulate and induce fear in others.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 20, "speed": 20},
+      "abilities": [
+        {
+          "name": "Nightmare Vision",
+          "level_required": 1,
+          "ap_cost": 18,
+          "cooldown": 2,
+          "description": "Show target their greatest fear",
+          "damage_type": "Special",
+          "target": "Single",
+          "effects": ["Fear", "Paralysis", "Mental damage"]
+        },
+        {
+          "name": "Terror Aura",
+          "level_required": 5,
+          "ap_cost": 28,
+          "cooldown": 3,
+          "description": "Emanate aura of pure terror",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Mass fear", "Attack/Defense down", "Morale break"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Fearless opponents", "Strong-willed individuals"],
+      "strengths": ["Psychological warfare", "Fear manipulation", "Crowd control", "Debuff enemies"],
+      "special_mechanics": {"fear_induction": true, "mental_attacks": true, "willpower_based": true},
+      "mastery_bonuses": {
+        "level_3": "Stronger fear effects",
+        "level_5": "Manipulate existing fears",
+        "level_7": "Physical manifestation of fears",
+        "level_10_awakening": "Nightmare realm"
+      }
+    },
+    {
+      "id": "senshi_senshi",
+      "name": "Senshi Senshi no Mi",
+      "translation": "Warrior-Warrior Fruit",
+      "description": "Grants user enhanced combat abilities and weapon mastery.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 35, "defense": 25, "speed": 20},
+      "abilities": [
+        {
+          "name": "Weapon Mastery",
+          "level_required": 1,
+          "ap_cost": 12,
+          "cooldown": 0,
+          "description": "Master any weapon instantly",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Critical hit bonus", "Weapon proficiency"]
+        },
+        {
+          "name": "Battle Trance",
+          "level_required": 5,
+          "ap_cost": 25,
+          "cooldown": 3,
+          "description": "Enter enhanced combat state",
+          "damage_type": "Buff",
+          "target": "Self",
+          "effects": ["Attack boost +40%", "Speed boost +30%", "Reduced pain"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Weapon expertise", "Combat prowess", "Enhanced reflexes", "Battle instincts"],
+      "special_mechanics": {"weapon_mastery": true, "combat_enhancement": true, "battle_instinct": true},
+      "mastery_bonuses": {
+        "level_3": "Dual-wielding mastery",
+        "level_5": "Create spirit weapons",
+        "level_7": "Ultimate technique mastery",
+        "level_10_awakening": "War god mode"
+      }
+    },
+    {
+      "id": "ryoku_ryoku",
+      "name": "Ryoku Ryoku no Mi",
+      "translation": "Power-Power Fruit",
+      "description": "Allows user to amplify their own or others' physical power.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "stat_bonuses": {"attack": 30, "defense": 20},
+      "abilities": [
+        {
+          "name": "Power Amplification",
+          "level_required": 1,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Double physical strength temporarily",
+          "damage_type": "Buff",
+          "target": "Self",
+          "effects": ["Attack boost +100%", "Temporary strength surge"]
+        },
+        {
+          "name": "Team Power",
+          "level_required": 5,
+          "ap_cost": 30,
+          "cooldown": 3,
+          "description": "Boost allies' power",
+          "damage_type": "Buff",
+          "target": "Allies",
+          "effects": ["All allies attack boost", "Shared strength"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Drains stamina"],
+      "strengths": ["Strength multiplication", "Ally support", "Physical enhancement", "Stackable boosts"],
+      "special_mechanics": {"power_amplification": true, "stackable": true, "ally_boost": true},
+      "mastery_bonuses": {
+        "level_3": "Triple power boost",
+        "level_5": "No stamina drain",
+        "level_7": "Quadruple power",
+        "level_10_awakening": "Limitless power domain"
+      }
     }
   ],
-  "total_count": 90,
+  "total_count": 100,
   "template": {
     "id": "unique_fruit_id",
     "name": "Fruit Name (Japanese)",
