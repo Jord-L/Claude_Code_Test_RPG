@@ -248,16 +248,42 @@ class CharacterCreationState(State):
                 callback=lambda ft=filter_type: self._set_fruit_filter(ft)
             )
             self.type_buttons.append(button)
-        
+
+        # Random buttons (below filter buttons)
+        random_button_width = 180
+        random_start_x = SCREEN_WIDTH // 2 - random_button_width - 5
+
+        # Random (Filter) button
+        self.random_filter_button = Button(
+            x=random_start_x,
+            y=230,
+            width=random_button_width,
+            height=35,
+            text="🎲 Random (Filter)",
+            callback=self._random_fruit_current_filter
+        )
+        self.type_buttons.append(self.random_filter_button)
+
+        # Random (All) button
+        self.random_all_button = Button(
+            x=random_start_x + random_button_width + 10,
+            y=230,
+            width=random_button_width,
+            height=35,
+            text="🎲 Random (All)",
+            callback=self._random_fruit_all
+        )
+        self.type_buttons.append(self.random_all_button)
+
         # Load fruit list based on filter
         self._update_fruit_list()
-        
-        # Fruit info panel
+
+        # Fruit info panel (adjusted y to account for random buttons)
         self.fruit_info_panel = Panel(
             x=SCREEN_WIDTH // 2 - 380,
-            y=240,
+            y=280,
             width=600,
-            height=350
+            height=310
         )
         self.fruit_info_panel.bg_color = UI_BG_COLOR
         self.fruit_info_panel.border_color = UI_BORDER_COLOR
@@ -298,24 +324,19 @@ class CharacterCreationState(State):
             self.selected_fruit_id = None
             self.selected_fruit_data = None
         elif self.fruit_type_filter == "all":
-            # Get starting fruits only
-            self.fruit_list = devil_fruit_manager.get_starting_fruits()
-            if not self.fruit_list:
-                # Fallback: get all fruits
-                self.fruit_list = devil_fruit_manager.get_all_fruits()
+            # Get ALL fruits (no starting_available filter)
+            self.fruit_list = devil_fruit_manager.get_all_fruits()
         else:
-            # Get fruits of specific type
-            all_of_type = devil_fruit_manager.get_fruits_by_type(self.fruit_type_filter)
-            # Filter for starting fruits only
-            self.fruit_list = [f for f in all_of_type if f.get("starting_available", False)]
-            if not self.fruit_list:
-                # Fallback: show all of this type
-                self.fruit_list = all_of_type
-        
+            # Get all fruits of specific type (no starting_available filter)
+            self.fruit_list = devil_fruit_manager.get_fruits_by_type(self.fruit_type_filter)
+
+        # Sort fruits by name for easier browsing
+        self.fruit_list = sorted(self.fruit_list, key=lambda f: f.get("name", ""))
+
         # Reset selection
         self.selected_fruit_index = 0
         self.fruit_scroll_offset = 0
-        
+
         # Select first fruit if available
         if self.fruit_list:
             self._select_fruit(0)
@@ -339,13 +360,75 @@ class CharacterCreationState(State):
     def _set_fruit_filter(self, filter_type: str):
         """
         Set the fruit type filter.
-        
+
         Args:
             filter_type: "all", "paramecia", "zoan", "logia", or "none"
         """
         self.fruit_type_filter = filter_type
         self._update_fruit_list()
-    
+
+    def _random_fruit_current_filter(self):
+        """Select a random fruit from the current filter."""
+        import random
+
+        if self.fruit_type_filter == "none":
+            # No fruit selected
+            self.selected_fruit_id = None
+            self.selected_fruit_data = None
+            return
+
+        if not self.fruit_list:
+            print("No fruits available in current filter!")
+            return
+
+        # Select random index
+        random_index = random.randint(0, len(self.fruit_list) - 1)
+        self._select_fruit(random_index)
+
+        # Update scroll to show selected fruit
+        if random_index < self.fruit_scroll_offset:
+            self.fruit_scroll_offset = random_index
+        elif random_index >= self.fruit_scroll_offset + self.max_visible_fruits:
+            self.fruit_scroll_offset = random_index - self.max_visible_fruits + 1
+
+        print(f"Random fruit selected: {self.selected_fruit_data.get('name')}")
+
+    def _random_fruit_all(self):
+        """Select a completely random fruit from all available fruits."""
+        import random
+
+        # Get all fruits
+        all_fruits = devil_fruit_manager.get_all_fruits()
+
+        if not all_fruits:
+            print("No fruits available!")
+            return
+
+        # Select random fruit
+        random_fruit = random.choice(all_fruits)
+
+        # Determine the type and set filter
+        fruit_type = random_fruit.get("type", "paramecia").lower()
+
+        # Update filter to show the type
+        self.fruit_type_filter = fruit_type
+        self._update_fruit_list()
+
+        # Find the fruit in the list and select it
+        for i, fruit in enumerate(self.fruit_list):
+            if fruit.get("id") == random_fruit.get("id"):
+                self._select_fruit(i)
+
+                # Update scroll to show selected fruit
+                if i < self.fruit_scroll_offset:
+                    self.fruit_scroll_offset = i
+                elif i >= self.fruit_scroll_offset + self.max_visible_fruits:
+                    self.fruit_scroll_offset = i - self.max_visible_fruits + 1
+
+                break
+
+        print(f"Random fruit selected: {random_fruit.get('name')} ({fruit_type})")
+
     def _update_preview(self):
         """Update character preview with current selections."""
         # Create temporary player for preview
@@ -609,18 +692,22 @@ class CharacterCreationState(State):
         # Instruction
         self.instruction_text.render(screen)
         
-        # Type filter buttons
+        # Type filter buttons (first 5 are type filters, last 2 are random buttons)
         for i, button in enumerate(self.type_buttons):
-            # Highlight selected filter
-            if (i == 0 and self.fruit_type_filter == "all") or \
-               (i == 1 and self.fruit_type_filter == "paramecia") or \
-               (i == 2 and self.fruit_type_filter == "zoan") or \
-               (i == 3 and self.fruit_type_filter == "logia") or \
-               (i == 4 and self.fruit_type_filter == "none"):
-                button.color = UI_HIGHLIGHT_COLOR
+            # Highlight selected filter (only for first 5 buttons)
+            if i < 5:
+                if (i == 0 and self.fruit_type_filter == "all") or \
+                   (i == 1 and self.fruit_type_filter == "paramecia") or \
+                   (i == 2 and self.fruit_type_filter == "zoan") or \
+                   (i == 3 and self.fruit_type_filter == "logia") or \
+                   (i == 4 and self.fruit_type_filter == "none"):
+                    button.color = UI_HIGHLIGHT_COLOR
+                else:
+                    button.color = UI_BG_COLOR
             else:
+                # Random buttons keep default color
                 button.color = UI_BG_COLOR
-            
+
             button.render(screen)
         
         # Fruit list panel
@@ -643,7 +730,7 @@ class CharacterCreationState(State):
             # Show "No Devil Fruit" option
             no_fruit_text = CenteredText(
                 x=SCREEN_WIDTH // 2 - 350,
-                y=270,
+                y=310,
                 text="[No Devil Fruit - Can Swim!]",
                 font_size=24,
                 color=UI_HIGHLIGHT_COLOR,
@@ -651,12 +738,12 @@ class CharacterCreationState(State):
             )
             no_fruit_text.render(screen)
             return
-        
+
         if not self.fruit_list:
             # No fruits available
             no_fruits_text = CenteredText(
                 x=SCREEN_WIDTH // 2 - 350,
-                y=270,
+                y=310,
                 text="No fruits available",
                 font_size=20,
                 color=GRAY,
@@ -664,9 +751,9 @@ class CharacterCreationState(State):
             )
             no_fruits_text.render(screen)
             return
-        
-        # Render visible fruits
-        list_start_y = 250
+
+        # Render visible fruits (adjusted for random buttons)
+        list_start_y = 290
         item_height = 35
         
         visible_start = self.fruit_scroll_offset
@@ -727,14 +814,14 @@ class CharacterCreationState(State):
         if translation:
             trans_text = CenteredText(
                 x=SCREEN_WIDTH // 2 - 70,
-                y=260,
+                y=300,
                 text=f"({translation})",
                 font_size=18,
                 color=CYAN,
                 centered=False
             )
             trans_text.render(screen)
-        
+
         # Description
         description = fruit.get("description", "")
         # Wrap text
@@ -742,58 +829,58 @@ class CharacterCreationState(State):
         for i, line in enumerate(desc_lines[:3]):  # Max 3 lines
             desc_text = CenteredText(
                 x=SCREEN_WIDTH // 2 - 70,
-                y=290 + i * 25,
+                y=330 + i * 22,
                 text=line,
                 font_size=16,
                 color=WHITE,
                 centered=False
             )
             desc_text.render(screen)
-        
+
         # Type/Rarity
         fruit_type = fruit.get("type", "paramecia").capitalize()
         rarity = fruit.get("rarity", "Common")
-        
+
         type_text = CenteredText(
             x=SCREEN_WIDTH // 2 - 70,
-            y=380,
+            y=410,
             text=f"Type: {fruit_type}",
             font_size=16,
             color=YELLOW,
             centered=False
         )
         type_text.render(screen)
-        
+
         rarity_text = CenteredText(
             x=SCREEN_WIDTH // 2 - 70,
-            y=405,
+            y=435,
             text=f"Rarity: {rarity}",
             font_size=16,
             color=YELLOW,
             centered=False
         )
         rarity_text.render(screen)
-        
+
         # Starting abilities
         abilities = fruit.get("abilities", [])
         starting_abilities = [a for a in abilities if a.get("level_required", 1) == 1]
-        
+
         if starting_abilities:
             ability_header = CenteredText(
                 x=SCREEN_WIDTH // 2 - 70,
-                y=440,
+                y=470,
                 text="Starting Abilities:",
                 font_size=16,
                 color=GREEN,
                 centered=False
             )
             ability_header.render(screen)
-            
-            for i, ability in enumerate(starting_abilities[:3]):  # Max 3
+
+            for i, ability in enumerate(starting_abilities[:2]):  # Max 2 (reduced from 3)
                 ability_name = ability.get("name", "Unknown")
                 ability_text = CenteredText(
                     x=SCREEN_WIDTH // 2 - 60,
-                    y=465 + i * 22,
+                    y=495 + i * 22,
                     text=f"• {ability_name}",
                     font_size=14,
                     color=LIGHT_GRAY,
