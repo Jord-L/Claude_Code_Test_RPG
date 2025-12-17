@@ -18,7 +18,7 @@
       "description": "Legendary creatures"
     }
   ],
-  "total_count": 46,
+  "total_count": 54,
   "fruits": [
     {
       "id": "ushi_ushi_bison",
@@ -1028,6 +1028,226 @@
       }
     },
     {
+      "id": "inu_inu_fox",
+      "name": "Inu Inu no Mi, Model: Fox",
+      "translation": "Dog-Dog Fruit, Model: Fox",
+      "model": "Fox",
+      "subtype": "Regular",
+      "description": "Transform into a fox. Grants cunning, agility, and stealth.",
+      "rarity": "Common",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"speed": 32, "attack": 20, "defense": 15}},
+        "full_beast": {"stat_modifiers": {"speed": 42, "attack": 25, "defense": 12}}
+      },
+      "abilities": [
+        {
+          "name": "Quick Bite",
+          "level_required": 1,
+          "ap_cost": 12,
+          "form_required": "Full Beast",
+          "description": "Swift bite attack",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Medium Damage", "Speed boost"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["High agility", "Cunning tactics", "Stealth", "Enhanced hearing"],
+      "special_mechanics": {"stealth": true, "enhanced_hearing": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced stealth",
+        "level_5": "Fox fire (minor flames)",
+        "level_7": "Illusion tricks",
+        "level_10_awakening": "Awakened Zoan - spirit fox traits"
+      }
+    },
+    {
+      "id": "neko_neko_lion",
+      "name": "Neko Neko no Mi, Model: Lion",
+      "translation": "Cat-Cat Fruit, Model: Lion",
+      "model": "Lion",
+      "subtype": "Regular",
+      "description": "Transform into a lion. Grants king of beasts strength and pride leadership.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 40, "defense": 30, "speed": 30}},
+        "full_beast": {"stat_modifiers": {"attack": 52, "defense": 35, "speed": 35}}
+      },
+      "abilities": [
+        {
+          "name": "King's Roar",
+          "level_required": 1,
+          "ap_cost": 18,
+          "form_required": "Full Beast",
+          "description": "Intimidating roar that strikes fear",
+          "damage_type": "Status",
+          "target": "All",
+          "effects": ["Fear", "Attack Down 15%", "Morale boost to allies"]
+        },
+        {
+          "name": "Pride Leader",
+          "level_required": 5,
+          "ap_cost": 20,
+          "form_required": "Hybrid",
+          "description": "Lead allies with king's authority",
+          "damage_type": "Buff",
+          "target": "Allies",
+          "effects": ["Attack boost +20%", "Defense boost +15%"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Carnivore Zoan", "King of beasts", "Leadership aura", "Powerful mane protection", "Pride tactics"],
+      "special_mechanics": {"carnivore_zoan": true, "leadership_aura": true, "mane_protection": true},
+      "mastery_bonuses": {
+        "level_3": "Thicker mane armor",
+        "level_5": "Enhanced leadership range",
+        "level_7": "Lionheart - cannot be intimidated",
+        "level_10_awakening": "Awakened Zoan - legendary beast king"
+      }
+    },
+    {
+      "id": "tori_tori_owl",
+      "name": "Tori Tori no Mi, Model: Owl",
+      "translation": "Bird-Bird Fruit, Model: Owl",
+      "model": "Owl",
+      "subtype": "Regular",
+      "description": "Transform into an owl. Grants silent flight and night vision.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"speed": 30, "attack": 22, "defense": 18}},
+        "full_beast": {"stat_modifiers": {"speed": 40, "attack": 20, "defense": 15}}
+      },
+      "abilities": [
+        {
+          "name": "Silent Swoop",
+          "level_required": 1,
+          "ap_cost": 15,
+          "form_required": "Full Beast",
+          "description": "Silent aerial attack",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Cannot be heard", "Surprise attack"]
+        },
+        {
+          "name": "Piercing Screech",
+          "level_required": 4,
+          "ap_cost": 20,
+          "form_required": "Hybrid",
+          "description": "Disorienting sonic screech",
+          "damage_type": "Special",
+          "target": "All",
+          "effects": ["Medium Damage", "Confusion", "Hearing impairment"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Reduced effectiveness in daylight"],
+      "strengths": ["Silent flight", "Perfect night vision", "360-degree head rotation", "Wisdom enhancement"],
+      "special_mechanics": {"flight": true, "silent_flight": true, "night_vision": true, "head_rotation": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced night vision",
+        "level_5": "Completely silent movement",
+        "level_7": "Wisdom of the owl - tactical insight",
+        "level_10_awakening": "Awakened Zoan - great horned hunter"
+      }
+    },
+    {
+      "id": "kuma_kuma_panda",
+      "name": "Kuma Kuma no Mi, Model: Panda",
+      "translation": "Bear-Bear Fruit, Model: Panda",
+      "model": "Panda",
+      "subtype": "Regular",
+      "description": "Transform into a panda. Grants bamboo mastery and deceptive strength.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 30, "defense": 35, "speed": 15}},
+        "full_beast": {"stat_modifiers": {"attack": 40, "defense": 45, "speed": 10}}
+      },
+      "abilities": [
+        {
+          "name": "Bamboo Strike",
+          "level_required": 1,
+          "ap_cost": 16,
+          "form_required": "Hybrid",
+          "description": "Powerful strike using bamboo or fists",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Knockback"]
+        },
+        {
+          "name": "Rolling Defense",
+          "level_required": 3,
+          "ap_cost": 14,
+          "form_required": "Full Beast",
+          "description": "Roll into ball for defense",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Defense boost", "Dodge improvement", "Can roll away"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Deceptive strength", "High durability", "Bamboo weapon mastery", "Peaceful aura"],
+      "special_mechanics": {"bamboo_mastery": true, "rolling_defense": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced bamboo techniques",
+        "level_5": "Iron bamboo strikes",
+        "level_7": "Martial arts mastery",
+        "level_10_awakening": "Awakened Zoan - war panda"
+      }
+    },
+    {
+      "id": "saru_saru_orangutan",
+      "name": "Saru Saru no Mi, Model: Orangutan",
+      "translation": "Monkey-Monkey Fruit, Model: Orangutan",
+      "model": "Orangutan",
+      "subtype": "Regular",
+      "description": "Transform into an orangutan. Grants incredible arm strength and intelligence.",
+      "rarity": "Uncommon",
+      "starting_available": true,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 35, "defense": 25, "speed": 18}},
+        "full_beast": {"stat_modifiers": {"attack": 45, "defense": 30, "speed": 15}}
+      },
+      "abilities": [
+        {
+          "name": "Long Arm Smash",
+          "level_required": 1,
+          "ap_cost": 17,
+          "form_required": "Hybrid",
+          "description": "Use long arms for extended reach strike",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Extended reach", "Grapple"]
+        },
+        {
+          "name": "Forest Swing",
+          "level_required": 4,
+          "ap_cost": 20,
+          "form_required": "Full Beast",
+          "description": "Swing through environment using long arms",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Medium AOE Damage", "Mobility boost"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Long arms - extended reach", "High intelligence", "Tool use mastery", "Climbing expert"],
+      "special_mechanics": {"extended_reach": true, "tool_mastery": true, "climbing_expert": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced arm strength",
+        "level_5": "Problem-solving boost",
+        "level_7": "Weapon improvisation",
+        "level_10_awakening": "Awakened Zoan - forest king"
+      }
+    },
+    {
       "id": "zou_zou_mammoth",
       "name": "Zou Zou no Mi, Model: Mammoth",
       "translation": "Elephant-Elephant Fruit, Model: Mammoth",
@@ -1153,42 +1373,6 @@
         "level_5": "Stronger fire attacks",
         "level_7": "Defense mode - invulnerability",
         "level_10_awakening": "Awakened Ancient Zoan - legendary endurance"
-      }
-    },
-    {
-      "id": "ryu_ryu_allosaurus",
-      "name": "Ryu Ryu no Mi, Model: Allosaurus",
-      "translation": "Dragon-Dragon Fruit, Model: Allosaurus",
-      "model": "Allosaurus",
-      "subtype": "Ancient",
-      "description": "Transform into an allosaurus. Grants predatory power and incredible bite force.",
-      "rarity": "Rare",
-      "starting_available": false,
-      "forms": {
-        "human": {"stat_modifiers": {}},
-        "hybrid": {"stat_modifiers": {"attack": 43, "defense": 38, "speed": 18}},
-        "full_beast": {"stat_modifiers": {"attack": 58, "defense": 48, "speed": 12}}
-      },
-      "abilities": [
-        {
-          "name": "Allosaurus Bite",
-          "level_required": 1,
-          "ap_cost": 18,
-          "form_required": "Hybrid",
-          "description": "Devastating bite with ancient predator jaws",
-          "damage_type": "Physical",
-          "target": "Single",
-          "effects": ["Heavy Damage", "Bleed"]
-        }
-      ],
-      "weaknesses": ["Water", "Seastone"],
-      "strengths": ["Ancient Zoan power", "Carnivore advantage", "High attack and defense", "Balanced combat"],
-      "special_mechanics": {"ancient_zoan": true, "carnivore_zoan": true},
-      "mastery_bonuses": {
-        "level_3": "Carnivore ferocity +40%",
-        "level_5": "Enhanced bite force",
-        "level_7": "Tail whip attacks",
-        "level_10_awakening": "Awakened Ancient Zoan - apex predator"
       }
     },
     {
@@ -1445,6 +1629,180 @@
         "level_5": "Enhanced plate armor",
         "level_7": "Tail whip combo",
         "level_10_awakening": "Awakened Ancient Zoan - armored titan stegosaurus"
+      }
+    },
+    {
+      "id": "ryu_ryu_velociraptor",
+      "name": "Ryu Ryu no Mi, Model: Velociraptor",
+      "translation": "Dragon-Dragon Fruit, Model: Velociraptor",
+      "model": "Velociraptor",
+      "subtype": "Ancient",
+      "description": "Transform into a velociraptor. Grants extreme speed and pack hunter tactics.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 38, "defense": 28, "speed": 45}},
+        "full_beast": {"stat_modifiers": {"attack": 45, "defense": 25, "speed": 55}}
+      },
+      "abilities": [
+        {
+          "name": "Raptor Claw",
+          "level_required": 1,
+          "ap_cost": 18,
+          "form_required": "Hybrid",
+          "description": "Slash with deadly sickle claws",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Slashing Damage", "Bleed", "Critical hit chance"]
+        },
+        {
+          "name": "Pack Hunt",
+          "level_required": 5,
+          "ap_cost": 25,
+          "form_required": "Any",
+          "description": "Coordinate with allies for devastating combo",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Massive Damage", "Ally damage boost", "Multi-hit"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Ancient Zoan power", "Extreme speed", "Pack tactics", "Intelligent hunter", "Sickle claws"],
+      "special_mechanics": {"ancient_zoan": true, "carnivore_zoan": true, "pack_hunter": true, "sickle_claws": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced claw sharpness",
+        "level_5": "Pack coordination bonus",
+        "level_7": "Blitz attack - multiple strikes",
+        "level_10_awakening": "Awakened Ancient Zoan - alpha raptor"
+      }
+    },
+    {
+      "id": "ryu_ryu_ankylosaurus",
+      "name": "Ryu Ryu no Mi, Model: Ankylosaurus",
+      "translation": "Dragon-Dragon Fruit, Model: Ankylosaurus",
+      "model": "Ankylosaurus",
+      "subtype": "Ancient",
+      "description": "Transform into an ankylosaurus. Grants impenetrable armor and devastating tail club.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 35, "defense": 55, "speed": 5}},
+        "full_beast": {"stat_modifiers": {"attack": 42, "defense": 70, "speed": 0}}
+      },
+      "abilities": [
+        {
+          "name": "Club Tail",
+          "level_required": 1,
+          "ap_cost": 22,
+          "form_required": "Full Beast",
+          "description": "Swing massive tail club with devastating force",
+          "damage_type": "Physical",
+          "target": "Multi",
+          "effects": ["Extreme Blunt Damage", "Stun", "Knockback", "Armor Break"]
+        },
+        {
+          "name": "Fortress Mode",
+          "level_required": 4,
+          "ap_cost": 15,
+          "form_required": "Full Beast",
+          "description": "Hunker down with impenetrable armor",
+          "damage_type": "Defense",
+          "target": "Self",
+          "effects": ["Defense +100%", "Immobile", "Reflect melee damage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone", "Cannot move in Fortress Mode"],
+      "strengths": ["Ancient Zoan power", "Impenetrable armor", "Devastating tail club", "Highest defense"],
+      "special_mechanics": {"ancient_zoan": true, "armored_tank": true, "tail_club": true},
+      "mastery_bonuses": {
+        "level_3": "Thicker armor plating",
+        "level_5": "Enhanced tail club damage",
+        "level_7": "Can move slowly in Fortress Mode",
+        "level_10_awakening": "Awakened Ancient Zoan - living fortress"
+      }
+    },
+    {
+      "id": "ryu_ryu_sabertooth",
+      "name": "Ryu Ryu no Mi, Model: Sabertooth Tiger",
+      "translation": "Dragon-Dragon Fruit, Model: Sabertooth Tiger",
+      "model": "Sabertooth Tiger",
+      "subtype": "Ancient",
+      "description": "Transform into a sabertooth tiger. Grants prehistoric predator instincts and massive fangs.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 48, "defense": 32, "speed": 35}},
+        "full_beast": {"stat_modifiers": {"attack": 60, "defense": 28, "speed": 40}}
+      },
+      "abilities": [
+        {
+          "name": "Saber Bite",
+          "level_required": 1,
+          "ap_cost": 20,
+          "form_required": "Hybrid",
+          "description": "Bite with massive saber teeth",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Extreme Piercing Damage", "Deep bleed", "Armor penetration"]
+        },
+        {
+          "name": "Prehistoric Pounce",
+          "level_required": 6,
+          "ap_cost": 30,
+          "form_required": "Full Beast",
+          "description": "Leap and pin prey with overwhelming force",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Massive Damage", "Pin", "Continuous damage"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Ancient Zoan power", "Carnivore advantage", "Massive fangs", "Apex predator", "Ambush specialist"],
+      "special_mechanics": {"ancient_zoan": true, "carnivore_zoan": true, "ambush_predator": true},
+      "mastery_bonuses": {
+        "level_3": "Longer saber fangs",
+        "level_5": "Carnivore fury boost",
+        "level_7": "Ice Age survivor traits",
+        "level_10_awakening": "Awakened Ancient Zoan - dire sabertooth"
+      }
+    },
+    {
+      "id": "tori_tori_archaeopteryx",
+      "name": "Tori Tori no Mi, Model: Archaeopteryx",
+      "translation": "Bird-Bird Fruit, Model: Archaeopteryx",
+      "model": "Archaeopteryx",
+      "subtype": "Ancient",
+      "description": "Transform into an archaeopteryx. Grants ancient flight and reptilian claws.",
+      "rarity": "Rare",
+      "starting_available": false,
+      "forms": {
+        "human": {"stat_modifiers": {}},
+        "hybrid": {"stat_modifiers": {"attack": 32, "speed": 40, "defense": 25}},
+        "full_beast": {"stat_modifiers": {"attack": 28, "speed": 50, "defense": 22}}
+      },
+      "abilities": [
+        {
+          "name": "Primordial Dive",
+          "level_required": 1,
+          "ap_cost": 18,
+          "form_required": "Full Beast",
+          "description": "Dive attack with claws and teeth",
+          "damage_type": "Physical",
+          "target": "Single",
+          "effects": ["Heavy Damage", "Slash and bite combo"]
+        }
+      ],
+      "weaknesses": ["Water", "Seastone"],
+      "strengths": ["Ancient Zoan power", "Flight capability", "Claws and teeth", "First bird characteristics"],
+      "special_mechanics": {"ancient_zoan": true, "flight": true, "reptilian_traits": true},
+      "mastery_bonuses": {
+        "level_3": "Enhanced flight control",
+        "level_5": "Sharper claws",
+        "level_7": "Gliding mastery",
+        "level_10_awakening": "Awakened Ancient Zoan - primordial sky hunter"
       }
     },
     {
