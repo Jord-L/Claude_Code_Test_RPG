@@ -37,22 +37,27 @@ Main Menu
 │  [All] [Paramecia] [Zoan] [Logia]   │
 │                          [None]      │
 │                                      │
+│  Random Selection:                   │
+│  [🎲 Random (Filter)] [🎲 Random (All)]│
+│                                      │
 │  ┌──────────────────┐  ┌──────────┐ │
 │  │ Fruit List       │  │ Preview  │ │
-│  │ ┌──────────────┐ │  │          │ │
-│  │ │ Gomu Gomu    │ │  │ Stats    │ │
-│  │ │ Bara Bara    │ │  │ Preview  │ │
-│  │ │ Mera Mera  ◄─┼─┼─►│ Details  │ │
+│  │ (Alphabetical)   │  │          │ │
+│  │ ┌──────────────┐ │  │ Stats    │ │
+│  │ │ Ame Ame      │ │  │ Preview  │ │
+│  │ │ Ami Ami      │ │  │ Details  │ │
+│  │ │ Ato Ato    ◄─┼─┼─►│          │ │
 │  │ │ ...          │ │  │          │ │
 │  │ └──────────────┘ │  └──────────┘ │
 │  └──────────────────┘                │
+│  (ALL 166 fruits available!)         │
 │                                      │
 │  Fruit Details:                      │
-│  Name: Gomu Gomu no Mi              │
-│  Translation: Gum-Gum Fruit          │
+│  Name: Ato Ato no Mi                │
+│  Translation: Art-Art Fruit          │
 │  Type: Paramecia                     │
 │  Rarity: Rare                        │
-│  Abilities: Gum-Gum Pistol          │
+│  Abilities: ...                      │
 │                                      │
 │  [Back]              [Continue]      │
 └─────────────────────────────────────┘
@@ -71,14 +76,14 @@ START GAME! 🏴‍☠️
 
 ## 📊 What's Available?
 
-### 166 Total Devil Fruits
+### 166 Total Devil Fruits - ALL SELECTABLE!
 
-| Type | Count | Available at Start |
-|------|-------|-------------------|
-| Paramecia | 100 | ~40 |
-| Logia | 12 | ~8 |
-| Zoan | 54 | ~15 |
-| **TOTAL** | **166** | **~63** |
+| Type | Count | Available at Creation |
+|------|-------|----------------------|
+| Paramecia | 100 | ✅ ALL 100 |
+| Logia | 12 | ✅ ALL 12 |
+| Zoan | 54 | ✅ ALL 54 |
+| **TOTAL** | **166** | **✅ ALL 166** |
 
 ### Zoan Breakdown
 
@@ -96,21 +101,44 @@ START GAME! 🏴‍☠️
 - **Gomu Gomu no Mi** (Rubber) - Iconic and fun!
 - **Mera Mera no Mi** (Fire) - Powerful Logia
 - **Neko Neko no Mi, Model: Leopard** - Balanced Zoan
+- **🎲 Random (All)** - Let fate decide!
 - **None** - Keep swimming ability, train other skills
 
 ### For Power Players
 
 **Go for:**
 - **Logia Fruits** - Intangibility and elemental power
-- **Mythical Zoans** - Phoenix, Dragon, etc.
-- **Strong Paramecia** - Unique abilities
+- **Mythical Zoans** - Phoenix, Dragon, Nine-Tailed Fox, etc.
+- **Legendary Paramecia** - Gura Gura, Ope Ope, etc.
+- **🎲 Random (Filter: Logia)** - Random legendary power!
 
 ### Navigation
 
 - **↑/↓ Arrow Keys** - Scroll fruit list
 - **Mouse Click** - Select fruit
 - **Type Filters** - Narrow down choices
+- **🎲 Random (Filter)** - Random fruit from current filter
+- **🎲 Random (All)** - Completely random fruit
 - **Details Panel** - Read before choosing!
+
+### 🎲 Random Selection Features
+
+**🎲 Random (Filter)**
+- Randomizes within your current filter
+- **[All]** selected? → Random from all 166 fruits
+- **[Paramecia]** selected? → Random Paramecia
+- **[Zoan]** selected? → Random Zoan (any subtype)
+- **[Logia]** selected? → Random Logia
+- Perfect for when you want a specific type but can't decide!
+
+**🎲 Random (All)**
+- Completely random from all 166 fruits
+- Automatically switches to the fruit's type filter
+- Auto-scrolls to show your selection
+- True surprise - could be anything!
+- Great for adventurous players!
+
+**Pro Tip:** Use Random (Filter: Logia) to guarantee a powerful elemental fruit! 🔥❄️⚡
 
 ## ⚠️ Important
 
@@ -132,6 +160,15 @@ python test_devil_fruit_loading.py
 # ✅ Paramecia: 100
 # ✅ Logia: 12
 # ✅ Zoan: 54 (30 Regular, 13 Ancient, 11 Mythical)
+
+# Test random selection and all fruits available
+python test_random_selection.py
+
+# Expected output:
+# ✅ All 166 fruits available
+# ✅ Random selection works
+# ✅ 103 non-starting fruits now accessible
+# ✅ Alphabetical sorting working
 ```
 
 ## 📖 Full Documentation
