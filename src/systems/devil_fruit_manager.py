@@ -92,15 +92,20 @@ class DevilFruitManager:
         """Load Paramecia Devil Fruits."""
         # Load index
         index = data_loader.load_json("DevilFruits/Paramecia/index.json")
-        if index:
-            self.type_indices["paramecia"] = index
-        
-        # Load all Paramecia fruits
-        fruits = data_loader.load_all_in_category("DevilFruits", "Paramecia")
-        
+        if not index:
+            print("Error: Could not load Paramecia index")
+            return
+
+        self.type_indices["paramecia"] = index
+
+        # Get fruits from index
+        fruits = index.get("fruits", [])
+
         for fruit in fruits:
             fruit_id = fruit.get("id")
             if fruit_id:
+                # Add type tag
+                fruit["type"] = "paramecia"
                 self.fruits_by_id[fruit_id] = fruit
                 self.fruits_by_type["paramecia"].append(fruit)
     
@@ -108,15 +113,20 @@ class DevilFruitManager:
         """Load Logia Devil Fruits."""
         # Load index
         index = data_loader.load_json("DevilFruits/Logia/index.json")
-        if index:
-            self.type_indices["logia"] = index
-        
-        # Load all Logia fruits
-        fruits = data_loader.load_all_in_category("DevilFruits", "Logia")
-        
+        if not index:
+            print("Error: Could not load Logia index")
+            return
+
+        self.type_indices["logia"] = index
+
+        # Get fruits from index
+        fruits = index.get("fruits", [])
+
         for fruit in fruits:
             fruit_id = fruit.get("id")
             if fruit_id:
+                # Add type tag
+                fruit["type"] = "logia"
                 self.fruits_by_id[fruit_id] = fruit
                 self.fruits_by_type["logia"].append(fruit)
     
@@ -124,35 +134,36 @@ class DevilFruitManager:
         """Load Zoan Devil Fruits (all subtypes)."""
         # Load main Zoan index
         index = data_loader.load_json("DevilFruits/Zoan/index.json")
-        if index:
-            self.type_indices["zoan"] = index
-        
-        # Load Regular Zoans
-        regular_fruits = data_loader.load_all_in_category("DevilFruits", "Zoan/Regular")
-        for fruit in regular_fruits:
+        if not index:
+            print("Error: Could not load Zoan index")
+            return
+
+        self.type_indices["zoan"] = index
+
+        # Get all fruits from single index file
+        fruits = index.get("fruits", [])
+
+        for fruit in fruits:
             fruit_id = fruit.get("id")
-            if fruit_id:
-                self.fruits_by_id[fruit_id] = fruit
-                self.fruits_by_type["zoan"].append(fruit)
+            if not fruit_id:
+                continue
+
+            # Add type tag
+            fruit["type"] = "zoan"
+
+            # Get subtype (Regular, Ancient, or Mythical)
+            subtype = fruit.get("subtype", "Regular").lower()
+
+            # Add to main collections
+            self.fruits_by_id[fruit_id] = fruit
+            self.fruits_by_type["zoan"].append(fruit)
+
+            # Add to subtype collection
+            if subtype in self.fruits_by_subtype:
+                self.fruits_by_subtype[subtype].append(fruit)
+            else:
+                # Default to regular if subtype not recognized
                 self.fruits_by_subtype["regular"].append(fruit)
-        
-        # Load Ancient Zoans
-        ancient_fruits = data_loader.load_all_in_category("DevilFruits", "Zoan/Ancient")
-        for fruit in ancient_fruits:
-            fruit_id = fruit.get("id")
-            if fruit_id:
-                self.fruits_by_id[fruit_id] = fruit
-                self.fruits_by_type["zoan"].append(fruit)
-                self.fruits_by_subtype["ancient"].append(fruit)
-        
-        # Load Mythical Zoans
-        mythical_fruits = data_loader.load_all_in_category("DevilFruits", "Zoan/Mythical")
-        for fruit in mythical_fruits:
-            fruit_id = fruit.get("id")
-            if fruit_id:
-                self.fruits_by_id[fruit_id] = fruit
-                self.fruits_by_type["zoan"].append(fruit)
-                self.fruits_by_subtype["mythical"].append(fruit)
     
     def get_fruit_by_id(self, fruit_id: str) -> Optional[Dict]:
         """
