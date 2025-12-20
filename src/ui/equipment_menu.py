@@ -404,17 +404,17 @@ class EquipmentMenu:
             mouse_x, mouse_y = event.pos
 
             # Check buttons
-            if self.close_button.contains_point(mouse_x, mouse_y):
+            if self.close_button.rect.collidepoint((mouse_x, mouse_y)):
                 self.hide()
                 if self.on_close:
                     self.on_close()
                 return
 
-            if self.unequip_button.enabled and self.unequip_button.contains_point(mouse_x, mouse_y):
+            if self.unequip_button.enabled and self.unequip_button.rect.collidepoint((mouse_x, mouse_y)):
                 self._unequip_selected()
                 return
 
-            if self.equip_button.contains_point(mouse_x, mouse_y):
+            if self.equip_button.rect.collidepoint((mouse_x, mouse_y)):
                 # This would open inventory selection (future integration)
                 print("Open inventory to select equipment (integration pending)")
                 return

@@ -454,24 +454,24 @@ class InventoryMenu:
             mouse_x, mouse_y = event.pos
 
             # Check buttons
-            if self.close_button.contains_point(mouse_x, mouse_y):
+            if self.close_button.rect.collidepoint((mouse_x, mouse_y)):
                 self.hide()
                 if self.on_close:
                     self.on_close()
                 return
 
-            if self.sort_button.contains_point(mouse_x, mouse_y):
+            if self.sort_button.rect.collidepoint((mouse_x, mouse_y)):
                 if self.inventory:
                     self.inventory.sort_by_rarity()
                     self._update_slots()
                 return
 
-            if self.use_button.enabled and self.use_button.contains_point(mouse_x, mouse_y):
+            if self.use_button.enabled and self.use_button.rect.collidepoint((mouse_x, mouse_y)):
                 if self.selected_slot and self.selected_slot.slot:
                     self._use_selected_item()
                 return
 
-            if self.equip_button.enabled and self.equip_button.contains_point(mouse_x, mouse_y):
+            if self.equip_button.enabled and self.equip_button.rect.collidepoint((mouse_x, mouse_y)):
                 if self.selected_slot and self.selected_slot.slot:
                     self._equip_selected_item()
                 return
