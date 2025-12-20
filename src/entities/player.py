@@ -432,6 +432,12 @@ class Player(Character):
                 import traceback
                 traceback.print_exc()
 
+        # Initialize equipment system if not present in save (backwards compatibility)
+        if not hasattr(player, 'equipment_slots') or player.equipment_slots is None:
+            from systems.equipment_manager import EquipmentSlots
+            player.equipment_slots = EquipmentSlots(player)
+            print(f"Initialized equipment system for {player.name} (old save compatibility)")
+
         return player
     
     def __str__(self) -> str:
