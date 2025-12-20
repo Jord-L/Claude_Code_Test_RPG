@@ -410,7 +410,7 @@ class EquipmentMenu:
                     self.on_close()
                 return
 
-            if self.unequip_button.is_enabled and self.unequip_button.contains_point(mouse_x, mouse_y):
+            if self.unequip_button.enabled and self.unequip_button.contains_point(mouse_x, mouse_y):
                 self._unequip_selected()
                 return
 

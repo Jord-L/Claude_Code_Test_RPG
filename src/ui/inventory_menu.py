@@ -412,12 +412,12 @@ class InventoryMenu:
                     self._update_slots()
                 return
 
-            if self.use_button.is_enabled and self.use_button.contains_point(mouse_x, mouse_y):
+            if self.use_button.enabled and self.use_button.contains_point(mouse_x, mouse_y):
                 if self.selected_slot and self.selected_slot.slot:
                     self._use_selected_item()
                 return
 
-            if self.equip_button.is_enabled and self.equip_button.contains_point(mouse_x, mouse_y):
+            if self.equip_button.enabled and self.equip_button.contains_point(mouse_x, mouse_y):
                 if self.selected_slot and self.selected_slot.slot:
                     self._equip_selected_item()
                 return

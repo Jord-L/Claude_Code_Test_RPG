@@ -88,9 +88,9 @@ class BattleState(State):
             player_party = [player]
 
         self.battle_manager = BattleManager(player_party, enemies)
-        
+
         # Create battle UI
-        self.battle_ui = BattleUI(self.battle_manager)
+        self.battle_ui = BattleUI(self.game.screen_width, self.game.screen_height, self.battle_manager)
         
         # Create AI controllers for enemies
         self.enemy_ais = []
