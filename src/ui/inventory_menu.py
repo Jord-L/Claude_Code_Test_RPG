@@ -4,7 +4,8 @@ Visual inventory management with grid display and item tooltips.
 """
 
 import pygame
-from typing import Optional, Callable, List, TYPE_CHECKING
+import os
+from typing import Optional, Callable, List, TYPE_CHECKING, Dict
 from systems.item_system import Item, Inventory, InventorySlot, Equipment
 from systems.item_loader import get_item_loader
 from ui.panel import Panel
@@ -13,6 +14,42 @@ from utils.constants import *
 
 if TYPE_CHECKING:
     from entities.character import Character
+
+
+# Icon cache to avoid reloading images
+_icon_cache: Dict[str, pygame.Surface] = {}
+
+
+def load_item_icon(icon_path: str, size: tuple = (44, 44)) -> Optional[pygame.Surface]:
+    """
+    Load an item icon from file with caching.
+
+    Args:
+        icon_path: Path to icon file (relative to assets/icons/)
+        size: Target size for icon
+
+    Returns:
+        Loaded and scaled icon surface, or None if not found
+    """
+    # Check cache first
+    cache_key = f"{icon_path}_{size[0]}x{size[1]}"
+    if cache_key in _icon_cache:
+        return _icon_cache[cache_key]
+
+    # Try to load from assets/icons/
+    full_path = os.path.join("assets", "icons", icon_path)
+
+    if os.path.exists(full_path):
+        try:
+            icon = pygame.image.load(full_path)
+            icon = pygame.transform.scale(icon, size)
+            _icon_cache[cache_key] = icon
+            return icon
+        except pygame.error as e:
+            print(f"Failed to load icon {full_path}: {e}")
+            return None
+
+    return None
 
 
 class ItemSlotUI:
@@ -72,16 +109,23 @@ class ItemSlotUI:
 
         # Draw item if present
         if self.slot and self.slot.item:
-            # Item icon placeholder (colored square based on rarity)
             icon_size = self.rect.width - 6
-            icon_rect = pygame.Rect(
-                self.rect.x + 3,
-                self.rect.y + 3,
-                icon_size,
-                icon_size
-            )
-            item_color = self.slot.item.get_color()
-            pygame.draw.rect(surface, item_color, icon_rect)
+            icon_x = self.rect.x + 3
+            icon_y = self.rect.y + 3
+
+            # Try to load and display icon if available
+            icon_displayed = False
+            if self.slot.item.icon:
+                icon_surface = load_item_icon(self.slot.item.icon, (icon_size, icon_size))
+                if icon_surface:
+                    surface.blit(icon_surface, (icon_x, icon_y))
+                    icon_displayed = True
+
+            # Fallback to colored square based on rarity
+            if not icon_displayed:
+                icon_rect = pygame.Rect(icon_x, icon_y, icon_size, icon_size)
+                item_color = self.slot.item.get_color()
+                pygame.draw.rect(surface, item_color, icon_rect)
 
             # Quantity if stackable
             if self.slot.item.stackable and self.slot.quantity > 1:
@@ -167,7 +211,10 @@ class ItemTooltip:
         line_height = 22
         padding = 10
 
-        total_lines = 1 + len(desc_lines) + len(stat_lines) + 2  # Title + desc + stats + value + type
+        # Title + type + (equip_slot if equipment) + desc + stats + value
+        total_lines = 1 + 1 + len(desc_lines) + len(stat_lines) + 1
+        if isinstance(self.item, Equipment):
+            total_lines += 1  # Add line for equipment slot
         height = padding * 2 + (total_lines * line_height)
 
         # Position (ensure it stays on screen)
@@ -199,6 +246,13 @@ class ItemTooltip:
         type_surface = self.small_font.render(type_text, True, LIGHT_GRAY)
         surface.blit(type_surface, (x + padding, current_y))
         current_y += line_height
+
+        # Equipment slot (if equipment)
+        if isinstance(self.item, Equipment):
+            slot_text = f"Equips to: {self.item.equip_slot.capitalize()} Slot"
+            slot_surface = self.small_font.render(slot_text, True, CYAN)
+            surface.blit(slot_surface, (x + padding, current_y))
+            current_y += line_height
 
         # Description
         for line in desc_lines:
