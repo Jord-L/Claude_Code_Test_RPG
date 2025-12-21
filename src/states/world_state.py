@@ -61,10 +61,12 @@ class WorldState(State):
         # Inventory menu
         self.inventory_menu = InventoryMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.inventory_menu.on_close = self._on_inventory_menu_close
+        self.inventory_menu.on_equipment_changed = self._on_equipment_changed
 
         # Equipment menu
         self.equipment_menu = EquipmentMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.equipment_menu.on_close = self._on_equipment_menu_close
+        self.equipment_menu.on_equip_requested = self._on_equip_requested_from_equipment
 
         # Travel menu
         self.travel_menu = TravelMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -481,9 +483,25 @@ class WorldState(State):
         """Callback when inventory menu is closed."""
         print("Inventory menu closed")
 
+    def _on_equipment_changed(self):
+        """Callback when equipment is equipped/unequipped."""
+        # Refresh equipment menu display
+        if hasattr(self, 'player_controller') and self.player_controller:
+            player = self.player_controller.player
+            self.equipment_menu.set_character(player, player.inventory)
+            print("Equipment menu refreshed")
+
     def _on_equipment_menu_close(self):
         """Callback when equipment menu is closed."""
         print("Equipment menu closed")
+
+    def _on_equip_requested_from_equipment(self):
+        """Callback when user clicks Equip button in equipment menu."""
+        # Hide equipment menu
+        self.equipment_menu.hide()
+        # Open inventory menu
+        self.inventory_menu.show()
+        print("Opened inventory to select equipment")
 
     def _on_travel_menu_close(self):
         """Callback when travel menu is closed."""

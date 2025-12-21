@@ -348,6 +348,7 @@ class InventoryMenu:
         # Callbacks
         self.on_close: Optional[Callable] = None
         self.on_use_item: Optional[Callable] = None
+        self.on_equipment_changed: Optional[Callable] = None  # Called when item is equipped
 
         # Fonts
         self.title_font = pygame.font.Font(None, 36)
@@ -605,6 +606,10 @@ class InventoryMenu:
             self.selected_slot.set_selected(False)
         self.selected_slot = None
         self.equip_button.set_enabled(False)
+
+        # Notify that equipment changed
+        if self.on_equipment_changed:
+            self.on_equipment_changed()
 
     def update(self, dt: float):
         """Update menu state."""

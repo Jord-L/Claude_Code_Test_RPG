@@ -299,6 +299,7 @@ class EquipmentMenu:
 
         # Callbacks
         self.on_close: Optional[Callable] = None
+        self.on_equip_requested: Optional[Callable] = None  # Callback to open inventory
 
         # Fonts
         self.title_font = pygame.font.Font(None, 36)
@@ -415,8 +416,9 @@ class EquipmentMenu:
                 return
 
             if self.equip_button.rect.collidepoint((mouse_x, mouse_y)):
-                # This would open inventory selection (future integration)
-                print("Open inventory to select equipment (integration pending)")
+                # Request to open inventory for item selection
+                if self.on_equip_requested:
+                    self.on_equip_requested()
                 return
 
             # Check equipment slots
