@@ -4,57 +4,16 @@ Visual inventory management with grid display and item tooltips.
 """
 
 import pygame
-import os
-from typing import Optional, Callable, List, TYPE_CHECKING, Dict
+from typing import Optional, Callable, List, TYPE_CHECKING
 from systems.item_system import Item, Inventory, InventorySlot, Equipment
 from systems.item_loader import get_item_loader
 from ui.panel import Panel
 from ui.button import Button
+from ui.item_icons import load_item_icon
 from utils.constants import *
 
 if TYPE_CHECKING:
     from entities.character import Character
-
-
-# Icon cache to avoid reloading images
-_icon_cache: Dict[str, pygame.Surface] = {}
-
-
-def load_item_icon(icon_path: str, size: tuple = (44, 44)) -> Optional[pygame.Surface]:
-    """
-    Load an item icon from file with caching.
-
-    Args:
-        icon_path: Path to icon file (relative to assets/)
-        size: Target size for icon
-
-    Returns:
-        Loaded and scaled icon surface, or None if not found
-    """
-    # Check cache first
-    cache_key = f"{icon_path}_{size[0]}x{size[1]}"
-    if cache_key in _icon_cache:
-        return _icon_cache[cache_key]
-
-    # Determine full path - handle both new (Raven Fantasy Icons) and old (items/) formats
-    if icon_path.startswith("Free - Raven Fantasy Icons"):
-        # New format: path already includes full directory structure
-        full_path = os.path.join("assets", icon_path)
-    else:
-        # Old format: prepend assets/icons/
-        full_path = os.path.join("assets", "icons", icon_path)
-
-    if os.path.exists(full_path):
-        try:
-            icon = pygame.image.load(full_path)
-            icon = pygame.transform.scale(icon, size)
-            _icon_cache[cache_key] = icon
-            return icon
-        except pygame.error as e:
-            print(f"Failed to load icon {full_path}: {e}")
-            return None
-
-    return None
 
 
 class ItemSlotUI:
