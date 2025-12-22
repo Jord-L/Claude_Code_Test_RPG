@@ -550,16 +550,23 @@ class InventoryMenu:
             print(f"Level {item.level_requirement} required to equip {item.name}!")
             return
 
+        # Remove item from inventory first (before equipping)
+        removed = self.inventory.remove_item(item.id, 1)
+        if not removed:
+            print(f"Failed to remove {item.name} from inventory!")
+            return
+
         # Equip the item
         old_equipment = self.character.equipment_slots.equip(item)
 
         # Add old equipment back to inventory if there was one
         if old_equipment:
-            self.inventory.add_item(old_equipment, 1)
-            print(f"Unequipped {old_equipment.name}")
+            added = self.inventory.add_item(old_equipment, 1)
+            if added:
+                print(f"Returned {old_equipment.name} to inventory")
+            else:
+                print(f"Warning: Failed to return {old_equipment.name} to inventory!")
 
-        # Remove equipped item from inventory
-        self.inventory.remove_item(item.id, 1)
         print(f"Equipped {item.name} on {self.character.name}!")
 
         # Update slots
