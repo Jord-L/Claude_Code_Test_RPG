@@ -78,7 +78,7 @@ class WorldState(State):
         button_height = 50
         button_spacing = 20
         center_x = SCREEN_WIDTH // 2 - button_width // 2
-        start_y = SCREEN_HEIGHT // 2 - 50
+        start_y = SCREEN_HEIGHT // 2 - 80
 
         self.pause_resume_button = Button(
             x=center_x,
@@ -89,9 +89,18 @@ class WorldState(State):
             callback=self._on_resume
         )
 
-        self.pause_menu_button = Button(
+        self.pause_save_button = Button(
             x=center_x,
             y=start_y + button_height + button_spacing,
+            width=button_width,
+            height=button_height,
+            text="Save Game",
+            callback=self._on_save_game
+        )
+
+        self.pause_menu_button = Button(
+            x=center_x,
+            y=start_y + (button_height + button_spacing) * 2,
             width=button_width,
             height=button_height,
             text="Back to Main Menu",
@@ -290,6 +299,7 @@ class WorldState(State):
         # Handle pause menu buttons when paused
         if self.paused:
             self.pause_resume_button.handle_event(event)
+            self.pause_save_button.handle_event(event)
             self.pause_menu_button.handle_event(event)
         else:
             # Pass input to player controller only when not paused
@@ -305,6 +315,7 @@ class WorldState(State):
         if self.paused:
             # Update pause menu buttons
             self.pause_resume_button.update(dt)
+            self.pause_save_button.update(dt)
             self.pause_menu_button.update(dt)
             return
 
@@ -462,12 +473,56 @@ class WorldState(State):
 
         # Render pause menu buttons
         self.pause_resume_button.render(surface)
+        self.pause_save_button.render(surface)
         self.pause_menu_button.render(surface)
 
     def _on_resume(self):
         """Resume game from pause menu."""
         self.paused = False
         print("Game resumed")
+
+    def _on_save_game(self):
+        """Save the game from pause menu."""
+        if not hasattr(self, 'player_controller') or not self.player_controller:
+            print("Cannot save: No player data available")
+            return
+
+        player = self.player_controller.player
+
+        print(f"\n{'='*60}")
+        print(f"SAVING GAME")
+        print(f"{'='*60}")
+        print(f"  Character: {player.name}")
+        print(f"  Level: {player.level}")
+
+        # Get save manager
+        from utils.save_manager import get_save_manager
+        save_manager = get_save_manager()
+
+        # Get all existing saves for this character
+        character_saves = save_manager.get_character_saves(player.name)
+
+        # Find next available slot (1-10)
+        existing_slots = [save['slot'] for save in character_saves]
+        next_slot = 1
+        for slot in range(1, 11):  # Allow up to 10 save slots
+            if slot not in existing_slots:
+                next_slot = slot
+                break
+        else:
+            # All slots 1-10 are full, use slot with oldest timestamp
+            next_slot = 1  # For now, just overwrite slot 1
+
+        # Prepare character data
+        character_data = player.to_dict()
+
+        # Save the game
+        if save_manager.save_game(character_data, character_name=player.name, slot=next_slot):
+            print(f"✓ Game saved to {player.name}/save_{next_slot}.json!")
+            print(f"{'='*60}\n")
+        else:
+            print(f"✗ Failed to save game")
+            print(f"{'='*60}\n")
 
     def _on_back_to_menu(self):
         """Return to main menu from pause menu."""
