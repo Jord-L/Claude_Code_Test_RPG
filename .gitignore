@@ -36,3 +36,7 @@ saves/*.json
 # Temporary files
 temp/
 tmp/
+
+# Environment variables
+.env
+!.env.example

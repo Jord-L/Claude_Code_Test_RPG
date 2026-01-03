@@ -287,14 +287,14 @@ class PartyMenu:
             mouse_x, mouse_y = event.pos
 
             # Check close button
-            if self.close_button.contains_point(mouse_x, mouse_y):
+            if self.close_button.rect.collidepoint((mouse_x, mouse_y)):
                 self.hide()
                 if self.on_close:
                     self.on_close()
                 return
 
             # Check swap button
-            if self.swap_button.is_enabled and self.swap_button.contains_point(mouse_x, mouse_y):
+            if self.swap_button.enabled and self.swap_button.rect.collidepoint((mouse_x, mouse_y)):
                 self._perform_swap()
                 return
 
@@ -445,7 +445,7 @@ class PartyMenu:
             instruction = "Select another member to swap (Active ↔ Reserve)"
             instruction_surface = self.info_font.render(instruction, True, YELLOW)
             instruction_x = self.panel_x + (self.panel_width - instruction_surface.get_width()) // 2
-            surface.blit(instruction_surface, (instruction_x, self.panel_y + self.panel_height - 100))
+            surface.blit(instruction_surface, (instruction_x, self.panel_y + self.panel_height - 140))
 
     def set_visible(self, visible: bool):
         """Set menu visibility."""

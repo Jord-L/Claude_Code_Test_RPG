@@ -208,6 +208,11 @@ class EquipmentManager:
 
         if char_id not in self.character_equipment:
             self.character_equipment[char_id] = EquipmentSlots(character)
+            # Also set it on the character object itself
+            character.equipment_slots = self.character_equipment[char_id]
+        elif character.equipment_slots is None:
+            # If slots exist in manager but not on character, assign it
+            character.equipment_slots = self.character_equipment[char_id]
 
         return self.character_equipment[char_id]
 

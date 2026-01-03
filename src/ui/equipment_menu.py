@@ -10,6 +10,7 @@ from systems.equipment_manager import EquipmentSlots
 from systems.item_system import Inventory
 from ui.panel import Panel
 from ui.button import Button
+from ui.item_icons import load_item_icon
 from utils.constants import *
 
 if TYPE_CHECKING:
@@ -83,31 +84,38 @@ class EquipmentSlotUI:
 
         # Draw equipment if present
         if self.equipment:
-            # Equipment icon (colored square based on rarity)
-            icon_size = 40
-            icon_rect = pygame.Rect(
-                self.rect.x + (self.rect.width - icon_size) // 2,
-                self.rect.y + 25,
-                icon_size,
-                icon_size
-            )
-            equipment_color = self.equipment.get_color()
-            pygame.draw.rect(surface, equipment_color, icon_rect)
+            icon_size = 60
+            icon_x = self.rect.x + (self.rect.width - icon_size) // 2
+            icon_y = self.rect.y + 25
 
-            # Equipment type indicator
-            type_indicator = ""
-            if isinstance(self.equipment, Weapon):
-                type_indicator = "⚔"
-            elif isinstance(self.equipment, Armor):
-                type_indicator = "🛡"
-            elif isinstance(self.equipment, Accessory):
-                type_indicator = "💍"
+            # Try to load item icon
+            icon = None
+            if hasattr(self.equipment, 'icon') and self.equipment.icon:
+                icon = load_item_icon(self.equipment.icon, size=(icon_size, icon_size))
 
-            if type_indicator:
-                type_surface = self.name_font.render(type_indicator, True, WHITE)
-                type_x = icon_rect.centerx - type_surface.get_width() // 2
-                type_y = icon_rect.centery - type_surface.get_height() // 2
-                surface.blit(type_surface, (type_x, type_y))
+            if icon:
+                # Draw the loaded icon
+                surface.blit(icon, (icon_x, icon_y))
+            else:
+                # Fallback: colored square based on rarity with type indicator
+                icon_rect = pygame.Rect(icon_x, icon_y, icon_size, icon_size)
+                equipment_color = self.equipment.get_color()
+                pygame.draw.rect(surface, equipment_color, icon_rect)
+
+                # Equipment type indicator
+                type_indicator = ""
+                if isinstance(self.equipment, Weapon):
+                    type_indicator = "⚔"
+                elif isinstance(self.equipment, Armor):
+                    type_indicator = "🛡"
+                elif isinstance(self.equipment, Accessory):
+                    type_indicator = "💍"
+
+                if type_indicator:
+                    type_surface = self.name_font.render(type_indicator, True, WHITE)
+                    type_x = icon_rect.centerx - type_surface.get_width() // 2
+                    type_y = icon_rect.centery - type_surface.get_height() // 2
+                    surface.blit(type_surface, (type_x, type_y))
 
         else:
             # Empty slot placeholder
@@ -299,6 +307,7 @@ class EquipmentMenu:
 
         # Callbacks
         self.on_close: Optional[Callable] = None
+        self.on_equip_requested: Optional[Callable] = None  # Callback to open inventory
 
         # Fonts
         self.title_font = pygame.font.Font(None, 36)
@@ -404,19 +413,20 @@ class EquipmentMenu:
             mouse_x, mouse_y = event.pos
 
             # Check buttons
-            if self.close_button.contains_point(mouse_x, mouse_y):
+            if self.close_button.rect.collidepoint((mouse_x, mouse_y)):
                 self.hide()
                 if self.on_close:
                     self.on_close()
                 return
 
-            if self.unequip_button.is_enabled and self.unequip_button.contains_point(mouse_x, mouse_y):
+            if self.unequip_button.enabled and self.unequip_button.rect.collidepoint((mouse_x, mouse_y)):
                 self._unequip_selected()
                 return
 
-            if self.equip_button.contains_point(mouse_x, mouse_y):
-                # This would open inventory selection (future integration)
-                print("Open inventory to select equipment (integration pending)")
+            if self.equip_button.rect.collidepoint((mouse_x, mouse_y)):
+                # Request to open inventory for item selection
+                if self.on_equip_requested:
+                    self.on_equip_requested()
                 return
 
             # Check equipment slots

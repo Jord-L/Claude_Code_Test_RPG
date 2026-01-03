@@ -224,9 +224,7 @@ class Equipment(Item):
             character: Character to apply to
         """
         for stat_name, bonus in self.stat_bonuses.items():
-            if hasattr(character.stats, stat_name):
-                stat = getattr(character.stats, stat_name)
-                stat.add_modifier(f"equip_{self.id}", bonus)
+            character.stats.add_modifier(stat_name, bonus)
 
     def remove_stats(self, character):
         """
@@ -235,10 +233,8 @@ class Equipment(Item):
         Args:
             character: Character to remove from
         """
-        for stat_name in self.stat_bonuses.keys():
-            if hasattr(character.stats, stat_name):
-                stat = getattr(character.stats, stat_name)
-                stat.remove_modifier(f"equip_{self.id}")
+        for stat_name, bonus in self.stat_bonuses.items():
+            character.stats.remove_modifier(stat_name, bonus)
 
 
 class Weapon(Equipment):

@@ -9,6 +9,7 @@ from systems.item_system import Item, Inventory, InventorySlot, Equipment
 from systems.item_loader import get_item_loader
 from ui.panel import Panel
 from ui.button import Button
+from ui.item_icons import load_item_icon
 from utils.constants import *
 
 if TYPE_CHECKING:
@@ -72,16 +73,23 @@ class ItemSlotUI:
 
         # Draw item if present
         if self.slot and self.slot.item:
-            # Item icon placeholder (colored square based on rarity)
             icon_size = self.rect.width - 6
-            icon_rect = pygame.Rect(
-                self.rect.x + 3,
-                self.rect.y + 3,
-                icon_size,
-                icon_size
-            )
-            item_color = self.slot.item.get_color()
-            pygame.draw.rect(surface, item_color, icon_rect)
+            icon_x = self.rect.x + 3
+            icon_y = self.rect.y + 3
+
+            # Try to load and display icon if available
+            icon_displayed = False
+            if self.slot.item.icon:
+                icon_surface = load_item_icon(self.slot.item.icon, (icon_size, icon_size))
+                if icon_surface:
+                    surface.blit(icon_surface, (icon_x, icon_y))
+                    icon_displayed = True
+
+            # Fallback to colored square based on rarity
+            if not icon_displayed:
+                icon_rect = pygame.Rect(icon_x, icon_y, icon_size, icon_size)
+                item_color = self.slot.item.get_color()
+                pygame.draw.rect(surface, item_color, icon_rect)
 
             # Quantity if stackable
             if self.slot.item.stackable and self.slot.quantity > 1:
@@ -167,7 +175,10 @@ class ItemTooltip:
         line_height = 22
         padding = 10
 
-        total_lines = 1 + len(desc_lines) + len(stat_lines) + 2  # Title + desc + stats + value + type
+        # Title + type + (equip_slot if equipment) + desc + stats + value
+        total_lines = 1 + 1 + len(desc_lines) + len(stat_lines) + 1
+        if isinstance(self.item, Equipment):
+            total_lines += 1  # Add line for equipment slot
         height = padding * 2 + (total_lines * line_height)
 
         # Position (ensure it stays on screen)
@@ -199,6 +210,13 @@ class ItemTooltip:
         type_surface = self.small_font.render(type_text, True, LIGHT_GRAY)
         surface.blit(type_surface, (x + padding, current_y))
         current_y += line_height
+
+        # Equipment slot (if equipment)
+        if isinstance(self.item, Equipment):
+            slot_text = f"Equips to: {self.item.equip_slot.capitalize()} Slot"
+            slot_surface = self.small_font.render(slot_text, True, CYAN)
+            surface.blit(slot_surface, (x + padding, current_y))
+            current_y += line_height
 
         # Description
         for line in desc_lines:
@@ -294,6 +312,7 @@ class InventoryMenu:
         # Callbacks
         self.on_close: Optional[Callable] = None
         self.on_use_item: Optional[Callable] = None
+        self.on_equipment_changed: Optional[Callable] = None  # Called when item is equipped
 
         # Fonts
         self.title_font = pygame.font.Font(None, 36)
@@ -400,24 +419,24 @@ class InventoryMenu:
             mouse_x, mouse_y = event.pos
 
             # Check buttons
-            if self.close_button.contains_point(mouse_x, mouse_y):
+            if self.close_button.rect.collidepoint((mouse_x, mouse_y)):
                 self.hide()
                 if self.on_close:
                     self.on_close()
                 return
 
-            if self.sort_button.contains_point(mouse_x, mouse_y):
+            if self.sort_button.rect.collidepoint((mouse_x, mouse_y)):
                 if self.inventory:
                     self.inventory.sort_by_rarity()
                     self._update_slots()
                 return
 
-            if self.use_button.is_enabled and self.use_button.contains_point(mouse_x, mouse_y):
+            if self.use_button.enabled and self.use_button.rect.collidepoint((mouse_x, mouse_y)):
                 if self.selected_slot and self.selected_slot.slot:
                     self._use_selected_item()
                 return
 
-            if self.equip_button.is_enabled and self.equip_button.contains_point(mouse_x, mouse_y):
+            if self.equip_button.enabled and self.equip_button.rect.collidepoint((mouse_x, mouse_y)):
                 if self.selected_slot and self.selected_slot.slot:
                     self._equip_selected_item()
                 return
@@ -531,16 +550,23 @@ class InventoryMenu:
             print(f"Level {item.level_requirement} required to equip {item.name}!")
             return
 
+        # Remove item from inventory first (before equipping)
+        removed = self.inventory.remove_item(item.id, 1)
+        if not removed:
+            print(f"Failed to remove {item.name} from inventory!")
+            return
+
         # Equip the item
         old_equipment = self.character.equipment_slots.equip(item)
 
         # Add old equipment back to inventory if there was one
         if old_equipment:
-            self.inventory.add_item(old_equipment, 1)
-            print(f"Unequipped {old_equipment.name}")
+            added = self.inventory.add_item(old_equipment, 1)
+            if added:
+                print(f"Returned {old_equipment.name} to inventory")
+            else:
+                print(f"Warning: Failed to return {old_equipment.name} to inventory!")
 
-        # Remove equipped item from inventory
-        self.inventory.remove_item(item.id, 1)
         print(f"Equipped {item.name} on {self.character.name}!")
 
         # Update slots
@@ -551,6 +577,10 @@ class InventoryMenu:
             self.selected_slot.set_selected(False)
         self.selected_slot = None
         self.equip_button.set_enabled(False)
+
+        # Notify that equipment changed
+        if self.on_equipment_changed:
+            self.on_equipment_changed()
 
     def update(self, dt: float):
         """Update menu state."""

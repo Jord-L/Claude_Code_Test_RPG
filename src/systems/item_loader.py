@@ -24,7 +24,8 @@ class ItemDatabase:
             "value": 50,
             "consumable": True,
             "usable_in_battle": True,
-            "effects": {"heal_hp": 50}
+            "effects": {"heal_hp": 50},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb1.png"
         },
         "health_potion_medium": {
             "name": "Health Potion",
@@ -35,7 +36,8 @@ class ItemDatabase:
             "value": 150,
             "consumable": True,
             "usable_in_battle": True,
-            "effects": {"heal_hp": 150}
+            "effects": {"heal_hp": 150},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb2.png"
         },
         "health_potion_large": {
             "name": "Large Health Potion",
@@ -46,7 +48,8 @@ class ItemDatabase:
             "value": 300,
             "consumable": True,
             "usable_in_battle": True,
-            "effects": {"heal_hp": 300}
+            "effects": {"heal_hp": 300},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb3.png"
         },
         "ap_potion": {
             "name": "AP Potion",
@@ -57,7 +60,8 @@ class ItemDatabase:
             "value": 100,
             "consumable": True,
             "usable_in_battle": True,
-            "effects": {"restore_ap": 50}
+            "effects": {"restore_ap": 50},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb10.png"
         },
         "revive_potion": {
             "name": "Phoenix Down",
@@ -68,7 +72,8 @@ class ItemDatabase:
             "value": 500,
             "consumable": True,
             "usable_in_battle": True,
-            "effects": {"revive": True, "revive_hp_percent": 0.5}
+            "effects": {"revive": True, "revive_hp_percent": 0.5},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb20.png"
         },
         "meat": {
             "name": "Sea King Meat",
@@ -80,7 +85,8 @@ class ItemDatabase:
             "consumable": True,
             "usable_in_battle": False,
             "usable_outside_battle": True,
-            "effects": {"heal_hp_percent": 0.5}
+            "effects": {"heal_hp_percent": 0.5},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb50.png"
         }
     }
 
@@ -97,7 +103,8 @@ class ItemDatabase:
             "attack_power": 10,
             "attack_speed": 1.0,
             "level_requirement": 1,
-            "stat_bonuses": {"strength": 2}
+            "stat_bonuses": {"strength": 2},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb100.png"
         },
         "iron_sword": {
             "name": "Iron Sword",
@@ -110,7 +117,8 @@ class ItemDatabase:
             "attack_power": 25,
             "attack_speed": 1.0,
             "level_requirement": 3,
-            "stat_bonuses": {"strength": 5, "skill": 2}
+            "stat_bonuses": {"strength": 5, "skill": 2},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb101.png"
         },
         "steel_katana": {
             "name": "Steel Katana",
@@ -124,7 +132,8 @@ class ItemDatabase:
             "attack_speed": 1.2,
             "crit_bonus": 5,
             "level_requirement": 7,
-            "stat_bonuses": {"strength": 8, "skill": 5, "speed": 3}
+            "stat_bonuses": {"strength": 8, "skill": 5, "speed": 3},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb102.png"
         },
         "flintlock_pistol": {
             "name": "Flintlock Pistol",
@@ -138,7 +147,8 @@ class ItemDatabase:
             "attack_speed": 0.8,
             "range": 3,
             "level_requirement": 4,
-            "stat_bonuses": {"skill": 6, "speed": 2}
+            "stat_bonuses": {"skill": 6, "speed": 2},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb120.png"
         },
         "combat_boots": {
             "name": "Combat Boots",
@@ -151,7 +161,8 @@ class ItemDatabase:
             "attack_power": 22,
             "attack_speed": 1.3,
             "level_requirement": 3,
-            "stat_bonuses": {"strength": 4, "speed": 6}
+            "stat_bonuses": {"strength": 4, "speed": 6},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb400.png"
         }
     }
 
@@ -168,7 +179,8 @@ class ItemDatabase:
             "defense": 8,
             "evasion_penalty": 0,
             "level_requirement": 1,
-            "stat_bonuses": {"defense": 3}
+            "stat_bonuses": {"defense": 3},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb200.png"
         },
         "iron_breastplate": {
             "name": "Iron Breastplate",
@@ -181,7 +193,8 @@ class ItemDatabase:
             "defense": 18,
             "evasion_penalty": -2,
             "level_requirement": 4,
-            "stat_bonuses": {"defense": 7, "endurance": 3}
+            "stat_bonuses": {"defense": 7, "endurance": 3},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb201.png"
         },
         "steel_plate": {
             "name": "Steel Plate Armor",
@@ -194,7 +207,8 @@ class ItemDatabase:
             "defense": 30,
             "evasion_penalty": -5,
             "level_requirement": 8,
-            "stat_bonuses": {"defense": 12, "endurance": 8}
+            "stat_bonuses": {"defense": 12, "endurance": 8},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb202.png"
         },
         "pirate_coat": {
             "name": "Pirate Captain's Coat",
@@ -207,7 +221,8 @@ class ItemDatabase:
             "defense": 15,
             "evasion_penalty": 0,
             "level_requirement": 6,
-            "stat_bonuses": {"defense": 5, "charisma": 8, "will": 4}
+            "stat_bonuses": {"defense": 5, "charisma": 8, "will": 4},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb220.png"
         }
     }
 
@@ -221,7 +236,8 @@ class ItemDatabase:
             "rarity": "uncommon",
             "value": 1000,
             "level_requirement": 1,
-            "stat_bonuses": {"strength": 5}
+            "stat_bonuses": {"strength": 5},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb300.png"
         },
         "speed_boots": {
             "name": "Boots of Speed",
@@ -231,7 +247,8 @@ class ItemDatabase:
             "rarity": "rare",
             "value": 1500,
             "level_requirement": 5,
-            "stat_bonuses": {"speed": 8, "skill": 3}
+            "stat_bonuses": {"speed": 8, "skill": 3},
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb301.png"
         },
         "lucky_charm": {
             "name": "Lucky Charm",
@@ -242,7 +259,8 @@ class ItemDatabase:
             "value": 2000,
             "level_requirement": 5,
             "stat_bonuses": {"skill": 5},
-            "special_effects": ["crit_rate_+5"]
+            "special_effects": ["crit_rate_+5"],
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb302.png"
         },
         "eternal_log_pose": {
             "name": "Eternal Log Pose",
@@ -254,7 +272,8 @@ class ItemDatabase:
             "unique": True,
             "level_requirement": 10,
             "stat_bonuses": {"will": 10, "charisma": 5},
-            "special_effects": ["no_random_encounters"]
+            "special_effects": ["no_random_encounters"],
+            "icon": "Free - Raven Fantasy Icons/Free - Raven Fantasy Icons/Separated Files/32x32/fb350.png"
         }
     }
 

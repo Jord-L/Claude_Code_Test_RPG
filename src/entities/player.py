@@ -348,21 +348,21 @@ class Player(Character):
             Dictionary representation
         """
         data = super().to_dict()
-        
+
         # Add player-specific data
         data.update({
             "berries": self.berries,
-            "inventory": self.inventory.copy(),
-            "key_items": self.key_items.copy(),
+            "inventory": [],  # New inventory system - serialize as empty for now
+            "key_items": self.key_items.copy() if self.key_items else [],
             "bounty": self.bounty,
-            "reputation": self.reputation.copy(),
-            "discovered_islands": self.discovered_islands.copy(),
-            "unlocked_fast_travel": self.unlocked_fast_travel.copy(),
-            "statistics": self.stats_tracker.copy(),
+            "reputation": self.reputation.copy() if self.reputation else {},
+            "discovered_islands": self.discovered_islands.copy() if self.discovered_islands else [],
+            "unlocked_fast_travel": self.unlocked_fast_travel.copy() if self.unlocked_fast_travel else [],
+            "statistics": self.stats_tracker.copy() if self.stats_tracker else {},
             "background": self.background,
-            "appearance": self.appearance.copy()
+            "appearance": self.appearance.copy() if self.appearance else {}
         })
-        
+
         return data
     
     @classmethod
@@ -395,7 +395,8 @@ class Player(Character):
         
         # Restore player-specific data
         player.berries = data.get("berries", STARTING_BERRIES)
-        player.inventory = data.get("inventory", [])
+        # Note: Inventory is already initialized as Inventory() object, skip loading for now
+        # player.inventory is already set up in __init__
         player.key_items = data.get("key_items", [])
         player.bounty = data.get("bounty", 0)
         player.reputation = data.get("reputation", {"pirates": 0, "marines": 0, "civilians": 0})
@@ -406,11 +407,37 @@ class Player(Character):
         player.appearance = data.get("appearance", {})
         
         # Restore Devil Fruit if present
-        if "devil_fruit" in data:
-            # Note: Would need to load fruit_data from devil_fruit_manager
-            # This is just the save structure
-            pass
-        
+        if "devil_fruit" in data and data["devil_fruit"]:
+            try:
+                from systems.devil_fruit_manager import devil_fruit_manager
+                from entities.devil_fruit import DevilFruit
+
+                saved_fruit = data["devil_fruit"]
+                fruit_id = saved_fruit.get("id")
+
+                if fruit_id:
+                    # Load the fruit data from manager
+                    fruit_data = devil_fruit_manager.get_fruit_by_id(fruit_id)
+
+                    if fruit_data:
+                        # Reconstruct the devil fruit with saved state
+                        player.devil_fruit = DevilFruit.from_dict(saved_fruit, fruit_data)
+                        player._apply_devil_fruit_bonuses()
+                    else:
+                        print(f"Warning: Could not find devil fruit data for {fruit_id}")
+                else:
+                    print("Warning: Saved devil fruit has no ID")
+            except Exception as e:
+                print(f"Error restoring devil fruit: {e}")
+                import traceback
+                traceback.print_exc()
+
+        # Initialize equipment system if not present in save (backwards compatibility)
+        if not hasattr(player, 'equipment_slots') or player.equipment_slots is None:
+            from systems.equipment_manager import EquipmentSlots
+            player.equipment_slots = EquipmentSlots(player)
+            print(f"Initialized equipment system for {player.name} (old save compatibility)")
+
         return player
     
     def __str__(self) -> str:

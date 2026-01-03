@@ -18,6 +18,7 @@ from ui.party_menu import PartyMenu
 from ui.inventory_menu import InventoryMenu
 from ui.equipment_menu import EquipmentMenu
 from ui.travel_menu import TravelMenu
+from ui.button import Button
 from utils.party_helpers import create_starter_crew
 from utils.item_helpers import add_starter_items
 from utils.constants import *
@@ -60,15 +61,51 @@ class WorldState(State):
         # Inventory menu
         self.inventory_menu = InventoryMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.inventory_menu.on_close = self._on_inventory_menu_close
+        self.inventory_menu.on_equipment_changed = self._on_equipment_changed
 
         # Equipment menu
         self.equipment_menu = EquipmentMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.equipment_menu.on_close = self._on_equipment_menu_close
+        self.equipment_menu.on_equip_requested = self._on_equip_requested_from_equipment
 
         # Travel menu
         self.travel_menu = TravelMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.travel_menu.on_travel = self._on_travel_selected
         self.travel_menu.on_close = self._on_travel_menu_close
+
+        # Pause menu buttons
+        button_width = 300
+        button_height = 50
+        button_spacing = 20
+        center_x = SCREEN_WIDTH // 2 - button_width // 2
+        start_y = SCREEN_HEIGHT // 2 - 80
+
+        self.pause_resume_button = Button(
+            x=center_x,
+            y=start_y,
+            width=button_width,
+            height=button_height,
+            text="Resume",
+            callback=self._on_resume
+        )
+
+        self.pause_save_button = Button(
+            x=center_x,
+            y=start_y + button_height + button_spacing,
+            width=button_width,
+            height=button_height,
+            text="Save Game",
+            callback=self._on_save_game
+        )
+
+        self.pause_menu_button = Button(
+            x=center_x,
+            y=start_y + (button_height + button_spacing) * 2,
+            width=button_width,
+            height=button_height,
+            text="Back to Main Menu",
+            callback=self._on_back_to_menu
+        )
 
         # Debug
         self.show_debug = True
@@ -136,9 +173,7 @@ class WorldState(State):
         if not hasattr(player, 'party_manager') or player.party_manager is None:
             player.party_manager = PartyManager(player)
             print(f"Initialized party manager for {player.name}")
-
-            # Add starter crew for testing/demo
-            create_starter_crew(player.party_manager)
+            print(f"Starting solo - no party members added")
 
             # Add starter items for testing/demo
             print("\nAdding starter items...")
@@ -261,20 +296,29 @@ class WorldState(State):
                 print("Manual battle trigger!")
                 self.battle_triggered = True
 
-        # Pass input to player controller
-        if not self.paused:
+        # Handle pause menu buttons when paused
+        if self.paused:
+            self.pause_resume_button.handle_event(event)
+            self.pause_save_button.handle_event(event)
+            self.pause_menu_button.handle_event(event)
+        else:
+            # Pass input to player controller only when not paused
             self.player_controller.handle_event(event)
     
     def update(self, dt):
         """
         Update world state.
-        
+
         Args:
             dt: Delta time in seconds
         """
         if self.paused:
+            # Update pause menu buttons
+            self.pause_resume_button.update(dt)
+            self.pause_save_button.update(dt)
+            self.pause_menu_button.update(dt)
             return
-        
+
         # Update player
         event = self.player_controller.update(dt)
         
@@ -427,11 +471,64 @@ class WorldState(State):
         pause_y = SCREEN_HEIGHT // 3
         surface.blit(pause_text, (pause_x, pause_y))
 
-        # Resume instruction
-        resume_text = self.font.render("Press ESC to resume", True, LIGHT_GRAY)
-        resume_x = (SCREEN_WIDTH - resume_text.get_width()) // 2
-        resume_y = pause_y + 100
-        surface.blit(resume_text, (resume_x, resume_y))
+        # Render pause menu buttons
+        self.pause_resume_button.render(surface)
+        self.pause_save_button.render(surface)
+        self.pause_menu_button.render(surface)
+
+    def _on_resume(self):
+        """Resume game from pause menu."""
+        self.paused = False
+        print("Game resumed")
+
+    def _on_save_game(self):
+        """Save the game from pause menu."""
+        if not hasattr(self, 'player_controller') or not self.player_controller:
+            print("Cannot save: No player data available")
+            return
+
+        player = self.player_controller.player
+
+        print(f"\n{'='*60}")
+        print(f"SAVING GAME")
+        print(f"{'='*60}")
+        print(f"  Character: {player.name}")
+        print(f"  Level: {player.level}")
+
+        # Get save manager
+        from utils.save_manager import get_save_manager
+        save_manager = get_save_manager()
+
+        # Get all existing saves for this character
+        character_saves = save_manager.get_character_saves(player.name)
+
+        # Find next available slot (1-10)
+        existing_slots = [save['slot'] for save in character_saves]
+        next_slot = 1
+        for slot in range(1, 11):  # Allow up to 10 save slots
+            if slot not in existing_slots:
+                next_slot = slot
+                break
+        else:
+            # All slots 1-10 are full, use slot with oldest timestamp
+            next_slot = 1  # For now, just overwrite slot 1
+
+        # Prepare character data
+        character_data = player.to_dict()
+
+        # Save the game
+        if save_manager.save_game(character_data, character_name=player.name, slot=next_slot):
+            print(f"✓ Game saved to {player.name}/save_{next_slot}.json!")
+            print(f"{'='*60}\n")
+        else:
+            print(f"✗ Failed to save game")
+            print(f"{'='*60}\n")
+
+    def _on_back_to_menu(self):
+        """Return to main menu from pause menu."""
+        print("Returning to main menu...")
+        self.paused = False
+        self.state_manager.change_state(STATE_MENU)
 
     def _on_party_menu_close(self):
         """Callback when party menu is closed."""
@@ -441,9 +538,25 @@ class WorldState(State):
         """Callback when inventory menu is closed."""
         print("Inventory menu closed")
 
+    def _on_equipment_changed(self):
+        """Callback when equipment is equipped/unequipped."""
+        # Refresh equipment menu display
+        if hasattr(self, 'player_controller') and self.player_controller:
+            player = self.player_controller.player
+            self.equipment_menu.set_character(player, player.inventory)
+            print("Equipment menu refreshed")
+
     def _on_equipment_menu_close(self):
         """Callback when equipment menu is closed."""
         print("Equipment menu closed")
+
+    def _on_equip_requested_from_equipment(self):
+        """Callback when user clicks Equip button in equipment menu."""
+        # Hide equipment menu
+        self.equipment_menu.hide()
+        # Open inventory menu
+        self.inventory_menu.show()
+        print("Opened inventory to select equipment")
 
     def _on_travel_menu_close(self):
         """Callback when travel menu is closed."""
