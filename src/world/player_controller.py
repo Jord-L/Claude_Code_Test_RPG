@@ -27,13 +27,14 @@ class PlayerController:
     def __init__(self, player: Player, game_map: Map):
         """
         Initialize player controller.
-        
+
         Args:
             player: Player instance
             game_map: Current map
         """
         self.player = player
         self.map = game_map
+        self.current_island = None  # Will be set by world state
         
         # Position (world coordinates, pixels)
         spawn_x, spawn_y = game_map.get_spawn_position()
@@ -175,11 +176,11 @@ class PlayerController:
     def _can_move_to(self, world_x: float, world_y: float) -> bool:
         """
         Check if player can move to position.
-        
+
         Args:
             world_x: Target X position
             world_y: Target Y position
-        
+
         Returns:
             True if valid move
         """
@@ -190,11 +191,26 @@ class PlayerController:
             (world_x, world_y + self.sprite_size - 1),  # Bottom-left
             (world_x + self.sprite_size - 1, world_y + self.sprite_size - 1)  # Bottom-right
         ]
-        
+
         for corner_x, corner_y in corners:
             if not self.map.is_walkable_world(int(corner_x), int(corner_y)):
                 return False
-        
+
+        # Check collision with NPCs and interactive objects
+        if self.current_island:
+            player_tile_x = int(world_x // TILE_SIZE)
+            player_tile_y = int(world_y // TILE_SIZE)
+
+            # Check NPCs
+            for npc in self.current_island.npcs:
+                if npc.tile_x == player_tile_x and npc.tile_y == player_tile_y:
+                    return False
+
+            # Check interactive objects
+            for obj in self.current_island.interactive_objects:
+                if obj.tile_x == player_tile_x and obj.tile_y == player_tile_y:
+                    return False
+
         return True
     
     def _check_encounter(self) -> bool:

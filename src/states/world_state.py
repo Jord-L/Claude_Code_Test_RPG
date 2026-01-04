@@ -18,6 +18,7 @@ from ui.party_menu import PartyMenu
 from ui.inventory_menu import InventoryMenu
 from ui.equipment_menu import EquipmentMenu
 from ui.travel_menu import TravelMenu
+from ui.chest_menu import ChestMenu
 from ui.button import Button
 from utils.party_helpers import create_starter_crew
 from utils.item_helpers import add_starter_items
@@ -72,6 +73,10 @@ class WorldState(State):
         self.travel_menu = TravelMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.travel_menu.on_travel = self._on_travel_selected
         self.travel_menu.on_close = self._on_travel_menu_close
+
+        # Chest menu
+        self.chest_menu = ChestMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.chest_menu.on_close = self._on_chest_menu_close
 
         # Pause menu buttons
         button_width = 300
@@ -198,6 +203,10 @@ class WorldState(State):
         # Create player controller
         self.player_controller = PlayerController(player, self.current_map)
 
+        # Set current island for collision detection
+        if self.island_manager:
+            self.player_controller.current_island = self.island_manager.get_current_island()
+
         # Create camera
         map_width, map_height = self.current_map.get_world_size()
         self.camera = Camera(map_width, map_height)
@@ -238,6 +247,10 @@ class WorldState(State):
             event: Pygame event
         """
         # Menus get priority (check in order)
+        if self.chest_menu.visible:
+            self.chest_menu.handle_event(event)
+            return
+
         if self.party_menu.visible:
             self.party_menu.handle_event(event)
             return
@@ -401,6 +414,7 @@ class WorldState(State):
         self.inventory_menu.render(surface)
         self.equipment_menu.render(surface)
         self.travel_menu.render(surface)
+        self.chest_menu.render(surface)
     
     def _render_interaction_message(self, surface: pygame.Surface):
         """Render interaction message box at bottom of screen."""
@@ -664,6 +678,10 @@ class WorldState(State):
         """Callback when travel menu is closed."""
         print("Travel menu closed")
 
+    def _on_chest_menu_close(self):
+        """Callback when chest menu is closed."""
+        print("Chest menu closed")
+
     def _on_travel_selected(self, destination_id: str):
         """Handle island travel."""
         if self.island_manager and self.player_controller:
@@ -736,39 +754,17 @@ class WorldState(State):
             if distance <= 1:  # Adjacent or same tile
                 print(f"Interacting with {obj.object_type} at {obj_tile}!")
 
-                if obj.one_time and hasattr(obj, '_opened'):
-                    self._show_message("This chest is already empty.")
+                # Handle chests with inventory UI
+                if obj.object_type == "chest" and obj.inventory:
+                    player = self.player_controller.player
+                    self.chest_menu.show(obj.inventory, player.inventory)
+                    print("Opened chest inventory menu")
                     return
 
-                # Build message
-                message_parts = []
+                # Handle other interactive objects
                 if obj.message:
-                    message_parts.append(obj.message)
-
-                # Give rewards
-                if obj.item_rewards:
-                    player = self.player_controller.player
-                    for item_id, quantity in obj.item_rewards:
-                        from systems.item_loader import load_item
-                        item = load_item(item_id)
-                        if item:
-                            player.inventory.add_item(item, quantity)
-                            message_parts.append(f"Received {quantity}x {item.name}!")
-                            print(f"  Received {quantity}x {item.name}!")
-
-                if obj.berries_reward > 0:
-                    player = self.player_controller.player
-                    player.berries += obj.berries_reward
-                    message_parts.append(f"Received {obj.berries_reward} Berries!")
-                    print(f"  Received {obj.berries_reward} Berries!")
-
-                # Show message
-                if message_parts:
-                    self._show_message("\n".join(message_parts))
-
-                # Mark as opened if one-time
-                if obj.one_time:
-                    obj._opened = True
+                    self._show_message(obj.message)
+                    return
 
                 return
 
