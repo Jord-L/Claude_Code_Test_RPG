@@ -198,18 +198,20 @@ class PlayerController:
 
         # Check collision with NPCs and interactive objects
         if self.current_island:
-            player_tile_x = int(world_x // TILE_SIZE)
-            player_tile_y = int(world_y // TILE_SIZE)
+            # Check all four corners against NPCs and objects
+            for corner_x, corner_y in corners:
+                tile_x = int(corner_x // TILE_SIZE)
+                tile_y = int(corner_y // TILE_SIZE)
 
-            # Check NPCs
-            for npc in self.current_island.npcs:
-                if npc.tile_x == player_tile_x and npc.tile_y == player_tile_y:
-                    return False
+                # Check NPCs
+                for npc in self.current_island.npcs:
+                    if npc.tile_x == tile_x and npc.tile_y == tile_y:
+                        return False
 
-            # Check interactive objects
-            for obj in self.current_island.interactive_objects:
-                if obj.tile_x == player_tile_x and obj.tile_y == player_tile_y:
-                    return False
+                # Check interactive objects
+                for obj in self.current_island.interactive_objects:
+                    if obj.tile_x == tile_x and obj.tile_y == tile_y:
+                        return False
 
         return True
     
