@@ -374,7 +374,10 @@ class WorldState(State):
         
         # Render map
         self.current_map.render(surface, camera_x, camera_y)
-        
+
+        # Render interactive objects and NPCs
+        self._render_interactive_elements(surface, camera_x, camera_y)
+
         # Render player
         self.player_controller.render(surface, camera_x, camera_y)
         
@@ -391,6 +394,70 @@ class WorldState(State):
         self.equipment_menu.render(surface)
         self.travel_menu.render(surface)
     
+    def _render_interactive_elements(self, surface: pygame.Surface, camera_x: int, camera_y: int):
+        """
+        Render interactive objects and NPCs on the map.
+
+        Args:
+            surface: Surface to draw on
+            camera_x: Camera X offset
+            camera_y: Camera Y offset
+        """
+        if not self.island_manager:
+            return
+
+        current_island = self.island_manager.get_current_island()
+        if not current_island:
+            return
+
+        # Get tile size from map
+        tile_size = self.current_map.tile_size if self.current_map else 32
+
+        # Render interactive objects
+        for obj in current_island.interactive_objects:
+            # Skip if already opened (one-time objects)
+            if obj.one_time and hasattr(obj, '_opened') and obj._opened:
+                continue
+
+            # Calculate screen position
+            screen_x = obj.tile_x * tile_size + camera_x
+            screen_y = obj.tile_y * tile_size + camera_y
+
+            # Choose color based on object type
+            if obj.object_type == "chest":
+                color = (0, 0, 255)  # Blue for chest
+            elif obj.object_type == "door":
+                color = (255, 0, 0)  # Red for door
+            else:
+                color = (128, 128, 128)  # Gray for other objects
+
+            # Draw filled square
+            rect = pygame.Rect(screen_x, screen_y, tile_size, tile_size)
+            pygame.draw.rect(surface, color, rect)
+            pygame.draw.rect(surface, (255, 255, 255), rect, 2)  # White border
+
+        # Render NPCs
+        for npc in current_island.npcs:
+            # Calculate screen position
+            screen_x = npc.tile_x * tile_size + camera_x
+            screen_y = npc.tile_y * tile_size + camera_y
+
+            # Draw green square for NPC
+            color = (0, 255, 0)  # Green for NPCs
+            rect = pygame.Rect(screen_x, screen_y, tile_size, tile_size)
+            pygame.draw.rect(surface, color, rect)
+            pygame.draw.rect(surface, (255, 255, 255), rect, 2)  # White border
+
+            # Draw name label
+            if hasattr(npc, 'name'):
+                name_font = pygame.font.Font(None, 20)
+                name_surface = name_font.render(npc.name, True, (255, 255, 255))
+                name_rect = name_surface.get_rect(center=(screen_x + tile_size // 2, screen_y - 10))
+                # Draw background for text
+                bg_rect = name_rect.inflate(4, 2)
+                pygame.draw.rect(surface, (0, 0, 0), bg_rect)
+                surface.blit(name_surface, name_rect)
+
     def _render_ui(self, surface: pygame.Surface):
         """Render UI elements."""
         # Player info (top-left)
