@@ -175,9 +175,8 @@ class WorldState(State):
             print(f"Initialized party manager for {player.name}")
             print(f"Starting solo - no party members added")
 
-            # Add starter items for testing/demo
-            print("\nAdding starter items...")
-            add_starter_items(player.inventory)
+            # Note: Starter items are now in the starter chest on the map
+            print("\nFind the starter chest to get your starting items!")
 
         # Set party menu's party manager
         self.party_menu.set_party_manager(player.party_manager)
@@ -295,6 +294,10 @@ class WorldState(State):
             elif event.key == pygame.K_b:
                 print("Manual battle trigger!")
                 self.battle_triggered = True
+
+            # Interact key (F)
+            elif event.key == pygame.K_f:
+                self._handle_interaction()
 
         # Handle pause menu buttons when paused
         if self.paused:
@@ -595,3 +598,66 @@ class WorldState(State):
                         else:
                             print("Not enough berries!")
                         break
+
+    def _handle_interaction(self):
+        """Handle F key interaction with NPCs and objects."""
+        if not self.player_controller or not self.island_manager:
+            return
+
+        player_tile = self.player_controller.get_tile_position()
+        current_island = self.island_manager.get_current_island()
+
+        if not current_island:
+            return
+
+        print(f"\nChecking for interactions at {player_tile}...")
+
+        # Check for NPCs within 1 tile range
+        for npc in current_island.npcs:
+            npc_tile = (npc.tile_x, npc.tile_y)
+            distance = abs(player_tile[0] - npc_tile[0]) + abs(player_tile[1] - npc_tile[1])
+
+            if distance <= 1:  # Adjacent or same tile
+                print(f"Interacting with {npc.name}!")
+                # TODO: Trigger dialogue or shop
+                print(f"  (Dialogue ID: {npc.dialogue_id})")
+                return
+
+        # Check for interactive objects within 1 tile range
+        for obj in current_island.interactive_objects:
+            obj_tile = (obj.tile_x, obj.tile_y)
+            distance = abs(player_tile[0] - obj_tile[0]) + abs(player_tile[1] - obj_tile[1])
+
+            if distance <= 1:  # Adjacent or same tile
+                print(f"Interacting with {obj.object_type} at {obj_tile}!")
+
+                if obj.one_time and hasattr(obj, '_opened'):
+                    print("  Already opened!")
+                    return
+
+                # Display message
+                if obj.message:
+                    print(f"  {obj.message}")
+
+                # Give rewards
+                if obj.item_rewards:
+                    player = self.player_controller.player
+                    for item_id, quantity in obj.item_rewards:
+                        from systems.item_loader import load_item
+                        item = load_item(item_id)
+                        if item:
+                            player.inventory.add_item(item, quantity)
+                            print(f"  Received {quantity}x {item.name}!")
+
+                if obj.berries_reward > 0:
+                    player = self.player_controller.player
+                    player.berries += obj.berries_reward
+                    print(f"  Received {obj.berries_reward} Berries!")
+
+                # Mark as opened if one-time
+                if obj.one_time:
+                    obj._opened = True
+
+                return
+
+        print("  No one nearby to interact with.")
