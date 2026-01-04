@@ -285,6 +285,10 @@ class PlayerController:
         screen_x = int(self.x - camera_x)
         screen_y = int(self.y - camera_y)
 
+        # Debug: warn if player is rendering off-screen
+        if screen_y < -self.sprite_size or screen_y > 720:
+            print(f"WARNING: Player rendering off-screen! World Y: {self.y}, Camera Y: {camera_y}, Screen Y: {screen_y}")
+
         # Try to render sprite animation
         current_frame = self.animation_controller.get_current_frame()
 
@@ -293,6 +297,7 @@ class PlayerController:
             surface.blit(current_frame, (screen_x, screen_y))
         else:
             # Fallback to colored rectangle if sprite fails
+            print(f"WARNING: No sprite frame available, using fallback rectangle")
             rect = pygame.Rect(screen_x, screen_y, self.sprite_size, self.sprite_size)
             pygame.draw.rect(surface, self.color, rect)
             pygame.draw.rect(surface, (0, 0, 0), rect, 2)
