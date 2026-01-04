@@ -64,22 +64,22 @@ class IslandFactory:
             dialogue_id="villager_generic"
         ))
 
-        # Add test NPC at green square (moved higher up)
+        # Add test NPC at green square (2 tiles up from previous)
         island.add_npc(NPCData(
             npc_id="test_npc",
             name="Mysterious Stranger",
             tile_x=15,
-            tile_y=5,
+            tile_y=6,
             dialogue_id="test_dialogue"
         ))
 
         # Add interactive objects
-        # Blue square - Starter chest with all the items (moved higher up)
+        # Blue square - Starter chest with all the items (2 tiles up from previous)
         island.add_interactive_object(InteractiveObject(
             object_id="starter_chest",
             object_type="chest",
             tile_x=6,
-            tile_y=5,
+            tile_y=6,
             item_rewards=[
                 ("health_potion_small", 5),
                 ("health_potion_medium", 3),
@@ -94,12 +94,12 @@ class IslandFactory:
             message="Found starter supplies! These items will help you on your journey!"
         ))
 
-        # Red square - Exit door (coming soon) (moved higher up)
+        # Red square - Exit door (coming soon) (2 tiles up from previous)
         island.add_interactive_object(InteractiveObject(
             object_id="exit_door",
             object_type="door",
             tile_x=20,
-            tile_y=5,
+            tile_y=6,
             interaction_type="examine",
             message="Coming soon...\nThis door leads to new adventures!",
             one_time=False
