@@ -184,6 +184,17 @@ class PlayerController:
         Returns:
             True if valid move
         """
+        # Check map boundaries first
+        map_width = self.map.width * TILE_SIZE
+        map_height = self.map.height * TILE_SIZE
+
+        # Ensure entire player sprite stays within bounds
+        if (world_x < 0 or
+            world_y < 0 or
+            world_x + self.sprite_size > map_width or
+            world_y + self.sprite_size > map_height):
+            return False
+
         # Check all four corners of the player sprite
         corners = [
             (world_x, world_y),  # Top-left
