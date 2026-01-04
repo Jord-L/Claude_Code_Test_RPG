@@ -69,7 +69,7 @@ class IslandFactory:
             npc_id="test_npc",
             name="Mysterious Stranger",
             tile_x=15,
-            tile_y=8,
+            tile_y=5,
             dialogue_id="test_dialogue"
         ))
 
@@ -79,7 +79,7 @@ class IslandFactory:
             object_id="starter_chest",
             object_type="chest",
             tile_x=6,
-            tile_y=8,
+            tile_y=5,
             item_rewards=[
                 ("health_potion_small", 5),
                 ("health_potion_medium", 3),
@@ -99,7 +99,7 @@ class IslandFactory:
             object_id="exit_door",
             object_type="door",
             tile_x=20,
-            tile_y=8,
+            tile_y=5,
             interaction_type="examine",
             message="Coming soon...\nThis door leads to new adventures!",
             one_time=False

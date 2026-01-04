@@ -458,8 +458,8 @@ class WorldState(State):
                 continue
 
             # Calculate screen position
-            screen_x = obj.tile_x * tile_size + camera_x
-            screen_y = obj.tile_y * tile_size + camera_y
+            screen_x = obj.tile_x * tile_size - camera_x
+            screen_y = obj.tile_y * tile_size - camera_y
 
             # Choose color based on object type
             if obj.object_type == "chest":
@@ -477,8 +477,8 @@ class WorldState(State):
         # Render NPCs
         for npc in current_island.npcs:
             # Calculate screen position
-            screen_x = npc.tile_x * tile_size + camera_x
-            screen_y = npc.tile_y * tile_size + camera_y
+            screen_x = npc.tile_x * tile_size - camera_x
+            screen_y = npc.tile_y * tile_size - camera_y
 
             # Draw green square for NPC
             color = (0, 255, 0)  # Green for NPCs
@@ -773,7 +773,7 @@ class WorldState(State):
 
                 return
 
-        self._show_message("No one nearby to interact with.")
+        # Don't show message if nothing to interact with
 
     def _show_message(self, message: str):
         """Display an interaction message on screen."""
