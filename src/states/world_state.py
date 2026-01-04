@@ -352,6 +352,9 @@ class WorldState(State):
         self.camera.center_on(player_x, player_y)
         self.camera.update(dt)
 
+        # Update menus
+        self.chest_menu.update(dt)
+
         # Update player playtime
         self.player_controller.player.update_playtime(dt)
         

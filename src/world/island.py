@@ -3,10 +3,13 @@ Island System
 Manages islands in the One Piece world with unique maps, NPCs, and encounters.
 """
 
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, TYPE_CHECKING
 from dataclasses import dataclass, field
 from world.map import Map
 from utils.constants import TILE_SIZE
+
+if TYPE_CHECKING:
+    from systems.item_system import Inventory
 
 
 @dataclass
