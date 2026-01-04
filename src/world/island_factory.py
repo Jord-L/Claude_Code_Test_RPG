@@ -94,7 +94,7 @@ class IslandFactory:
         ]
 
         for item_id, quantity in starter_items:
-            item = item_loader.create_item(item_id)
+            item = item_loader.load_item(item_id)
             if item:
                 chest_inventory.add_item(item, quantity)
 
