@@ -40,3 +40,4 @@ tmp/
 # Environment variables
 .env
 !.env.example
+Documentation/Start_looking_pos.png
