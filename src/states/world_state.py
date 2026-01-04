@@ -410,8 +410,8 @@ class WorldState(State):
         if not current_island:
             return
 
-        # Get tile size from map
-        tile_size = self.current_map.tile_size if self.current_map else 32
+        # Use TILE_SIZE constant
+        tile_size = TILE_SIZE
 
         # Render interactive objects
         for obj in current_island.interactive_objects:
