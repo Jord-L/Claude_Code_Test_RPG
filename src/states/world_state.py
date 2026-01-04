@@ -112,7 +112,7 @@ class WorldState(State):
 
         # Interaction message display
         self.interaction_message = ""
-        self.interaction_message_timer = 0  # Frames to display message
+        self.message_showing = False
     
     def startup(self, persistent):
         """
@@ -338,12 +338,6 @@ class WorldState(State):
         player_x, player_y = self.player_controller.get_center_position()
         self.camera.center_on(player_x, player_y)
         self.camera.update(dt)
-
-        # Update interaction message timer
-        if self.interaction_message_timer > 0:
-            self.interaction_message_timer -= 1
-            if self.interaction_message_timer == 0:
-                self.interaction_message = ""
 
         # Update player playtime
         self.player_controller.player.update_playtime(dt)
@@ -706,6 +700,11 @@ class WorldState(State):
 
     def _handle_interaction(self):
         """Handle F key interaction with NPCs and objects."""
+        # If message is already showing, close it
+        if self.message_showing:
+            self._close_message()
+            return
+
         if not self.player_controller or not self.island_manager:
             return
 
@@ -778,4 +777,9 @@ class WorldState(State):
     def _show_message(self, message: str):
         """Display an interaction message on screen."""
         self.interaction_message = message
-        self.interaction_message_timer = 180  # Display for 3 seconds at 60 FPS
+        self.message_showing = True
+
+    def _close_message(self):
+        """Close the interaction message."""
+        self.interaction_message = ""
+        self.message_showing = False
