@@ -109,6 +109,10 @@ class WorldState(State):
 
         # Debug
         self.show_debug = True
+
+        # Interaction message display
+        self.interaction_message = ""
+        self.interaction_message_timer = 0  # Frames to display message
     
     def startup(self, persistent):
         """
@@ -334,7 +338,13 @@ class WorldState(State):
         player_x, player_y = self.player_controller.get_center_position()
         self.camera.center_on(player_x, player_y)
         self.camera.update(dt)
-        
+
+        # Update interaction message timer
+        if self.interaction_message_timer > 0:
+            self.interaction_message_timer -= 1
+            if self.interaction_message_timer == 0:
+                self.interaction_message = ""
+
         # Update player playtime
         self.player_controller.player.update_playtime(dt)
         
@@ -383,7 +393,11 @@ class WorldState(State):
         
         # Render UI
         self._render_ui(surface)
-        
+
+        # Render interaction message
+        if self.interaction_message:
+            self._render_interaction_message(surface)
+
         # Render pause overlay
         if self.paused:
             self._render_pause_overlay(surface)
@@ -394,6 +408,30 @@ class WorldState(State):
         self.equipment_menu.render(surface)
         self.travel_menu.render(surface)
     
+    def _render_interaction_message(self, surface: pygame.Surface):
+        """Render interaction message box at bottom of screen."""
+        if not self.interaction_message:
+            return
+
+        # Message box dimensions
+        box_width = SCREEN_WIDTH - 100
+        box_height = 120
+        box_x = 50
+        box_y = SCREEN_HEIGHT - box_height - 20
+
+        # Draw message box background
+        box_rect = pygame.Rect(box_x, box_y, box_width, box_height)
+        pygame.draw.rect(surface, (0, 0, 0), box_rect)
+        pygame.draw.rect(surface, (255, 255, 255), box_rect, 3)
+
+        # Draw message text (with word wrapping)
+        lines = self.interaction_message.split('\n')
+        y_offset = box_y + 15
+        for line in lines:
+            text_surface = self.small_font.render(line, True, (255, 255, 255))
+            surface.blit(text_surface, (box_x + 15, y_offset))
+            y_offset += 25
+
     def _render_interactive_elements(self, surface: pygame.Surface, camera_x: int, camera_y: int):
         """
         Render interactive objects and NPCs on the map.
@@ -686,8 +724,9 @@ class WorldState(State):
 
             if distance <= 1:  # Adjacent or same tile
                 print(f"Interacting with {npc.name}!")
-                # TODO: Trigger dialogue or shop
-                print(f"  (Dialogue ID: {npc.dialogue_id})")
+                # Display NPC dialogue
+                message = f"{npc.name} says:\n\"Press F to interact with objects, NPCs, and chests!\""
+                self._show_message(message)
                 return
 
         # Check for interactive objects within 1 tile range
@@ -699,12 +738,13 @@ class WorldState(State):
                 print(f"Interacting with {obj.object_type} at {obj_tile}!")
 
                 if obj.one_time and hasattr(obj, '_opened'):
-                    print("  Already opened!")
+                    self._show_message("This chest is already empty.")
                     return
 
-                # Display message
+                # Build message
+                message_parts = []
                 if obj.message:
-                    print(f"  {obj.message}")
+                    message_parts.append(obj.message)
 
                 # Give rewards
                 if obj.item_rewards:
@@ -714,12 +754,18 @@ class WorldState(State):
                         item = load_item(item_id)
                         if item:
                             player.inventory.add_item(item, quantity)
+                            message_parts.append(f"Received {quantity}x {item.name}!")
                             print(f"  Received {quantity}x {item.name}!")
 
                 if obj.berries_reward > 0:
                     player = self.player_controller.player
                     player.berries += obj.berries_reward
+                    message_parts.append(f"Received {obj.berries_reward} Berries!")
                     print(f"  Received {obj.berries_reward} Berries!")
+
+                # Show message
+                if message_parts:
+                    self._show_message("\n".join(message_parts))
 
                 # Mark as opened if one-time
                 if obj.one_time:
@@ -727,4 +773,9 @@ class WorldState(State):
 
                 return
 
-        print("  No one nearby to interact with.")
+        self._show_message("No one nearby to interact with.")
+
+    def _show_message(self, message: str):
+        """Display an interaction message on screen."""
+        self.interaction_message = message
+        self.interaction_message_timer = 180  # Display for 3 seconds at 60 FPS
