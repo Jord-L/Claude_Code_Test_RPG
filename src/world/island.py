@@ -47,6 +47,7 @@ class InteractiveObject:
     message: Optional[str] = None
     unlock_condition: Optional[str] = None
     one_time: bool = True  # Can only interact once
+    inventory: Optional['Inventory'] = None  # For chests with persistent storage
 
 
 @dataclass
