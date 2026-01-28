@@ -632,6 +632,16 @@ class IslandFactory:
             for y in range(28, 30):
                 map_instance.set_tile(x, y, TileType.WATER)
 
+        # Water on the west (left edge) - prevents clipping off walkable area
+        for y in range(0, 30):
+            for x in range(0, 2):
+                map_instance.set_tile(x, y, TileType.WATER)
+
+        # Water on the east (right edge) - prevents clipping off walkable area
+        for y in range(0, 30):
+            for x in range(28, 30):
+                map_instance.set_tile(x, y, TileType.WATER)
+
         # Forest on the north
         for x in range(0, 30):
             for y in range(0, 8):
