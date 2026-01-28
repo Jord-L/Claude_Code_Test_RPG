@@ -583,6 +583,14 @@ class WorldState(State):
                                 new_island = self.island_manager.get_current_island()
                                 self.current_map = new_island.map
 
+                                # Update player controller with new map reference
+                                self.player_controller.map = new_island.map
+                                self.player_controller.current_island = new_island
+
+                                # Update camera with new map size
+                                map_width, map_height = new_island.map.get_world_size()
+                                self.camera.set_map_size(map_width, map_height)
+
                                 # Move player to spawn point
                                 spawn_x, spawn_y = new_island.map.spawn_point
                                 self.player_controller.set_position(spawn_x * 64, spawn_y * 64)
