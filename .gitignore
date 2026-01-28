@@ -41,3 +41,5 @@ tmp/
 .env
 !.env.example
 Documentation/Start_looking_pos.png
+saves/Fire/save_3.json
+saves/Fire/save_4.json
