@@ -34,11 +34,16 @@ class PlayerController:
         """
         self.player = player
         self.map = game_map
-        
-        # Position (world coordinates, pixels)
+        self.current_island = None  # Will be set by world state
+
+        # Visual (must be set before set_position for bounds calculation)
+        self.sprite_size = TILE_SIZE
+
+        # Position (world coordinates, pixels) - clamped to map bounds
         spawn_x, spawn_y = game_map.get_spawn_position()
-        self.x = spawn_x
-        self.y = spawn_y
+        self.x = 0  # Initialize before set_position
+        self.y = 0
+        self.set_position(spawn_x, spawn_y)
         
         # Movement
         self.speed = PLAYER_SPEED
@@ -50,8 +55,7 @@ class PlayerController:
         self.step_threshold = TILE_SIZE  # One tile = one step
         self.step_accumulator = 0
         
-        # Visual
-        self.sprite_size = TILE_SIZE
+        # Visual fallback color
         self.color = (255, 100, 100)  # Red for player (fallback)
 
         # Sprite animation
@@ -247,25 +251,28 @@ class PlayerController:
     
     def set_position(self, world_x: int, world_y: int):
         """
-        Set player position.
-        
+        Set player position, clamped to map bounds.
+
         Args:
             world_x: World X coordinate
             world_y: World Y coordinate
         """
-        self.x = world_x
-        self.y = world_y
+        # Clamp position to map bounds
+        map_width = self.map.width * TILE_SIZE
+        map_height = self.map.height * TILE_SIZE
+
+        self.x = max(0, min(world_x, map_width - self.sprite_size))
+        self.y = max(0, min(world_y, map_height - self.sprite_size))
     
     def set_tile_position(self, tile_x: int, tile_y: int):
         """
-        Set player position by tile coordinates.
-        
+        Set player position by tile coordinates, clamped to map bounds.
+
         Args:
             tile_x: Tile X coordinate
             tile_y: Tile Y coordinate
         """
-        self.x = tile_x * TILE_SIZE
-        self.y = tile_y * TILE_SIZE
+        self.set_position(tile_x * TILE_SIZE, tile_y * TILE_SIZE)
     
     def teleport_to_spawn(self):
         """Teleport player to map spawn point."""
