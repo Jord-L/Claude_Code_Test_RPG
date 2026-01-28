@@ -27,13 +27,14 @@ class PlayerController:
     def __init__(self, player: Player, game_map: Map):
         """
         Initialize player controller.
-        
+
         Args:
             player: Player instance
             game_map: Current map
         """
         self.player = player
         self.map = game_map
+        self.current_island = None  # Will be set by world state
         
         # Position (world coordinates, pixels)
         spawn_x, spawn_y = game_map.get_spawn_position()
@@ -175,14 +176,25 @@ class PlayerController:
     def _can_move_to(self, world_x: float, world_y: float) -> bool:
         """
         Check if player can move to position.
-        
+
         Args:
             world_x: Target X position
             world_y: Target Y position
-        
+
         Returns:
             True if valid move
         """
+        # Check map boundaries first
+        map_width = self.map.width * TILE_SIZE
+        map_height = self.map.height * TILE_SIZE
+
+        # Ensure entire player sprite stays within bounds
+        if (world_x < 0 or
+            world_y < 0 or
+            world_x + self.sprite_size > map_width or
+            world_y + self.sprite_size > map_height):
+            return False
+
         # Check all four corners of the player sprite
         corners = [
             (world_x, world_y),  # Top-left
@@ -190,11 +202,28 @@ class PlayerController:
             (world_x, world_y + self.sprite_size - 1),  # Bottom-left
             (world_x + self.sprite_size - 1, world_y + self.sprite_size - 1)  # Bottom-right
         ]
-        
+
         for corner_x, corner_y in corners:
             if not self.map.is_walkable_world(int(corner_x), int(corner_y)):
                 return False
-        
+
+        # Check collision with NPCs and interactive objects
+        if self.current_island:
+            # Check all four corners against NPCs and objects
+            for corner_x, corner_y in corners:
+                tile_x = int(corner_x // TILE_SIZE)
+                tile_y = int(corner_y // TILE_SIZE)
+
+                # Check NPCs
+                for npc in self.current_island.npcs:
+                    if npc.tile_x == tile_x and npc.tile_y == tile_y:
+                        return False
+
+                # Check interactive objects
+                for obj in self.current_island.interactive_objects:
+                    if obj.tile_x == tile_x and obj.tile_y == tile_y:
+                        return False
+
         return True
     
     def _check_encounter(self) -> bool:
@@ -285,6 +314,10 @@ class PlayerController:
         screen_x = int(self.x - camera_x)
         screen_y = int(self.y - camera_y)
 
+        # Debug: warn if player is rendering off-screen
+        if screen_y < -self.sprite_size or screen_y > 720:
+            print(f"WARNING: Player rendering off-screen! World Y: {self.y}, Camera Y: {camera_y}, Screen Y: {screen_y}")
+
         # Try to render sprite animation
         current_frame = self.animation_controller.get_current_frame()
 
@@ -293,6 +326,7 @@ class PlayerController:
             surface.blit(current_frame, (screen_x, screen_y))
         else:
             # Fallback to colored rectangle if sprite fails
+            print(f"WARNING: No sprite frame available, using fallback rectangle")
             rect = pygame.Rect(screen_x, screen_y, self.sprite_size, self.sprite_size)
             pygame.draw.rect(surface, self.color, rect)
             pygame.draw.rect(surface, (0, 0, 0), rect, 2)

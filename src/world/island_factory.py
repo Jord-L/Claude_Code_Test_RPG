@@ -36,12 +36,12 @@ class IslandFactory:
         # Build map layout
         IslandFactory._build_foosha_village_map(map_instance)
 
-        # Add NPCs
+        # Add NPCs (moved down near spawn)
         island.add_npc(NPCData(
             npc_id="mayor",
             name="Mayor Woop Slap",
             tile_x=15,
-            tile_y=10,
+            tile_y=18,
             npc_type="quest_giver",
             dialogue_id="mayor_greeting"
         ))
@@ -49,8 +49,8 @@ class IslandFactory:
         island.add_npc(NPCData(
             npc_id="makino",
             name="Mira",
-            tile_x=12,
-            tile_y=12,
+            tile_x=10,
+            tile_y=22,
             npc_type="shopkeeper",
             shop_id="makino_bar",
             dialogue_id="makino_greeting"
@@ -59,20 +59,64 @@ class IslandFactory:
         island.add_npc(NPCData(
             npc_id="villager_1",
             name="Villager",
-            tile_x=18,
-            tile_y=15,
+            tile_x=20,
+            tile_y=24,
             dialogue_id="villager_generic"
         ))
 
+        # Add test NPC at green square (near spawn)
+        island.add_npc(NPCData(
+            npc_id="test_npc",
+            name="Mysterious Stranger",
+            tile_x=15,
+            tile_y=20,
+            dialogue_id="test_dialogue"
+        ))
+
         # Add interactive objects
+        # Blue square - Starter chest with all the items (near spawn)
+        from systems.item_system import Inventory
+        from systems.item_loader import get_item_loader
+
+        chest_inventory = Inventory(max_slots=20)
+        item_loader = get_item_loader()
+
+        # Add starter items to chest
+        starter_items = [
+            ("health_potion_small", 5),
+            ("health_potion_medium", 3),
+            ("ap_potion", 3),
+            ("meat", 2),
+            ("revive_potion", 1),
+            ("wooden_sword", 2),
+            ("leather_vest", 2),
+            ("steel_katana", 1)
+        ]
+
+        for item_id, quantity in starter_items:
+            item = item_loader.load_item(item_id)
+            if item:
+                chest_inventory.add_item(item, quantity)
+
         island.add_interactive_object(InteractiveObject(
-            object_id="chest_1",
+            object_id="starter_chest",
             object_type="chest",
-            tile_x=8,
-            tile_y=8,
-            item_rewards=[("health_potion_small", 3), ("wooden_sword", 1)],
-            berries_reward=500,
-            message="Found starter supplies!"
+            tile_x=12,
+            tile_y=20,
+            message="Starter Chest - Press F again to close",
+            one_time=False,
+            inventory=chest_inventory
+        ))
+
+        # Red square - Exit door (coming soon) (near spawn)
+        island.add_interactive_object(InteractiveObject(
+            object_id="exit_door",
+            object_type="door",
+            tile_x=18,
+            tile_y=20,
+            interaction_type="examine",
+            message="Coming soon...\nThis door leads to new adventures!",
+            one_time=False
         ))
 
         island.add_interactive_object(InteractiveObject(

@@ -18,6 +18,7 @@ from ui.party_menu import PartyMenu
 from ui.inventory_menu import InventoryMenu
 from ui.equipment_menu import EquipmentMenu
 from ui.travel_menu import TravelMenu
+from ui.chest_menu import ChestMenu
 from ui.button import Button
 from utils.party_helpers import create_starter_crew
 from utils.item_helpers import add_starter_items
@@ -73,6 +74,10 @@ class WorldState(State):
         self.travel_menu.on_travel = self._on_travel_selected
         self.travel_menu.on_close = self._on_travel_menu_close
 
+        # Chest menu
+        self.chest_menu = ChestMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.chest_menu.on_close = self._on_chest_menu_close
+
         # Pause menu buttons
         button_width = 300
         button_height = 50
@@ -109,6 +114,10 @@ class WorldState(State):
 
         # Debug
         self.show_debug = True
+
+        # Interaction message display
+        self.interaction_message = ""
+        self.message_showing = False
     
     def startup(self, persistent):
         """
@@ -175,9 +184,8 @@ class WorldState(State):
             print(f"Initialized party manager for {player.name}")
             print(f"Starting solo - no party members added")
 
-            # Add starter items for testing/demo
-            print("\nAdding starter items...")
-            add_starter_items(player.inventory)
+            # Note: Starter items are now in the starter chest on the map
+            print("\nFind the starter chest to get your starting items!")
 
         # Set party menu's party manager
         self.party_menu.set_party_manager(player.party_manager)
@@ -194,6 +202,10 @@ class WorldState(State):
 
         # Create player controller
         self.player_controller = PlayerController(player, self.current_map)
+
+        # Set current island for collision detection
+        if self.island_manager:
+            self.player_controller.current_island = self.island_manager.get_current_island()
 
         # Create camera
         map_width, map_height = self.current_map.get_world_size()
@@ -235,6 +247,10 @@ class WorldState(State):
             event: Pygame event
         """
         # Menus get priority (check in order)
+        if self.chest_menu.visible:
+            self.chest_menu.handle_event(event)
+            return
+
         if self.party_menu.visible:
             self.party_menu.handle_event(event)
             return
@@ -296,6 +312,10 @@ class WorldState(State):
                 print("Manual battle trigger!")
                 self.battle_triggered = True
 
+            # Interact key (F)
+            elif event.key == pygame.K_f:
+                self._handle_interaction()
+
         # Handle pause menu buttons when paused
         if self.paused:
             self.pause_resume_button.handle_event(event)
@@ -331,7 +351,10 @@ class WorldState(State):
         player_x, player_y = self.player_controller.get_center_position()
         self.camera.center_on(player_x, player_y)
         self.camera.update(dt)
-        
+
+        # Update menus
+        self.chest_menu.update(dt)
+
         # Update player playtime
         self.player_controller.player.update_playtime(dt)
         
@@ -371,13 +394,20 @@ class WorldState(State):
         
         # Render map
         self.current_map.render(surface, camera_x, camera_y)
-        
+
+        # Render interactive objects and NPCs
+        self._render_interactive_elements(surface, camera_x, camera_y)
+
         # Render player
         self.player_controller.render(surface, camera_x, camera_y)
         
         # Render UI
         self._render_ui(surface)
-        
+
+        # Render interaction message
+        if self.interaction_message:
+            self._render_interaction_message(surface)
+
         # Render pause overlay
         if self.paused:
             self._render_pause_overlay(surface)
@@ -387,7 +417,96 @@ class WorldState(State):
         self.inventory_menu.render(surface)
         self.equipment_menu.render(surface)
         self.travel_menu.render(surface)
+        self.chest_menu.render(surface)
     
+    def _render_interaction_message(self, surface: pygame.Surface):
+        """Render interaction message box at bottom of screen."""
+        if not self.interaction_message:
+            return
+
+        # Message box dimensions
+        box_width = SCREEN_WIDTH - 100
+        box_height = 120
+        box_x = 50
+        box_y = SCREEN_HEIGHT - box_height - 20
+
+        # Draw message box background
+        box_rect = pygame.Rect(box_x, box_y, box_width, box_height)
+        pygame.draw.rect(surface, (0, 0, 0), box_rect)
+        pygame.draw.rect(surface, (255, 255, 255), box_rect, 3)
+
+        # Draw message text (with word wrapping)
+        lines = self.interaction_message.split('\n')
+        y_offset = box_y + 15
+        for line in lines:
+            text_surface = self.small_font.render(line, True, (255, 255, 255))
+            surface.blit(text_surface, (box_x + 15, y_offset))
+            y_offset += 25
+
+    def _render_interactive_elements(self, surface: pygame.Surface, camera_x: int, camera_y: int):
+        """
+        Render interactive objects and NPCs on the map.
+
+        Args:
+            surface: Surface to draw on
+            camera_x: Camera X offset
+            camera_y: Camera Y offset
+        """
+        if not self.island_manager:
+            return
+
+        current_island = self.island_manager.get_current_island()
+        if not current_island:
+            return
+
+        # Use TILE_SIZE constant
+        tile_size = TILE_SIZE
+
+        # Render interactive objects
+        for obj in current_island.interactive_objects:
+            # Skip if already opened (one-time objects)
+            if obj.one_time and hasattr(obj, '_opened') and obj._opened:
+                continue
+
+            # Calculate screen position
+            screen_x = obj.tile_x * tile_size - camera_x
+            screen_y = obj.tile_y * tile_size - camera_y
+
+            # Choose color based on object type
+            if obj.object_type == "chest":
+                color = (0, 0, 255)  # Blue for chest
+            elif obj.object_type == "door":
+                color = (255, 0, 0)  # Red for door
+            else:
+                color = (128, 128, 128)  # Gray for other objects
+
+            # Draw filled square
+            rect = pygame.Rect(screen_x, screen_y, tile_size, tile_size)
+            pygame.draw.rect(surface, color, rect)
+            pygame.draw.rect(surface, (255, 255, 255), rect, 2)  # White border
+
+        # Render NPCs
+        for npc in current_island.npcs:
+            # Calculate screen position
+            screen_x = npc.tile_x * tile_size - camera_x
+            screen_y = npc.tile_y * tile_size - camera_y
+
+            # Draw green square for NPC
+            color = (0, 255, 0)  # Green for NPCs
+            rect = pygame.Rect(screen_x, screen_y, tile_size, tile_size)
+            pygame.draw.rect(surface, color, rect)
+            pygame.draw.rect(surface, (255, 255, 255), rect, 2)  # White border
+
+            # Draw name label
+            if hasattr(npc, 'name'):
+                name_font = pygame.font.Font(None, 20)
+                name_surface = name_font.render(npc.name, True, (255, 255, 255))
+                name_rect = name_surface.get_rect(center=(screen_x + tile_size // 2, screen_y - 10))
+                # Draw background for text
+                bg_rect = name_rect.inflate(4, 2)
+                pygame.draw.rect(surface, (0, 0, 0), bg_rect)
+                surface.blit(name_surface, name_rect)
+
     def _render_ui(self, surface: pygame.Surface):
         """Render UI elements."""
         # Player info (top-left)
@@ -562,6 +681,10 @@ class WorldState(State):
         """Callback when travel menu is closed."""
         print("Travel menu closed")
 
+    def _on_chest_menu_close(self):
+        """Callback when chest menu is closed."""
+        print("Chest menu closed")
+
     def _on_travel_selected(self, destination_id: str):
         """Handle island travel."""
         if self.island_manager and self.player_controller:
@@ -595,3 +718,67 @@ class WorldState(State):
                         else:
                             print("Not enough berries!")
                         break
+
+    def _handle_interaction(self):
+        """Handle F key interaction with NPCs and objects."""
+        # If message is already showing, close it
+        if self.message_showing:
+            self._close_message()
+            return
+
+        if not self.player_controller or not self.island_manager:
+            return
+
+        player_tile = self.player_controller.get_tile_position()
+        current_island = self.island_manager.get_current_island()
+
+        if not current_island:
+            return
+
+        print(f"\nChecking for interactions at {player_tile}...")
+
+        # Check for NPCs within 1 tile range
+        for npc in current_island.npcs:
+            npc_tile = (npc.tile_x, npc.tile_y)
+            distance = abs(player_tile[0] - npc_tile[0]) + abs(player_tile[1] - npc_tile[1])
+
+            if distance <= 1:  # Adjacent or same tile
+                print(f"Interacting with {npc.name}!")
+                # Display NPC dialogue
+                message = f"{npc.name} says:\n\"Press F to interact with objects, NPCs, and chests!\""
+                self._show_message(message)
+                return
+
+        # Check for interactive objects within 1 tile range
+        for obj in current_island.interactive_objects:
+            obj_tile = (obj.tile_x, obj.tile_y)
+            distance = abs(player_tile[0] - obj_tile[0]) + abs(player_tile[1] - obj_tile[1])
+
+            if distance <= 1:  # Adjacent or same tile
+                print(f"Interacting with {obj.object_type} at {obj_tile}!")
+
+                # Handle chests with inventory UI
+                if obj.object_type == "chest" and obj.inventory:
+                    player = self.player_controller.player
+                    self.chest_menu.show(obj.inventory, player.inventory)
+                    print("Opened chest inventory menu")
+                    return
+
+                # Handle other interactive objects
+                if obj.message:
+                    self._show_message(obj.message)
+                    return
+
+                return
+
+        # Don't show message if nothing to interact with
+
+    def _show_message(self, message: str):
+        """Display an interaction message on screen."""
+        self.interaction_message = message
+        self.message_showing = True
+
+    def _close_message(self):
+        """Close the interaction message."""
+        self.interaction_message = ""
+        self.message_showing = False

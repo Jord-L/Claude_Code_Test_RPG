@@ -118,4 +118,11 @@ def create_default_dialogues() -> DialogueManager:
     makino.add_line("Mira", "Alex used to come here all the time as a kid.")
     manager.register_dialogue(makino)
 
+    # Test NPC dialogue
+    test_npc = Dialogue("test_dialogue")
+    test_npc.add_line("Mysterious Stranger", "Greetings, traveler...")
+    test_npc.add_line("Mysterious Stranger", "This is test text! I'm here to help you learn the controls.")
+    test_npc.add_line("Mysterious Stranger", "Press F to interact with objects, NPCs, and chests!")
+    manager.register_dialogue(test_npc)
+
     return manager

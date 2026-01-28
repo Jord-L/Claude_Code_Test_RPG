@@ -1,0 +1,88 @@
+{
+    "version": "2.0",
+    "timestamp": "2026-01-04T10:32:36.132438",
+    "slot": 1,
+    "character": {
+        "name": "T",
+        "level": 1,
+        "experience": 0,
+        "exp_to_next_level": 100,
+        "current_hp": 130,
+        "current_ap": 65,
+        "stats": {
+            "primary": {
+                "strength": 10,
+                "defense": 10,
+                "agility": 10,
+                "intelligence": 10,
+                "willpower": 10,
+                "charisma": 10,
+                "luck": 10
+            },
+            "modifiers": {
+                "strength": 0,
+                "defense": 0,
+                "agility": 0,
+                "intelligence": 0,
+                "willpower": 0,
+                "charisma": 0,
+                "luck": 0,
+                "max_hp": 0,
+                "max_ap": 0,
+                "attack": 0,
+                "critical_chance": 0,
+                "critical_damage": 0,
+                "evasion": 0
+            },
+            "percent_modifiers": {
+                "max_hp": 0.0,
+                "max_ap": 0.0,
+                "attack": 0.0,
+                "defense": 0.0,
+                "speed": 0.0
+            }
+        },
+        "is_alive": true,
+        "devil_fruit": {
+            "fruit_id": "ame_ame",
+            "mastery_level": 1,
+            "mastery_exp": 0,
+            "mastery_exp_to_next": 100,
+            "awakened": false,
+            "current_form": null,
+            "unlocked_abilities": [
+                "Syrup Trap"
+            ]
+        },
+        "equipment": {},
+        "berries": 1000,
+        "inventory": [],
+        "key_items": [],
+        "bounty": 0,
+        "reputation": {
+            "pirates": 0,
+            "marines": 0,
+            "civilians": 0
+        },
+        "discovered_islands": [],
+        "unlocked_fast_travel": [],
+        "statistics": {
+            "battles_won": 0,
+            "enemies_defeated": 0,
+            "berries_earned": 0,
+            "berries_spent": 0,
+            "islands_visited": 0,
+            "deaths": 0,
+            "playtime": 0.0
+        },
+        "background": null,
+        "appearance": {}
+    },
+    "progress": {
+        "current_location": "Tutorial Island",
+        "story_flags": [],
+        "completed_quests": [],
+        "active_quests": []
+    },
+    "playtime": 0
+}
