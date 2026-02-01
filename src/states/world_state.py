@@ -168,7 +168,12 @@ class WorldState(State):
 
             # Start at Foosha Village
             self.island_manager.set_current_island("foosha_village")
-            print(f"Starting location: {self.island_manager.get_current_island().name}\n")
+            current = self.island_manager.get_current_island()
+            print(f"Starting location: {current.name}")
+            print(f"  Interactive objects: {len(current.interactive_objects)}")
+            for obj in current.interactive_objects:
+                print(f"    - {obj.object_id} ({obj.object_type}) at ({obj.tile_x}, {obj.tile_y})")
+            print(f"  NPCs: {len(current.npcs)}\n")
 
         # Get current map from island
         current_island = self.island_manager.get_current_island()
