@@ -352,5 +352,33 @@ class EnemyFactory:
             exp=rewards.get("exp", level * 10),
             berries=rewards.get("berries", level * 50)
         )
-        
+
         return enemy
+
+    @staticmethod
+    def create_enemy(enemy_type: str, level: int = 1) -> Enemy:
+        """
+        Create an enemy by type string.
+
+        Args:
+            enemy_type: One of 'bandit', 'marine_soldier', 'pirate', 'sea_beast', 'boss'
+            level: Enemy level
+
+        Returns:
+            Enemy instance
+        """
+        if enemy_type == "boss":
+            return EnemyFactory.create_boss("Elite Boss", level)
+
+        dispatch = {
+            "bandit": EnemyFactory.create_bandit,
+            "marine_soldier": EnemyFactory.create_marine,
+            "marine": EnemyFactory.create_marine,
+            "pirate": EnemyFactory.create_pirate,
+            "sea_beast": EnemyFactory.create_sea_beast,
+        }
+        creator = dispatch.get(enemy_type)
+        if creator:
+            return creator(level)
+        # Fallback for unknown types
+        return EnemyFactory.create_bandit(level)
