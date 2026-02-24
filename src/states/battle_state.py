@@ -236,7 +236,7 @@ class BattleState(State):
             return
         
         # AI chooses action
-        all_enemies = self.battle_manager.enemy_party
+        all_enemies = self.battle_manager.enemies
         all_allies = self.battle_manager.player_party
         
         action = ai.choose_action(all_enemies, all_allies)
