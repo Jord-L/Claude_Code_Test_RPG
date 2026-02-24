@@ -22,26 +22,26 @@ class IslandFactory:
         Small peaceful village where Alex grew up.
         """
         # Create map (30x30 tiles)
-        map_instance = Map(30, 30, TileType.GRASS)
-        map_instance.name = "Foosha Village"
-        map_instance.spawn_point = (15, 25)  # Start near bottom
+        map_instance = Map(30, 30, TileType.WOOD)
+        map_instance.name = "Starting Hall"
+        map_instance.spawn_point = (15, 20)  # Center of main hall
 
         # Create island
-        island = Island("foosha_village", "Foosha Village", map_instance)
-        island.description = "A peaceful village in the East Blue where Alex grew up."
+        island = Island("foosha_village", "Starting Hall", map_instance)
+        island.description = "A safe indoor hall where your adventure begins."
         island.recommended_level = 1
         island.story_arc = "Romance Dawn"
-        island.dock_position = (15, 28)
+        island.dock_position = (15, 27)
 
         # Build map layout
         IslandFactory._build_foosha_village_map(map_instance)
 
-        # Add NPCs (moved down near spawn)
+        # Add NPCs in the main hall
         island.add_npc(NPCData(
             npc_id="mayor",
             name="Mayor Woop Slap",
             tile_x=15,
-            tile_y=18,
+            tile_y=14,
             npc_type="quest_giver",
             dialogue_id="mayor_greeting"
         ))
@@ -49,8 +49,8 @@ class IslandFactory:
         island.add_npc(NPCData(
             npc_id="makino",
             name="Mira",
-            tile_x=10,
-            tile_y=22,
+            tile_x=5,
+            tile_y=12,
             npc_type="shopkeeper",
             shop_id="makino_bar",
             dialogue_id="makino_greeting"
@@ -59,16 +59,16 @@ class IslandFactory:
         island.add_npc(NPCData(
             npc_id="villager_1",
             name="Villager",
-            tile_x=20,
-            tile_y=24,
+            tile_x=25,
+            tile_y=12,
             dialogue_id="villager_generic"
         ))
 
-        # Add test NPC at green square (near spawn)
+        # Guide NPC near spawn
         island.add_npc(NPCData(
             npc_id="test_npc",
-            name="Mysterious Stranger",
-            tile_x=15,
+            name="Guide",
+            tile_x=17,
             tile_y=20,
             dialogue_id="test_dialogue"
         ))
@@ -101,21 +101,21 @@ class IslandFactory:
         island.add_interactive_object(InteractiveObject(
             object_id="starter_chest",
             object_type="chest",
-            tile_x=12,
+            tile_x=13,
             tile_y=20,
             message="Starter Chest - Press F again to close",
             one_time=False,
             inventory=chest_inventory
         ))
 
-        # Red square - Exit door (coming soon) (near spawn)
+        # Exit door to the outside world
         island.add_interactive_object(InteractiveObject(
             object_id="exit_door",
             object_type="door",
-            tile_x=18,
-            tile_y=20,
+            tile_x=15,
+            tile_y=27,
             interaction_type="examine",
-            message="Coming soon...\nThis door leads to new adventures!",
+            message="Exit to the outside world.\nComing soon...",
             one_time=False
         ))
 
@@ -123,22 +123,13 @@ class IslandFactory:
             object_id="sign_1",
             object_type="sign",
             tile_x=15,
-            tile_y=20,
+            tile_y=16,
             interaction_type="read",
-            message="Welcome to Foosha Village!\nA peaceful place in the East Blue.",
+            message="Welcome to the Starting Hall!\nThis is a safe place to prepare for your adventure.",
             one_time=False
         ))
 
-        # Add simple encounter zone (bandits in the forest)
-        forest_tiles = [(x, y) for x in range(0, 5) for y in range(0, 10)]
-        island.add_encounter_zone(EncounterZone(
-            zone_id="forest_bandits",
-            tiles=forest_tiles,
-            enemy_groups=["bandit"],
-            min_level=1,
-            max_level=3,
-            encounter_rate=0.03
-        ))
+        # No encounters in starting area - this is a safe indoor space
 
         # Add connection to Shell Town (unlocked by default)
         island.add_connection(IslandConnection(
@@ -619,51 +610,40 @@ class IslandFactory:
 
     @staticmethod
     def _build_foosha_village_map(map_instance: Map):
-        """Build Foosha Village map layout."""
-        # Create a simple village with houses, paths, and forest
+        """Build Foosha Village map layout - indoor starting building."""
+        # Fill interior with wood floor
+        for x in range(1, 29):
+            for y in range(1, 29):
+                map_instance.set_tile(x, y, TileType.WOOD)
 
-        # Central plaza (stone path)
+        # Wall boundaries around entire map (indoor building)
+        for x in range(30):
+            map_instance.set_tile(x, 0, TileType.WALL)   # Top wall
+            map_instance.set_tile(x, 29, TileType.WALL)  # Bottom wall
+        for y in range(30):
+            map_instance.set_tile(0, y, TileType.WALL)   # Left wall
+            map_instance.set_tile(29, y, TileType.WALL)  # Right wall
+
+        # Central stone area (main hall)
         for x in range(12, 19):
-            for y in range(10, 16):
+            for y in range(12, 18):
                 map_instance.set_tile(x, y, TileType.STONE)
 
-        # Water on the south (ocean)
-        for x in range(0, 30):
-            for y in range(28, 30):
-                map_instance.set_tile(x, y, TileType.WATER)
+        # Interior room dividers
+        # Left room
+        for y in range(8, 15):
+            map_instance.set_tile(8, y, TileType.WALL)
+        map_instance.set_tile(8, 11, TileType.DOOR)  # Door opening
 
-        # Water on the west (left edge) - prevents clipping off walkable area
-        for y in range(0, 30):
-            for x in range(0, 2):
-                map_instance.set_tile(x, y, TileType.WATER)
+        # Right room
+        for y in range(8, 15):
+            map_instance.set_tile(22, y, TileType.WALL)
+        map_instance.set_tile(22, 11, TileType.DOOR)  # Door opening
 
-        # Water on the east (right edge) - prevents clipping off walkable area
-        for y in range(0, 30):
-            for x in range(28, 30):
-                map_instance.set_tile(x, y, TileType.WATER)
-
-        # Forest on the north
-        for x in range(0, 30):
-            for y in range(0, 8):
-                map_instance.set_tile(x, y, TileType.TREE)
-
-        # Houses (use walls for building outlines)
-        # Mayor's house
-        for x in range(13, 18):
-            for y in range(8, 11):
-                if x == 13 or x == 17 or y == 8 or y == 10:
-                    map_instance.set_tile(x, y, TileType.WALL)
-
-        # Mira's bar
-        for x in range(10, 15):
-            for y in range(11, 14):
-                if x == 10 or x == 14 or y == 11 or y == 13:
-                    map_instance.set_tile(x, y, TileType.WALL)
-
-        # Dock area
-        for x in range(14, 17):
-            for y in range(26, 28):
-                map_instance.set_tile(x, y, TileType.WOOD)
+        # Back wall section
+        for x in range(8, 23):
+            map_instance.set_tile(x, 8, TileType.WALL)
+        map_instance.set_tile(15, 8, TileType.DOOR)  # Door to back area
 
     @staticmethod
     def _build_shell_town_map(map_instance: Map):
