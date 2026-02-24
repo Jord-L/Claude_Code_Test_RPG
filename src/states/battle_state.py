@@ -95,11 +95,9 @@ class BattleState(State):
         # Create AI controllers for enemies
         self.enemy_ais = []
         for enemy in enemies:
-            ai = EnemyAI(enemy)
-            ai.set_difficulty(enemy.ai_difficulty)
-            ai.set_personality(enemy.ai_personality)
+            ai = EnemyAI(enemy, difficulty=enemy.ai_difficulty)
             self.enemy_ais.append(ai)
-            self.logger.debug(f"Created AI for {enemy.name}: {enemy.ai_personality} / {enemy.ai_difficulty}")
+            self.logger.debug(f"Created AI for {enemy.name}: difficulty={enemy.ai_difficulty}")
         
         # Reset state
         self.battle_over = False
