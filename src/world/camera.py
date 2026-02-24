@@ -40,7 +40,7 @@ class Camera:
     def center_on(self, world_x: int, world_y: int):
         """
         Center camera on a world position.
-        
+
         Args:
             world_x: World X coordinate
             world_y: World Y coordinate
@@ -48,10 +48,17 @@ class Camera:
         # Calculate centered position
         self.target_x = world_x - SCREEN_WIDTH // 2
         self.target_y = world_y - SCREEN_HEIGHT // 2
-        
-        # Clamp to map bounds
-        self.target_x = max(0, min(self.target_x, self.map_width - SCREEN_WIDTH))
-        self.target_y = max(0, min(self.target_y, self.map_height - SCREEN_HEIGHT))
+
+        # Handle maps smaller than screen - center the map
+        if self.map_width < SCREEN_WIDTH:
+            self.target_x = -(SCREEN_WIDTH - self.map_width) // 2
+        else:
+            self.target_x = max(0, min(self.target_x, self.map_width - SCREEN_WIDTH))
+
+        if self.map_height < SCREEN_HEIGHT:
+            self.target_y = -(SCREEN_HEIGHT - self.map_height) // 2
+        else:
+            self.target_y = max(0, min(self.target_y, self.map_height - SCREEN_HEIGHT))
     
     def update(self, dt: float):
         """
