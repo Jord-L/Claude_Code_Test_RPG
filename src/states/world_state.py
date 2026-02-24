@@ -391,8 +391,8 @@ class WorldState(State):
         Args:
             surface: Surface to draw on
         """
-        # Clear screen
-        surface.fill(BLACK)
+        # Clear screen with ocean blue (areas outside map appear as water)
+        surface.fill((0, 119, 190))  # Ocean blue - matches TileType.WATER color
         
         # Get camera offset
         camera_x, camera_y = self.camera.get_offset()
