@@ -79,8 +79,9 @@ class WorldState(State):
         self.chest_menu = ChestMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.chest_menu.on_close = self._on_chest_menu_close
 
-        # Load sprites for NPCs and objects
-        self._load_world_sprites()
+        # Sprite dictionaries (loaded in startup after pygame display is ready)
+        self.npc_sprites = {}
+        self.object_sprites = {}
 
         # Pause menu buttons
         button_width = 300
@@ -227,6 +228,9 @@ class WorldState(State):
         # Reset flags
         self.paused = False
         self.battle_triggered = False
+
+        # Load sprites (must be after pygame display is initialized)
+        self._load_world_sprites()
 
         print(f"\n✓ World State: Loaded map '{self.current_map.name}'")
         print(f"✓ World State: Player at {self.player_controller.get_tile_position()}")
