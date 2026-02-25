@@ -78,28 +78,31 @@ class BattleManager:
         # Status effects to process each turn
         self.status_effects_active = True
         
-        # Initialize battle
+        # Initialize battle (but don't start turns yet - wait for UI setup)
         self._initialize_battle()
-    
+
     def _initialize_battle(self):
-        """Initialize battle state."""
+        """Initialize battle state (logging only, no turn start)."""
         self.add_to_log("Battle Start!")
         self.add_to_log("")
-        
+
         # List combatants
         self.add_to_log("Player Party:")
         for char in self.player_party:
             self.add_to_log(f"  - {char.name} (Lv. {char.level})")
-        
+
         self.add_to_log("")
         self.add_to_log("Enemies:")
         for enemy in self.enemies:
             self.add_to_log(f"  - {enemy.name} (Lv. {enemy.level})")
-        
+
         self.add_to_log("")
         self.add_to_log("="*40)
-        
-        # Start first turn
+
+        # NOTE: _start_next_turn() is called by start_battle() after UI is ready
+
+    def start_battle(self):
+        """Start the battle - call this after UI callbacks are set up."""
         self._start_next_turn()
     
     def _start_next_turn(self):
@@ -659,8 +662,44 @@ class BattleManager:
     def turn_order(self) -> List[Character]:
         """
         Get current turn order from turn system.
-        
+
         Returns:
             List of characters in turn order
         """
         return self.turn_system.get_turn_order()
+
+    def advance_turn(self):
+        """Advance to the next turn (alias for _end_turn for external use)."""
+        self._end_turn()
+
+    def get_rewards(self) -> Dict:
+        """
+        Get battle rewards.
+
+        Returns:
+            Dictionary with 'experience' and 'berries' keys
+        """
+        if self.result:
+            return {
+                "experience": self.result.exp_gained,
+                "berries": self.result.berries_gained,
+                "items": self.result.items_gained
+            }
+        # Calculate on the fly if result not yet set
+        return {
+            "experience": self._calculate_exp_reward(),
+            "berries": self._calculate_berries_reward(),
+            "items": self._calculate_item_rewards()
+        }
+
+    def is_victory(self) -> bool:
+        """
+        Check if battle ended in victory.
+
+        Returns:
+            True if player won
+        """
+        if self.result:
+            return self.result.victory
+        # Check if all enemies are defeated
+        return not any(enemy.is_alive for enemy in self.enemies)

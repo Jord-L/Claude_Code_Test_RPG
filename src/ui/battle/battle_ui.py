@@ -614,3 +614,25 @@ class BattleUI:
     def get_battle_result(self):
         """Get battle result."""
         return self.battle_manager.result
+
+    def get_selected_action(self):
+        """
+        Get the selected action (for polling-based flow).
+
+        Returns:
+            None - actions are handled via callbacks in this UI
+        """
+        # Actions are executed directly via callbacks (_on_action_menu_selected)
+        # This method exists for compatibility but returns None
+        return None
+
+    def reset_for_next_turn(self):
+        """Reset UI state for the next turn."""
+        self.state = UIState.WAITING
+        self.current_action_type = None
+        self.pending_action = None
+        self.selected_item = None
+        self.action_menu.set_visible(False)
+        self.action_menu.set_active(False)
+        self.target_selector.set_visible(False)
+        self.item_menu.set_visible(False)

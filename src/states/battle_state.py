@@ -102,7 +102,14 @@ class BattleState(State):
         # Reset state
         self.battle_over = False
         self.victory = False
-        
+
+        # Enemy turn delay (for readability)
+        self.enemy_turn_delay = 0.0
+        self.enemy_turn_delay_duration = 0.8  # seconds
+
+        # Start the battle now that UI callbacks are connected
+        self.battle_manager.start_battle()
+
         self.logger.info(f"Battle started: Player vs {len(enemies)} enemies")
     
     def _create_enemy_party(self, player_level: int) -> List:
@@ -200,47 +207,47 @@ class BattleState(State):
         if self.battle_manager.is_player_turn():
             self._handle_player_turn()
         else:
+            # Accumulate delay for enemy turns
+            self.enemy_turn_delay += dt
             self._handle_enemy_turn()
     
     def _handle_player_turn(self):
         """Handle player's turn."""
-        # UI handles player input and action execution
-        # Check if player submitted an action
-        if self.battle_ui.state == UIState.WAITING:
-            action = self.battle_ui.get_selected_action()
-            
-            if action:
-                self.logger.info(f"Player action: {action.get_description()}")
-                
-                # Execute action
-                self.battle_manager.execute_action(action)
-                
-                # Reset UI
-                self.battle_ui.reset_for_next_turn()
-    
+        # Player input is handled by BattleUI via callbacks
+        # BattleUI._on_action_menu_selected() executes actions directly
+        # No polling needed here
+        pass
+
     def _handle_enemy_turn(self):
-        """Handle enemy's turn."""
+        """Handle enemy's turn with delay for readability."""
+        # Add delay so player can read battle log
+        if self.enemy_turn_delay < self.enemy_turn_delay_duration:
+            return  # Still waiting
+
+        # Reset delay for next enemy turn
+        self.enemy_turn_delay = 0.0
+
         actor = self.battle_manager.current_actor
-        
+
         # Find AI for this enemy
         ai = None
         for enemy_ai in self.enemy_ais:
             if enemy_ai.enemy == actor:
                 ai = enemy_ai
                 break
-        
+
         if not ai:
             self.logger.error(f"No AI found for enemy: {actor.name}")
             # Skip turn
             self.battle_manager.advance_turn()
             return
-        
+
         # AI chooses action
         all_enemies = self.battle_manager.enemies
         all_allies = self.battle_manager.player_party
-        
+
         action = ai.choose_action(all_enemies, all_allies)
-        
+
         if action:
             self.logger.info(f"Enemy action: {action.get_description()}")
             self.battle_manager.execute_action(action)
