@@ -14,7 +14,7 @@ from world.island import IslandManager
 from world.island_factory import IslandFactory
 from systems.party_manager import PartyManager
 from systems.equipment_manager import EquipmentManager
-from systems.sprite_manager import get_sprite_manager
+from systems.sprite_manager import SpriteManager
 from ui.party_menu import PartyMenu
 from ui.inventory_menu import InventoryMenu
 from ui.equipment_menu import EquipmentMenu
@@ -530,7 +530,7 @@ class WorldState(State):
 
     def _load_world_sprites(self):
         """Load sprites for NPCs and interactive objects."""
-        sprite_mgr = get_sprite_manager()
+        sprite_mgr = SpriteManager()
         sprite_size = (TILE_SIZE, TILE_SIZE)
 
         # NPC sprites - use first frame of enemy idle animations
