@@ -14,6 +14,7 @@ from world.island import IslandManager
 from world.island_factory import IslandFactory
 from systems.party_manager import PartyManager
 from systems.equipment_manager import EquipmentManager
+from systems.sprite_manager import get_sprite_manager
 from ui.party_menu import PartyMenu
 from ui.inventory_menu import InventoryMenu
 from ui.equipment_menu import EquipmentMenu
@@ -77,6 +78,9 @@ class WorldState(State):
         # Chest menu
         self.chest_menu = ChestMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.chest_menu.on_close = self._on_chest_menu_close
+
+        # Load sprites for NPCs and objects
+        self._load_world_sprites()
 
         # Pause menu buttons
         button_width = 300
@@ -477,18 +481,21 @@ class WorldState(State):
             screen_x = obj.tile_x * tile_size - camera_x
             screen_y = obj.tile_y * tile_size - camera_y
 
-            # Choose color based on object type
-            if obj.object_type == "chest":
-                color = (0, 0, 255)  # Blue for chest
-            elif obj.object_type == "door":
-                color = (255, 0, 0)  # Red for door
+            # Try to use sprite, fallback to colored rectangle
+            sprite = self.object_sprites.get(obj.object_type)
+            if sprite:
+                surface.blit(sprite, (screen_x, screen_y))
             else:
-                color = (128, 128, 128)  # Gray for other objects
-
-            # Draw filled square
-            rect = pygame.Rect(screen_x, screen_y, tile_size, tile_size)
-            pygame.draw.rect(surface, color, rect)
-            pygame.draw.rect(surface, (255, 255, 255), rect, 2)  # White border
+                # Fallback colors
+                if obj.object_type == "chest":
+                    color = (0, 0, 255)
+                elif obj.object_type == "door":
+                    color = (255, 0, 0)
+                else:
+                    color = (128, 128, 128)
+                rect = pygame.Rect(screen_x, screen_y, tile_size, tile_size)
+                pygame.draw.rect(surface, color, rect)
+                pygame.draw.rect(surface, (255, 255, 255), rect, 2)
 
         # Render NPCs
         for npc in current_island.npcs:
@@ -496,11 +503,16 @@ class WorldState(State):
             screen_x = npc.tile_x * tile_size - camera_x
             screen_y = npc.tile_y * tile_size - camera_y
 
-            # Draw green square for NPC
-            color = (0, 255, 0)  # Green for NPCs
-            rect = pygame.Rect(screen_x, screen_y, tile_size, tile_size)
-            pygame.draw.rect(surface, color, rect)
-            pygame.draw.rect(surface, (255, 255, 255), rect, 2)  # White border
+            # Try to use sprite based on NPC type, fallback to colored rectangle
+            npc_type = getattr(npc, 'npc_type', 'default')
+            sprite = self.npc_sprites.get(npc_type) or self.npc_sprites.get('default')
+            if sprite:
+                surface.blit(sprite, (screen_x, screen_y))
+            else:
+                color = (0, 255, 0)
+                rect = pygame.Rect(screen_x, screen_y, tile_size, tile_size)
+                pygame.draw.rect(surface, color, rect)
+                pygame.draw.rect(surface, (255, 255, 255), rect, 2)
 
             # Draw name label
             if hasattr(npc, 'name'):
@@ -511,6 +523,25 @@ class WorldState(State):
                 bg_rect = name_rect.inflate(4, 2)
                 pygame.draw.rect(surface, (0, 0, 0), bg_rect)
                 surface.blit(name_surface, name_rect)
+
+    def _load_world_sprites(self):
+        """Load sprites for NPCs and interactive objects."""
+        sprite_mgr = get_sprite_manager()
+        sprite_size = (TILE_SIZE, TILE_SIZE)
+
+        # NPC sprites - use first frame of enemy idle animations
+        self.npc_sprites = {
+            "quest_giver": sprite_mgr.load_sprite("sprites/4-Enemy-Big Guy/1-Idle/1.png", sprite_size),
+            "shopkeeper": sprite_mgr.load_sprite("sprites/2-Enemy-Bald Pirate/1-Idle/1.png", sprite_size),
+            "default": sprite_mgr.load_sprite("sprites/3-Enemy-Cucumber/1-Idle/1.png", sprite_size),
+        }
+
+        # Interactive object sprites
+        self.object_sprites = {
+            "chest": sprite_mgr.load_sprite("sprites/7-Objects/12-Other Objects/Barrel.png", sprite_size),
+            "door": sprite_mgr.load_sprite("sprites/7-Objects/2-Door/1-Closed/1.png", sprite_size),
+            "sign": sprite_mgr.load_sprite("sprites/7-Objects/4-Interrogation Dialog/1.png", sprite_size),
+        }
 
     def _render_ui(self, surface: pygame.Surface):
         """Render UI elements."""
