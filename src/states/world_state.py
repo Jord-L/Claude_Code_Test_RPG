@@ -325,8 +325,8 @@ class WorldState(State):
                 print("Manual battle trigger!")
                 self.battle_triggered = True
 
-            # Interact key (F)
-            elif event.key == pygame.K_f:
+            # Interact key (E)
+            elif event.key == pygame.K_e:
                 self._handle_interaction()
 
         # Handle pause menu buttons when paused
@@ -785,7 +785,7 @@ class WorldState(State):
             if distance <= 1:  # Adjacent or same tile
                 print(f"Interacting with {npc.name}!")
                 # Display NPC dialogue
-                message = f"{npc.name} says:\n\"Press F to interact with objects, NPCs, and chests!\""
+                message = f"{npc.name} says:\n\"Press E to interact with objects, NPCs, and chests!\""
                 self._show_message(message)
                 return
 

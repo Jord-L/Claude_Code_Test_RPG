@@ -103,7 +103,7 @@ class IslandFactory:
             object_type="chest",
             tile_x=13,
             tile_y=20,
-            message="Starter Chest - Press F again to close",
+            message="Starter Chest - Press E again to close",
             one_time=False,
             inventory=chest_inventory
         ))
