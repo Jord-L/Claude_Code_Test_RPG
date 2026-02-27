@@ -316,30 +316,10 @@ class WorldState(State):
                 self.equipment_menu.show()
                 print("Equipment menu opened!")
 
-            # Travel menu (T key)
-            elif event.key == pygame.K_t:
-                if self.island_manager and self.player_controller:
-                    current_island = self.island_manager.get_current_island()
-                    available = self.island_manager.get_available_islands()
-                    connections = current_island.connections if current_island else []
-                    self.travel_menu.set_destinations(
-                        current_island,
-                        available,
-                        connections,
-                        self.player_controller.player.berries
-                    )
-                    self.travel_menu.show()
-                    print("Travel menu opened!")
-
             # Pause (ESC)
             elif event.key == pygame.K_ESCAPE:
                 self.paused = not self.paused
                 print(f"Game {'paused' if self.paused else 'unpaused'}")
-
-            # Manual battle trigger (for testing)
-            elif event.key == pygame.K_b:
-                print("Manual battle trigger!")
-                self.battle_triggered = True
 
             # Interact key (F)
             elif event.key == pygame.K_f:
@@ -605,7 +585,7 @@ class WorldState(State):
         surface.blit(location_text, (20, 105))
         
         # Controls hint (bottom-center)
-        controls = "WASD: Move | P: Party | I: Inv | E: Equip | T: Travel | B: Battle | ESC: Pause | F3: Debug"
+        controls = "WASD: Move | P: Party | I: Inv | E: Equip | F: Interact | ESC: Pause | F3: Debug"
         controls_text = self.small_font.render(controls, True, LIGHT_GRAY)
         controls_x = (SCREEN_WIDTH - controls_text.get_width()) // 2
         surface.blit(controls_text, (controls_x, SCREEN_HEIGHT - 30))
