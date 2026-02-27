@@ -74,6 +74,16 @@ class ChestMenu:
             callback=self._on_store
         )
 
+        # Take All button
+        self.take_all_button = Button(
+            x=self.x + 20,
+            y=self.y + self.height - 60,
+            width=100,
+            height=40,
+            text="Take All",
+            callback=self._on_take_all
+        )
+
         # Callbacks
         self.on_close: Optional[Callable] = None
 
@@ -121,6 +131,7 @@ class ChestMenu:
         self.close_button.handle_event(event)
         self.take_button.handle_event(event)
         self.store_button.handle_event(event)
+        self.take_all_button.handle_event(event)
 
     def update(self, dt: float):
         """Update menu state."""
@@ -130,6 +141,7 @@ class ChestMenu:
         self.close_button.update(dt)
         self.take_button.update(dt)
         self.store_button.update(dt)
+        self.take_all_button.update(dt)
 
     def render(self, surface: pygame.Surface):
         """Render the chest menu."""
@@ -157,6 +169,7 @@ class ChestMenu:
         self.close_button.render(surface)
         self.take_button.render(surface)
         self.store_button.render(surface)
+        self.take_all_button.render(surface)
 
     def _render_chest_slots(self, surface: pygame.Surface):
         """Render chest inventory slots."""
@@ -307,3 +320,27 @@ class ChestMenu:
             if self.chest_inventory.add_item(slot.item, 1):
                 self.player_inventory.remove_item_at(self.selected_player_slot, 1)
                 print(f"Stored {slot.item.name} in chest")
+
+    def _on_take_all(self):
+        """Take all items from chest to player inventory."""
+        if not self.chest_inventory or not self.player_inventory:
+            return
+
+        items_taken = 0
+        # Iterate through chest slots and transfer all items
+        for i, slot in enumerate(self.chest_inventory.slots):
+            if slot and not slot.is_empty():
+                # Try to transfer all quantity of this item
+                quantity = slot.quantity
+                for _ in range(quantity):
+                    if self.player_inventory.add_item(slot.item, 1):
+                        self.chest_inventory.remove_item_at(i, 1)
+                        items_taken += 1
+                    else:
+                        # Inventory full
+                        print("Inventory full!")
+                        break
+
+        if items_taken > 0:
+            print(f"Took {items_taken} items from chest")
+        self.selected_chest_slot = -1

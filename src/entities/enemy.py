@@ -205,11 +205,18 @@ class EnemyFactory:
     def create_bandit(level: int = 1) -> Enemy:
         """Create a bandit enemy."""
         enemy = Enemy("Bandit", level, "Bandit", "easy")
+        # TESTING: Set strength to 1 for 1 damage punch
         enemy.set_stats(
-            strength=10 + level * 2,
-            defense=8 + level,
-            agility=12 + level * 2
+            strength=1,  # Testing: 1 damage punch
+            defense=1,
+            agility=5
         )
+        # Original stats (commented out for testing):
+        # enemy.set_stats(
+        #     strength=10 + level * 2,
+        #     defense=8 + level,
+        #     agility=12 + level * 2
+        # )
         enemy.set_rewards(
             exp=level * 8,
             berries=level * 40
@@ -217,16 +224,23 @@ class EnemyFactory:
         enemy.ai_personality = "aggressive"
         enemy.description = "A common thug looking for easy targets."
         return enemy
-    
+
     @staticmethod
     def create_marine(level: int = 1) -> Enemy:
         """Create a Marine soldier enemy."""
         enemy = Enemy("Marine Soldier", level, "Marine", "normal")
+        # TESTING: Set strength to 1 for 1 damage punch
         enemy.set_stats(
-            strength=12 + level * 2,
-            defense=12 + level * 2,
-            agility=10 + level
+            strength=1,  # Testing: 1 damage punch
+            defense=1,
+            agility=5
         )
+        # Original stats (commented out for testing):
+        # enemy.set_stats(
+        #     strength=12 + level * 2,
+        #     defense=12 + level * 2,
+        #     agility=10 + level
+        # )
         enemy.set_rewards(
             exp=level * 12,
             berries=level * 60
@@ -234,16 +248,23 @@ class EnemyFactory:
         enemy.ai_personality = "balanced"
         enemy.description = "A disciplined Marine soldier serving the World Government."
         return enemy
-    
+
     @staticmethod
     def create_pirate(level: int = 1) -> Enemy:
         """Create a pirate enemy."""
         enemy = Enemy("Pirate", level, "Pirate", "normal")
+        # TESTING: Set strength to 1 for 1 damage punch
         enemy.set_stats(
-            strength=14 + level * 2,
-            defense=8 + level,
-            agility=11 + level
+            strength=1,  # Testing: 1 damage punch
+            defense=1,
+            agility=5
         )
+        # Original stats (commented out for testing):
+        # enemy.set_stats(
+        #     strength=14 + level * 2,
+        #     defense=8 + level,
+        #     agility=11 + level
+        # )
         enemy.set_rewards(
             exp=level * 10,
             berries=level * 50
@@ -251,16 +272,23 @@ class EnemyFactory:
         enemy.ai_personality = "aggressive"
         enemy.description = "A rival pirate seeking treasure and glory."
         return enemy
-    
+
     @staticmethod
     def create_sea_beast(level: int = 1) -> Enemy:
         """Create a sea beast enemy."""
         enemy = Enemy("Sea Beast", level, "Beast", "normal")
+        # TESTING: Set strength to 1 for 1 damage punch
         enemy.set_stats(
-            strength=16 + level * 3,
-            defense=14 + level * 2,
-            agility=6 + level
+            strength=1,  # Testing: 1 damage punch
+            defense=1,
+            agility=5
         )
+        # Original stats (commented out for testing):
+        # enemy.set_stats(
+        #     strength=16 + level * 3,
+        #     defense=14 + level * 2,
+        #     agility=6 + level
+        # )
         enemy.set_rewards(
             exp=level * 15,
             berries=level * 30
@@ -268,7 +296,7 @@ class EnemyFactory:
         enemy.ai_personality = "aggressive"
         enemy.description = "A dangerous creature from the seas."
         return enemy
-    
+
     @staticmethod
     def create_boss(
         name: str,
@@ -277,42 +305,50 @@ class EnemyFactory:
     ) -> Enemy:
         """
         Create a boss enemy with enhanced stats.
-        
+
         Args:
             name: Boss name
             level: Boss level
             enemy_type: Boss type
-        
+
         Returns:
             Boss enemy
         """
         enemy = Enemy(name, level, enemy_type, "hard")
-        
-        # Bosses have significantly higher stats
+
+        # TESTING: Set strength to 1 for 1 damage punch
         enemy.set_stats(
-            strength=20 + level * 4,
-            defense=18 + level * 3,
-            agility=12 + level * 2,
-            intelligence=15 + level * 2,
-            willpower=18 + level * 2
+            strength=1,  # Testing: 1 damage punch
+            defense=1,
+            agility=5,
+            intelligence=5,
+            willpower=5
         )
-        
+        # Original stats (commented out for testing):
+        # enemy.set_stats(
+        #     strength=20 + level * 4,
+        #     defense=18 + level * 3,
+        #     agility=12 + level * 2,
+        #     intelligence=15 + level * 2,
+        #     willpower=18 + level * 2
+        # )
+
         # Much better rewards
         enemy.set_rewards(
             exp=level * 50,
             berries=level * 200
         )
-        
+
         # Multiply HP for boss
         enemy.max_hp = int(enemy.max_hp * 3)
         enemy.current_hp = enemy.max_hp
-        
+
         # More AP
         enemy.max_ap = int(enemy.max_ap * 2)
         enemy.current_ap = enemy.max_ap
-        
+
         enemy.ai_personality = "tactical"
-        
+
         return enemy
     
     @staticmethod
