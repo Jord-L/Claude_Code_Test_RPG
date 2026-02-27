@@ -138,12 +138,26 @@ class WorldState(State):
         print("="*60)
         print(f"Received persistent data keys: {list(persistent.keys())}")
 
+        # Ensure devil fruits are loaded
+        devil_fruit_manager.load_all_fruits()
+
         # Get player from persistent data or create new
         if "player" in persistent:
             player = persistent["player"]
             print(f"✓ Using player from character creation: {player.name}")
             print(f"   Level: {player.level}")
             print(f"   Devil Fruit: {player.devil_fruit.name if player.devil_fruit else 'None'}")
+
+            # Ensure player has devil fruit abilities loaded
+            if player.devil_fruit:
+                print(f"   Abilities: {len(player.devil_fruit.unlocked_abilities)} unlocked")
+            else:
+                # Give default devil fruit for testing if none selected
+                print("   No devil fruit - giving Gomu Gomu no Mi for testing...")
+                fruit_data = devil_fruit_manager.get_fruit_by_id("gomu_gomu")
+                if fruit_data:
+                    player.equip_devil_fruit(fruit_data)
+                    print(f"   Equipped: {player.devil_fruit.name}")
         else:
             print("⚠ No player in persistent data - creating test player")
             # Create test player

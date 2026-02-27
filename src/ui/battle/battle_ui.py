@@ -78,10 +78,10 @@ class BattleUI:
             self.battle_manager.enemies
         )
         
-        # Action Menu (bottom center)
-        menu_width = 400
-        menu_height = 350
-        menu_x = (self.screen_width - menu_width) // 2
+        # Action Menu (left side, below player info)
+        menu_width = 250
+        menu_height = 320
+        menu_x = 20
         menu_y = self.screen_height - menu_height - 20
         
         self.action_menu = ActionMenu(menu_x, menu_y, menu_width, menu_height)
@@ -141,12 +141,39 @@ class BattleUI:
         # Build action menu options
         options = []
 
-        # Attack (always available)
+        # Punch (basic unarmed attack - always available)
         options.append(ActionOption(
-            "attack",
-            "Attack",
+            "punch",
+            "Punch",
             enabled=True
         ))
+
+        # Weapon attack (if has weapon equipped)
+        has_weapon = False
+        weapon_name = "Weapon"
+        if hasattr(actor, 'equipment') and actor.equipment:
+            weapon = actor.equipment.get("weapon") or actor.equipment.get("main_hand")
+            if weapon:
+                has_weapon = True
+                weapon_name = weapon.get("name", "Weapon")[:12]  # Truncate long names
+        options.append(ActionOption(
+            "weapon",
+            weapon_name,
+            enabled=has_weapon
+        ))
+
+        # Devil Fruit Abilities (show individual abilities)
+        if hasattr(actor, 'devil_fruit') and actor.devil_fruit is not None:
+            abilities = actor.devil_fruit.unlocked_abilities
+            for i, ability in enumerate(abilities[:3]):  # Max 3 abilities shown
+                ap_cost = ability.get("ap_cost", 10)
+                can_afford = actor.current_ap >= ap_cost
+                ability_name = ability.get("name", "Ability")[:12]
+                options.append(ActionOption(
+                    f"ability_{i}",
+                    f"{ability_name}",
+                    enabled=can_afford
+                ))
 
         # Defend (always available)
         options.append(ActionOption(
@@ -154,20 +181,8 @@ class BattleUI:
             "Defend",
             enabled=True
         ))
-        
-        # Devil Fruit Abilities (if character has Devil Fruit with unlocked abilities)
-        has_abilities = (
-            hasattr(actor, 'devil_fruit') and
-            actor.devil_fruit is not None and
-            len(actor.devil_fruit.unlocked_abilities) > 0
-        )
-        options.append(ActionOption(
-            "ability",
-            "Devil Fruit",
-            enabled=has_abilities
-        ))
-        
-        # Items (if character has items - for Phase 2)
+
+        # Items (if character has items)
         has_items = False
         if hasattr(actor, 'inventory') and actor.inventory is not None:
             if hasattr(actor.inventory, 'slots'):
@@ -177,7 +192,7 @@ class BattleUI:
             "Item",
             enabled=has_items
         ))
-        
+
         # Run (always available)
         options.append(ActionOption(
             "run",
@@ -192,53 +207,55 @@ class BattleUI:
     def _on_action_menu_selected(self, action_type: str):
         """
         Called when an action is selected from menu.
-        
+
         Args:
             action_type: Selected action type
         """
         self.current_action_type = action_type
         actor = self.battle_manager.current_actor
-        
+
         if not actor:
             return
-        
+
         # Handle based on action type
-        if action_type == "attack":
-            # Show target selector for enemies
+        if action_type == "punch":
+            # Basic unarmed attack - show target selector
             self._show_target_selector(
                 self.battle_manager.get_alive_enemies(),
-                "Select Attack Target"
+                "Punch Target"
             )
-        
+
+        elif action_type == "weapon":
+            # Weapon attack - show target selector
+            self._show_target_selector(
+                self.battle_manager.get_alive_enemies(),
+                "Weapon Target"
+            )
+
         elif action_type == "defend":
             # Defend doesn't need target - execute immediately
             self._execute_action(ActionType.DEFEND, target=None)
-        
-        elif action_type == "ability":
-            # TODO: Show ability selection menu (Phase 2)
-            # For now, just show a simple target selector
-            # and use first ability if available
-            if hasattr(actor, 'devil_fruit') and actor.devil_fruit:
-                # Access abilities from DevilFruit object
+
+        elif action_type.startswith("ability_"):
+            # Devil Fruit ability - get ability index
+            try:
+                ability_idx = int(action_type.split("_")[1])
                 abilities = actor.devil_fruit.unlocked_abilities
-                if abilities:
-                    # Use first ability for now
+                if ability_idx < len(abilities):
+                    ability = abilities[ability_idx]
                     self.pending_action = CombatAction(
                         ActionType.ABILITY,
                         actor,
-                        ability_data=abilities[0]
+                        ability_data=ability
                     )
                     self._show_target_selector(
                         self.battle_manager.get_alive_enemies(),
-                        f"Select Target for {abilities[0]['name']}"
+                        f"Target for {ability['name']}"
                     )
-                else:
-                    self.hud.add_log_message("No abilities available!")
-                    self._show_action_menu(actor)
-            else:
-                self.hud.add_log_message("No Devil Fruit abilities!")
+            except (ValueError, IndexError, AttributeError):
+                self.hud.add_log_message("Ability not available!")
                 self._show_action_menu(actor)
-        
+
         elif action_type == "item":
             # Show item selection menu
             if hasattr(actor, 'inventory') and actor.inventory:
@@ -246,7 +263,7 @@ class BattleUI:
             else:
                 self.hud.add_log_message("No items in inventory!")
                 self._show_action_menu(actor)
-        
+
         elif action_type == "run":
             # Run doesn't need target - execute immediately
             self._execute_action(ActionType.RUN, target=None)
@@ -285,11 +302,16 @@ class BattleUI:
         self.target_selector.hide()
 
         # Execute action with target
-        if self.current_action_type == "attack":
+        if self.current_action_type == "punch":
+            # Basic unarmed attack
             self._execute_action(ActionType.ATTACK, target=target)
 
-        elif self.current_action_type == "ability":
-            # Use pending action (which has ability data)
+        elif self.current_action_type == "weapon":
+            # Weapon attack (uses same ATTACK type but could add weapon bonus)
+            self._execute_action(ActionType.ATTACK, target=target)
+
+        elif self.current_action_type and self.current_action_type.startswith("ability_"):
+            # Devil Fruit ability - use pending action
             if self.pending_action:
                 self.pending_action.target = target
                 self.battle_manager.execute_action(self.pending_action)

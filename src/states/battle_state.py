@@ -115,39 +115,50 @@ class BattleState(State):
     def _create_enemy_party(self, player_level: int) -> List:
         """
         Create an enemy party based on player level.
-        
+
         Args:
             player_level: Player's current level
-        
+
         Returns:
             List of Enemy instances
         """
         # Determine number of enemies (1-3 for now)
         num_enemies = random.randint(1, 3)
-        
-        # Select enemy types based on level
-        enemy_types = []
+
+        # Define enemy factions (enemies within same faction work together)
+        factions = {
+            "outlaws": ["bandit", "pirate"],       # Criminals
+            "marines": ["marine_soldier"],          # Marines
+            "wildlife": ["sea_beast"],              # Wild creatures
+        }
+
+        # Select faction based on level and randomness
         if player_level < 3:
-            enemy_types = ["bandit", "bandit", "marine_soldier"]
+            # Low level - bandits or marines (not both)
+            faction_name = random.choice(["outlaws", "marines"])
         elif player_level < 6:
-            enemy_types = ["marine_soldier", "pirate", "sea_beast"]
+            # Mid level - any faction
+            faction_name = random.choice(["outlaws", "marines", "wildlife"])
         else:
-            enemy_types = ["pirate", "sea_beast", "boss"]
-        
-        # Create enemies
+            # High level - outlaws or wildlife
+            faction_name = random.choice(["outlaws", "wildlife"])
+
+        faction_enemies = factions[faction_name]
+
+        # Create enemies from same faction
         enemies = []
         for i in range(num_enemies):
-            enemy_type = random.choice(enemy_types)
-            
+            enemy_type = random.choice(faction_enemies)
+
             # Adjust level slightly
             enemy_level = player_level + random.randint(-1, 1)
             enemy_level = max(1, enemy_level)
-            
+
             # Create enemy
             enemy = EnemyFactory.create_enemy(enemy_type, enemy_level)
             enemy.name = f"{enemy.name} {i+1}" if num_enemies > 1 else enemy.name
             enemies.append(enemy)
-        
+
         return enemies
     
     def cleanup(self):
