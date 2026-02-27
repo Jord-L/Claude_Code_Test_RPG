@@ -320,15 +320,15 @@ class BattleState(State):
         self.logger.info(f"Player survived with {player.current_hp} HP")
     
     def _end_battle(self):
-        """End battle and transition to main menu."""
+        """End battle and return to world state."""
         self.logger.info("Ending battle state...")
 
         # Mark state as done
         self.done = True
 
-        # Always return to main menu after battle (win or lose)
-        self.next_state = "menu"
-        self.logger.info("Returning to main menu")
+        # Return to world state (where player was before battle)
+        self.next_state = "world"
+        self.logger.info("Returning to world state")
     
     def render(self, surface):
         """
