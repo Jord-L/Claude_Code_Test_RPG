@@ -38,19 +38,22 @@ class NPCData:
 
 @dataclass
 class InteractiveObject:
-    """Interactive object on an island (chest, door, sign, etc.)."""
+    """Interactive object on an island (chest, door, sign, ship, etc.)."""
 
     object_id: str
-    object_type: str  # chest, door, sign, berry_pile, barrel
+    object_type: str  # chest, door, sign, berry_pile, barrel, ship
     tile_x: int
     tile_y: int
-    interaction_type: str = "examine"  # examine, open, read, take
+    interaction_type: str = "examine"  # examine, open, read, take, transition, travel
     item_rewards: List[Tuple[str, int]] = field(default_factory=list)  # [(item_id, quantity)]
     berries_reward: int = 0
     message: Optional[str] = None
     unlock_condition: Optional[str] = None
     one_time: bool = True  # Can only interact once
     inventory: Optional['Inventory'] = None  # For chests with persistent storage
+    # Transition door properties (for doors that teleport to another area)
+    destination_island: Optional[str] = None  # Island ID to teleport to
+    destination_spawn: Optional[Tuple[int, int]] = None  # Optional custom spawn point
 
 
 @dataclass

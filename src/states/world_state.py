@@ -812,6 +812,26 @@ class WorldState(State):
             if distance <= 1:  # Adjacent or same tile
                 print(f"Interacting with {obj.object_type} at {obj_tile}!")
 
+                # Handle transition doors (auto-teleport to another area)
+                if obj.object_type == "door" and obj.destination_island:
+                    self._teleport_to_island(obj.destination_island, obj.destination_spawn)
+                    return
+
+                # Handle ships (open travel menu for island-to-island travel)
+                if obj.object_type == "ship":
+                    if self.island_manager and self.player_controller:
+                        available = self.island_manager.get_available_islands()
+                        connections = current_island.connections if current_island else []
+                        self.travel_menu.set_destinations(
+                            current_island,
+                            available,
+                            connections,
+                            self.player_controller.player.berries
+                        )
+                        self.travel_menu.show()
+                        print("Opened ship travel menu")
+                    return
+
                 # Handle chests with inventory UI
                 if obj.object_type == "chest" and obj.inventory:
                     player = self.player_controller.player
@@ -837,3 +857,46 @@ class WorldState(State):
         """Close the interaction message."""
         self.interaction_message = ""
         self.message_showing = False
+
+    def _teleport_to_island(self, destination_id: str, custom_spawn: tuple = None):
+        """
+        Teleport player to another island/area (used by transition doors).
+
+        Args:
+            destination_id: Island ID to teleport to
+            custom_spawn: Optional custom spawn point (tile_x, tile_y)
+        """
+        if not self.island_manager or not self.player_controller:
+            return
+
+        # Travel to the destination
+        if self.island_manager.travel_to_island(destination_id):
+            # Update map reference
+            new_island = self.island_manager.get_current_island()
+            self.current_map = new_island.map
+
+            # Update player controller with new map
+            self.player_controller.map = new_island.map
+            self.player_controller.current_island = new_island
+
+            # Update camera dimensions for new map
+            map_width, map_height = new_island.map.get_world_size()
+            self.camera.map_width = map_width
+            self.camera.map_height = map_height
+
+            # Move player to spawn point (custom or default)
+            if custom_spawn:
+                spawn_x, spawn_y = custom_spawn
+            else:
+                spawn_x, spawn_y = new_island.map.spawn_point
+            self.player_controller.set_position(spawn_x * TILE_SIZE, spawn_y * TILE_SIZE)
+
+            # Center camera on player immediately
+            player_x, player_y = self.player_controller.get_center_position()
+            self.camera.center_on(player_x, player_y)
+            self.camera.x = self.camera.target_x
+            self.camera.y = self.camera.target_y
+
+            print(f"Teleported to {new_island.name}!")
+        else:
+            print(f"Failed to teleport to {destination_id}!")

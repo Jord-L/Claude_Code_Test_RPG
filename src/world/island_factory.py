@@ -108,15 +108,16 @@ class IslandFactory:
             inventory=chest_inventory
         ))
 
-        # Exit door to the outside village
+        # Exit door to the outside village (transition door)
         island.add_interactive_object(InteractiveObject(
             object_id="exit_door",
             object_type="door",
             tile_x=15,
             tile_y=27,
-            interaction_type="examine",
-            message="Exit to Foosha Village.\nPress T and select 'Foosha Village' to go outside.",
-            one_time=False
+            interaction_type="transition",
+            one_time=False,
+            destination_island="foosha_exterior",
+            destination_spawn=(20, 34)  # Just outside the building
         ))
 
         island.add_interactive_object(InteractiveObject(
@@ -185,15 +186,16 @@ class IslandFactory:
             dialogue_id="child_talk"
         ))
 
-        # Door back to the starting hall
+        # Door back to the starting hall (transition door)
         island.add_interactive_object(InteractiveObject(
             object_id="hall_entrance",
             object_type="door",
             tile_x=20,
             tile_y=33,
-            interaction_type="examine",
-            message="Entrance to the Starting Hall.\nPress T and select 'Starting Hall' to go inside.",
-            one_time=False
+            interaction_type="transition",
+            one_time=False,
+            destination_island="foosha_village",
+            destination_spawn=(15, 26)  # Just inside the hall
         ))
 
         # Village well
@@ -211,10 +213,21 @@ class IslandFactory:
         island.add_interactive_object(InteractiveObject(
             object_id="dock_sign",
             object_type="sign",
-            tile_x=20,
+            tile_x=18,
             tile_y=36,
             interaction_type="read",
-            message="Foosha Village Dock\nShips to Shell Town depart daily.\nTravel cost: 100 Berries",
+            message="Foosha Village Dock\nBoard the ship to travel to other islands.",
+            one_time=False
+        ))
+
+        # Ship at the dock for island travel
+        island.add_interactive_object(InteractiveObject(
+            object_id="dock_ship",
+            object_type="ship",
+            tile_x=20,
+            tile_y=37,
+            interaction_type="travel",
+            message="Board this ship to travel to other islands.",
             one_time=False
         ))
 
@@ -230,13 +243,13 @@ class IslandFactory:
             encounter_rate=0.03  # Low encounter rate
         ))
 
-        # Connection back to starting hall (free)
+        # Connection back to starting hall (for door transition - no cost)
         island.add_connection(IslandConnection(
             destination_island="foosha_village",
             berries_cost=0
         ))
 
-        # Connection to Shell Town
+        # Ship travel to Shell Town
         island.add_connection(IslandConnection(
             destination_island="shell_town",
             berries_cost=100
