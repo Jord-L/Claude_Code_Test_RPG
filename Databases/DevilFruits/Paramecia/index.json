@@ -12,14 +12,37 @@
       "stat_bonuses": {"attack": 15, "defense": 20, "speed": 10},
       "abilities": [
         {
-          "name": "Gum-Gum Pistol",
+          "name": "Gomu Gomu Pistol",
           "level_required": 1,
           "ap_cost": 10,
           "cooldown": 0,
           "description": "Stretch arm for a powerful punch",
           "damage_type": "Physical",
           "target": "Single",
-          "effects": ["Medium Damage"]
+          "base_damage": 25,
+          "effects": []
+        },
+        {
+          "name": "Gomu Gomu Gatling",
+          "level_required": 1,
+          "ap_cost": 20,
+          "cooldown": 2,
+          "description": "Rapid fire barrage of punches",
+          "damage_type": "Physical",
+          "target": "Single",
+          "base_damage": 50,
+          "effects": []
+        },
+        {
+          "name": "Gomu Gomu Bazooka",
+          "level_required": 3,
+          "ap_cost": 15,
+          "cooldown": 1,
+          "description": "Double palm strike with stretched arms",
+          "damage_type": "Physical",
+          "target": "Single",
+          "base_damage": 40,
+          "effects": []
         }
       ],
       "weaknesses": ["Water", "Seastone", "Bladed weapons"],

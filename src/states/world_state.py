@@ -157,7 +157,7 @@ class WorldState(State):
             
             # Add Devil Fruit for testing
             devil_fruit_manager.load_all_fruits()
-            fruit_data = devil_fruit_manager.get_fruit("gomu_gomu")
+            fruit_data = devil_fruit_manager.get_fruit_by_id("gomu_gomu")
             if fruit_data:
                 player.devil_fruit = DevilFruit(fruit_data)
                 print(f"Equipped {player.devil_fruit.name} with {len(player.devil_fruit.unlocked_abilities)} abilities")
