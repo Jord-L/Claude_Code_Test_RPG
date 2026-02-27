@@ -8,6 +8,7 @@ from typing import Optional, Callable
 from systems.item_system import Inventory
 from ui.panel import Panel
 from ui.button import Button
+from ui.item_icons import load_item_icon
 from utils.constants import *
 
 
@@ -203,9 +204,23 @@ class ChestMenu:
 
             # Draw item if present
             if slot and not slot.is_empty():
-                item_color = slot.item.get_color()
-                item_rect = pygame.Rect(slot_x + 5, slot_y + 5, slot_size - 10, slot_size - 10)
-                pygame.draw.rect(surface, item_color, item_rect)
+                icon_size = slot_size - 6
+                icon_x = slot_x + 3
+                icon_y = slot_y + 3
+
+                # Try to load and display icon
+                icon_displayed = False
+                if slot.item.icon:
+                    icon_surface = load_item_icon(slot.item.icon, (icon_size, icon_size))
+                    if icon_surface:
+                        surface.blit(icon_surface, (icon_x, icon_y))
+                        icon_displayed = True
+
+                # Fallback to colored square
+                if not icon_displayed:
+                    item_color = slot.item.get_color()
+                    item_rect = pygame.Rect(icon_x, icon_y, icon_size, icon_size)
+                    pygame.draw.rect(surface, item_color, item_rect)
 
                 # Draw quantity
                 if slot.quantity > 1:
@@ -244,9 +259,23 @@ class ChestMenu:
 
             # Draw item if present
             if slot and not slot.is_empty():
-                item_color = slot.item.get_color()
-                item_rect = pygame.Rect(slot_x + 5, slot_y + 5, slot_size - 10, slot_size - 10)
-                pygame.draw.rect(surface, item_color, item_rect)
+                icon_size = slot_size - 6
+                icon_x = slot_x + 3
+                icon_y = slot_y + 3
+
+                # Try to load and display icon
+                icon_displayed = False
+                if slot.item.icon:
+                    icon_surface = load_item_icon(slot.item.icon, (icon_size, icon_size))
+                    if icon_surface:
+                        surface.blit(icon_surface, (icon_x, icon_y))
+                        icon_displayed = True
+
+                # Fallback to colored square
+                if not icon_displayed:
+                    item_color = slot.item.get_color()
+                    item_rect = pygame.Rect(icon_x, icon_y, icon_size, icon_size)
+                    pygame.draw.rect(surface, item_color, item_rect)
 
                 # Draw quantity
                 if slot.quantity > 1:
@@ -327,19 +356,26 @@ class ChestMenu:
             return
 
         items_taken = 0
-        # Iterate through chest slots and transfer all items
+        inventory_full = False
+
+        # First collect all items and their slot indices
+        items_to_take = []
         for i, slot in enumerate(self.chest_inventory.slots):
             if slot and not slot.is_empty():
-                # Try to transfer all quantity of this item
-                quantity = slot.quantity
-                for _ in range(quantity):
-                    if self.player_inventory.add_item(slot.item, 1):
-                        self.chest_inventory.remove_item_at(i, 1)
-                        items_taken += 1
-                    else:
-                        # Inventory full
-                        print("Inventory full!")
-                        break
+                items_to_take.append((i, slot.item, slot.quantity))
+
+        # Now transfer items
+        for slot_idx, item, quantity in items_to_take:
+            if inventory_full:
+                break
+            for _ in range(quantity):
+                if self.player_inventory.add_item(item, 1):
+                    self.chest_inventory.remove_item_at(slot_idx, 1)
+                    items_taken += 1
+                else:
+                    print("Inventory full!")
+                    inventory_full = True
+                    break
 
         if items_taken > 0:
             print(f"Took {items_taken} items from chest")
