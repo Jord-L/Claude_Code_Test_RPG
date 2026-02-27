@@ -11,6 +11,7 @@ from combat.turn_system import TurnSystem
 from combat.combat_action import CombatAction, ActionType
 from combat.damage_calculator import DamageCalculator
 from utils.constants import *
+from utils.logger import log_error
 
 
 class BattleResult:
@@ -115,6 +116,9 @@ class BattleManager:
         
         if not self.current_actor:
             # Should not happen, but handle gracefully
+            log_error("COMBAT_001", "No valid actor for turn",
+                      turn=self.current_turn, player_count=len(self.player_party),
+                      enemy_count=len(self.enemies))
             self.add_to_log("Error: No valid actor for turn!")
             self.battle_active = False
             return
@@ -162,6 +166,10 @@ class BattleManager:
         
         # Validate action
         if action.actor != self.current_actor:
+            log_error("COMBAT_002", "Action actor mismatch",
+                      action_actor=action.actor.name if action.actor else "None",
+                      current_actor=self.current_actor.name if self.current_actor else "None",
+                      action_type=str(action.action_type))
             self.add_to_log("Error: Action actor does not match current actor!")
             return False
         

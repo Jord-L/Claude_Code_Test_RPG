@@ -15,7 +15,7 @@ from ui.battle.battle_ui import BattleUI, UIState
 from combat.combat_action import ActionFactory
 from combat.enemy_ai import EnemyAI
 from utils.constants import *
-from utils.logger import get_logger
+from utils.logger import get_logger, log_error
 
 
 class BattleState(State):
@@ -61,7 +61,8 @@ class BattleState(State):
         
         # Get player from persistent data
         if "player" not in persistent:
-            self.logger.error("No player data provided to battle state!")
+            log_error("BATTLE_001", "No player data provided to battle state",
+                      state="battle_state", persistent_keys=list(persistent.keys()))
             raise ValueError("Battle state requires player data")
         
         player = persistent["player"]
@@ -248,7 +249,8 @@ class BattleState(State):
                 break
 
         if not ai:
-            self.logger.error(f"No AI found for enemy: {actor.name}")
+            log_error("BATTLE_002", "No AI found for enemy",
+                      enemy_name=actor.name, enemy_count=len(self.enemy_ais))
             # Skip turn
             self.battle_manager.advance_turn()
             return

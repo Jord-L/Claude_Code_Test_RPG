@@ -71,9 +71,23 @@ class GameLogger:
         general_handler.setLevel(logging.INFO)
         general_handler.setFormatter(detailed_formatter)
         self.logger.addHandler(general_handler)
-        
+
+        # Error-specific log file (only ERROR and CRITICAL)
+        error_formatter = logging.Formatter(
+            '[%(asctime)s] [%(levelname)-8s] [%(name)s:%(filename)s:%(lineno)d]\n'
+            '  Message: %(message)s\n'
+            '  Function: %(funcName)s\n',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        error_log_file = os.path.join(log_dir, "errors.log")
+        error_handler = logging.FileHandler(error_log_file, encoding='utf-8')
+        error_handler.setLevel(logging.ERROR)  # Only ERROR and CRITICAL
+        error_handler.setFormatter(error_formatter)
+        self.logger.addHandler(error_handler)
+
         self.session_log_file = session_log_file
         self.general_log_file = general_log_file
+        self.error_log_file = error_log_file
     
     def debug(self, message):
         """Log debug message."""
@@ -116,6 +130,25 @@ class GameLogger:
     def get_general_log_path(self):
         """Get the path to the general log file."""
         return self.general_log_file
+
+    def get_error_log_path(self):
+        """Get the path to the error log file."""
+        return self.error_log_file
+
+    def log_error_with_context(self, error_code: str, message: str, **context):
+        """
+        Log an error with additional context information.
+
+        Args:
+            error_code: A unique error code (e.g., "BATTLE_001", "SAVE_002")
+            message: Error description
+            **context: Additional context key-value pairs
+        """
+        context_str = ", ".join(f"{k}={v}" for k, v in context.items())
+        full_message = f"[{error_code}] {message}"
+        if context_str:
+            full_message += f" | Context: {context_str}"
+        self.logger.error(full_message)
 
 
 # Global logger instance
@@ -196,3 +229,20 @@ def separator(char="=", length=70):
 def section(title):
     """Log a section header."""
     get_logger().section(title)
+
+
+def log_error(error_code: str, message: str, **context):
+    """
+    Log an error with error code and context.
+
+    Args:
+        error_code: Unique error code (e.g., "BATTLE_001")
+        message: Error description
+        **context: Additional context
+    """
+    get_logger().log_error_with_context(error_code, message, **context)
+
+
+def get_error_log_path():
+    """Get the path to the error log file."""
+    return get_logger().get_error_log_path()
