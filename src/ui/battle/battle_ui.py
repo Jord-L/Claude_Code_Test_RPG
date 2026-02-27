@@ -116,12 +116,12 @@ class BattleUI:
     def _on_turn_start(self, actor: Character):
         """
         Called when a new turn starts.
-        
+
         Args:
             actor: Character whose turn it is
         """
         self.hud.set_current_actor(actor)
-        
+
         # If it's a player's turn, show action menu
         if actor in self.battle_manager.player_party:
             self._show_action_menu(actor)
@@ -132,22 +132,22 @@ class BattleUI:
     def _show_action_menu(self, actor: Character):
         """
         Show action menu for player turn.
-        
+
         Args:
             actor: Acting character
         """
         self.state = UIState.ACTION_SELECTION
-        
+
         # Build action menu options
         options = []
-        
+
         # Attack (always available)
         options.append(ActionOption(
             "attack",
             "Attack",
             enabled=True
         ))
-        
+
         # Defend (always available)
         options.append(ActionOption(
             "defend",
@@ -168,7 +168,10 @@ class BattleUI:
         ))
         
         # Items (if character has items - for Phase 2)
-        has_items = hasattr(actor, 'inventory') and len(actor.inventory) > 0
+        has_items = False
+        if hasattr(actor, 'inventory') and actor.inventory is not None:
+            if hasattr(actor.inventory, 'slots'):
+                has_items = len(actor.inventory.slots) > 0
         options.append(ActionOption(
             "item",
             "Item",
@@ -185,7 +188,7 @@ class BattleUI:
         self.action_menu.set_options(options)
         self.action_menu.set_visible(True)
         self.action_menu.set_active(True)
-    
+
     def _on_action_menu_selected(self, action_type: str):
         """
         Called when an action is selected from menu.
@@ -221,8 +224,8 @@ class BattleUI:
                 if abilities:
                     # Use first ability for now
                     self.pending_action = CombatAction(
-                        actor,
                         ActionType.ABILITY,
+                        actor,
                         ability_data=abilities[0]
                     )
                     self._show_target_selector(
@@ -417,7 +420,7 @@ class BattleUI:
             return
         
         # Create action
-        action = CombatAction(actor, action_type, target=target)
+        action = CombatAction(action_type, actor, target=target)
         
         # Execute through battle manager
         success = self.battle_manager.execute_action(action)
