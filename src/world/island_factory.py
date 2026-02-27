@@ -103,19 +103,19 @@ class IslandFactory:
             object_type="chest",
             tile_x=13,
             tile_y=20,
-            message="Starter Chest - Press E again to close",
+            message="Starter Chest - Press F again to close",
             one_time=False,
             inventory=chest_inventory
         ))
 
-        # Exit door to the outside world
+        # Exit door to the outside village
         island.add_interactive_object(InteractiveObject(
             object_id="exit_door",
             object_type="door",
             tile_x=15,
             tile_y=27,
             interaction_type="examine",
-            message="Exit to the outside world.\nComing soon...",
+            message="Exit to Foosha Village.\nPress T and select 'Foosha Village' to go outside.",
             one_time=False
         ))
 
@@ -131,7 +131,112 @@ class IslandFactory:
 
         # No encounters in starting area - this is a safe indoor space
 
-        # Add connection to Shell Town (unlocked by default)
+        # Add connection to the exterior village (free)
+        island.add_connection(IslandConnection(
+            destination_island="foosha_exterior",
+            berries_cost=0
+        ))
+
+        return island
+
+    @staticmethod
+    def create_foosha_exterior() -> Island:
+        """
+        Create Foosha Village Exterior - the outdoor village area.
+        Peaceful village with some low-level encounters outside.
+        """
+        # Create map (40x40 tiles)
+        map_instance = Map(40, 40, TileType.GRASS)
+        map_instance.name = "Foosha Village"
+        map_instance.spawn_point = (20, 35)  # Near the starting hall entrance
+
+        # Create island
+        island = Island("foosha_exterior", "Foosha Village", map_instance)
+        island.description = "A peaceful coastal village in the East Blue. Your adventure begins here."
+        island.recommended_level = 1
+        island.story_arc = "Romance Dawn"
+        island.dock_position = (20, 38)
+
+        # Build map layout
+        IslandFactory._build_foosha_exterior_map(map_instance)
+
+        # Add NPCs around the village
+        island.add_npc(NPCData(
+            npc_id="fisherman",
+            name="Old Fisherman",
+            tile_x=35,
+            tile_y=30,
+            dialogue_id="fisherman_talk"
+        ))
+
+        island.add_npc(NPCData(
+            npc_id="villager_ext_1",
+            name="Villager",
+            tile_x=10,
+            tile_y=20,
+            dialogue_id="villager_generic"
+        ))
+
+        island.add_npc(NPCData(
+            npc_id="child",
+            name="Village Kid",
+            tile_x=25,
+            tile_y=25,
+            dialogue_id="child_talk"
+        ))
+
+        # Door back to the starting hall
+        island.add_interactive_object(InteractiveObject(
+            object_id="hall_entrance",
+            object_type="door",
+            tile_x=20,
+            tile_y=33,
+            interaction_type="examine",
+            message="Entrance to the Starting Hall.\nPress T and select 'Starting Hall' to go inside.",
+            one_time=False
+        ))
+
+        # Village well
+        island.add_interactive_object(InteractiveObject(
+            object_id="village_well",
+            object_type="sign",
+            tile_x=20,
+            tile_y=20,
+            interaction_type="examine",
+            message="An old stone well. The water looks clean and refreshing.",
+            one_time=False
+        ))
+
+        # Signpost near dock
+        island.add_interactive_object(InteractiveObject(
+            object_id="dock_sign",
+            object_type="sign",
+            tile_x=20,
+            tile_y=36,
+            interaction_type="read",
+            message="Foosha Village Dock\nShips to Shell Town depart daily.\nTravel cost: 100 Berries",
+            one_time=False
+        ))
+
+        # Light encounter zone in the outskirts (bandits)
+        bandit_tiles = [(x, y) for x in range(2, 10) for y in range(5, 15)]
+        bandit_tiles += [(x, y) for x in range(30, 38) for y in range(5, 15)]
+        island.add_encounter_zone(EncounterZone(
+            zone_id="village_outskirts",
+            tiles=bandit_tiles,
+            enemy_groups=["bandit"],
+            min_level=1,
+            max_level=2,
+            encounter_rate=0.03  # Low encounter rate
+        ))
+
+        # Connection back to starting hall (free)
+        island.add_connection(IslandConnection(
+            destination_island="foosha_village",
+            berries_cost=0
+        ))
+
+        # Connection to Shell Town
         island.add_connection(IslandConnection(
             destination_island="shell_town",
             berries_cost=100
@@ -646,6 +751,82 @@ class IslandFactory:
         map_instance.set_tile(15, 8, TileType.DOOR)  # Door to back area
 
     @staticmethod
+    def _build_foosha_exterior_map(map_instance: Map):
+        """Build Foosha Village exterior map layout - outdoor village."""
+        # Default is grass, add features on top
+
+        # Trees around the edges (north forest)
+        for x in range(0, 40):
+            for y in range(0, 6):
+                if random.random() < 0.7:
+                    map_instance.set_tile(x, y, TileType.TREE)
+
+        # Trees on east and west edges
+        for y in range(0, 40):
+            for x in range(0, 3):
+                if random.random() < 0.6:
+                    map_instance.set_tile(x, y, TileType.TREE)
+            for x in range(37, 40):
+                if random.random() < 0.6:
+                    map_instance.set_tile(x, y, TileType.TREE)
+
+        # Dirt path from dock to starting hall
+        for y in range(33, 40):
+            map_instance.set_tile(19, y, TileType.DIRT)
+            map_instance.set_tile(20, y, TileType.DIRT)
+            map_instance.set_tile(21, y, TileType.DIRT)
+
+        # Main village path (horizontal)
+        for x in range(8, 32):
+            map_instance.set_tile(x, 25, TileType.DIRT)
+            map_instance.set_tile(x, 26, TileType.DIRT)
+
+        # Path to north (connects to main path)
+        for y in range(10, 26):
+            map_instance.set_tile(19, y, TileType.DIRT)
+            map_instance.set_tile(20, y, TileType.DIRT)
+            map_instance.set_tile(21, y, TileType.DIRT)
+
+        # Starting hall building (stone structure)
+        for x in range(17, 24):
+            for y in range(30, 34):
+                if x == 17 or x == 23 or y == 30 or y == 33:
+                    map_instance.set_tile(x, y, TileType.WALL)
+                else:
+                    map_instance.set_tile(x, y, TileType.STONE)
+        # Door entrance
+        map_instance.set_tile(20, 33, TileType.DOOR)
+
+        # Village houses (left side)
+        for x in range(8, 14):
+            for y in range(22, 25):
+                if x == 8 or x == 13 or y == 22 or y == 24:
+                    map_instance.set_tile(x, y, TileType.WALL)
+                else:
+                    map_instance.set_tile(x, y, TileType.WOOD)
+
+        # Village houses (right side)
+        for x in range(26, 32):
+            for y in range(22, 25):
+                if x == 26 or x == 31 or y == 22 or y == 24:
+                    map_instance.set_tile(x, y, TileType.WALL)
+                else:
+                    map_instance.set_tile(x, y, TileType.WOOD)
+
+        # Well in center of village
+        map_instance.set_tile(20, 20, TileType.STONE)
+
+        # Ocean (south edge)
+        for x in range(0, 40):
+            for y in range(38, 40):
+                map_instance.set_tile(x, y, TileType.WATER)
+
+        # Wooden dock
+        for x in range(18, 23):
+            for y in range(36, 38):
+                map_instance.set_tile(x, y, TileType.WOOD)
+
+    @staticmethod
     def _build_shell_town_map(map_instance: Map):
         """Build Shell Town map layout."""
         # Marine base on the north
@@ -834,13 +1015,14 @@ class IslandFactory:
     @staticmethod
     def create_all_islands() -> List[Island]:
         """
-        Create all 8 East Blue islands.
+        Create all East Blue islands.
 
         Returns:
             List of all islands
         """
         return [
             IslandFactory.create_foosha_village(),
+            IslandFactory.create_foosha_exterior(),
             IslandFactory.create_shell_town(),
             IslandFactory.create_orange_town(),
             IslandFactory.create_syrup_village(),
