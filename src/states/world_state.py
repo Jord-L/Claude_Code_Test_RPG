@@ -742,13 +742,28 @@ class WorldState(State):
 
                             # Travel to island
                             if self.island_manager.travel_to_island(destination_id):
-                                # Update map
+                                # Update map reference
                                 new_island = self.island_manager.get_current_island()
                                 self.current_map = new_island.map
 
+                                # Update player controller with new map
+                                self.player_controller.map = new_island.map
+                                self.player_controller.current_island = new_island
+
+                                # Update camera dimensions for new map
+                                map_width, map_height = new_island.map.get_world_size()
+                                self.camera.map_width = map_width
+                                self.camera.map_height = map_height
+
                                 # Move player to spawn point
                                 spawn_x, spawn_y = new_island.map.spawn_point
-                                self.player_controller.set_position(spawn_x * 64, spawn_y * 64)
+                                self.player_controller.set_position(spawn_x * TILE_SIZE, spawn_y * TILE_SIZE)
+
+                                # Center camera on player immediately
+                                player_x, player_y = self.player_controller.get_center_position()
+                                self.camera.center_on(player_x, player_y)
+                                self.camera.x = self.camera.target_x
+                                self.camera.y = self.camera.target_y
 
                                 # Close menu
                                 self.travel_menu.hide()
