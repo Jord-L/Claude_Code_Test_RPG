@@ -254,10 +254,11 @@ class BattleState(State):
             return
 
         # AI chooses action
-        all_enemies = self.battle_manager.enemies
-        all_allies = self.battle_manager.player_party
+        # choose_action expects (player_party, enemy_party) - enemies attack players!
+        player_party = self.battle_manager.player_party
+        enemy_party = self.battle_manager.enemies
 
-        action = ai.choose_action(all_enemies, all_allies)
+        action = ai.choose_action(player_party, enemy_party)
 
         if action:
             self.logger.info(f"Enemy action: {action.get_description()}")

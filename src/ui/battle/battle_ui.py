@@ -78,16 +78,23 @@ class BattleUI:
             self.battle_manager.enemies
         )
         
-        # Action Menu (left side, below player info)
-        menu_width = 250
+        # Action Menu (center of screen)
+        menu_width = 280
         menu_height = 320
-        menu_x = 20
-        menu_y = self.screen_height - menu_height - 20
-        
+        menu_x = (self.screen_width - menu_width) // 2
+        menu_y = (self.screen_height - menu_height) // 2 - 50
+
         self.action_menu = ActionMenu(menu_x, menu_y, menu_width, menu_height)
         self.action_menu.on_action_selected = self._on_action_menu_selected
         self.action_menu.on_cancel = self._on_action_menu_cancel
         self.action_menu.set_visible(False)
+
+        # Attack Submenu (shows attack types)
+        self.attack_submenu = ActionMenu(menu_x, menu_y, menu_width, menu_height)
+        self.attack_submenu.on_action_selected = self._on_attack_submenu_selected
+        self.attack_submenu.on_cancel = self._on_attack_submenu_cancel
+        self.attack_submenu.set_visible(False)
+        self.attack_submenu.title = "Attack Type"
         
         # Target Selector (center)
         selector_width = 500
@@ -138,42 +145,15 @@ class BattleUI:
         """
         self.state = UIState.ACTION_SELECTION
 
-        # Build action menu options
+        # Build main action menu options
         options = []
 
-        # Punch (basic unarmed attack - always available)
+        # Attack (opens submenu)
         options.append(ActionOption(
-            "punch",
-            "Punch",
+            "attack",
+            "Attack",
             enabled=True
         ))
-
-        # Weapon attack (if has weapon equipped)
-        has_weapon = False
-        weapon_name = "Weapon"
-        if hasattr(actor, 'equipment') and actor.equipment:
-            weapon = actor.equipment.get("weapon") or actor.equipment.get("main_hand")
-            if weapon:
-                has_weapon = True
-                weapon_name = weapon.get("name", "Weapon")[:12]  # Truncate long names
-        options.append(ActionOption(
-            "weapon",
-            weapon_name,
-            enabled=has_weapon
-        ))
-
-        # Devil Fruit Abilities (show individual abilities)
-        if hasattr(actor, 'devil_fruit') and actor.devil_fruit is not None:
-            abilities = actor.devil_fruit.unlocked_abilities
-            for i, ability in enumerate(abilities[:3]):  # Max 3 abilities shown
-                ap_cost = ability.get("ap_cost", 10)
-                can_afford = actor.current_ap >= ap_cost
-                ability_name = ability.get("name", "Ability")[:12]
-                options.append(ActionOption(
-                    f"ability_{i}",
-                    f"{ability_name}",
-                    enabled=can_afford
-                ))
 
         # Defend (always available)
         options.append(ActionOption(
@@ -218,26 +198,100 @@ class BattleUI:
             return
 
         # Handle based on action type
+        if action_type == "attack":
+            # Open attack submenu
+            self._show_attack_submenu(actor)
+
+        elif action_type == "defend":
+            # Defend doesn't need target - execute immediately
+            self._execute_action(ActionType.DEFEND, target=None)
+
+        elif action_type == "item":
+            # Show item selection menu
+            if hasattr(actor, 'inventory') and actor.inventory:
+                self._show_item_menu(actor)
+            else:
+                self.hud.add_log_message("No items in inventory!")
+                self._show_action_menu(actor)
+
+        elif action_type == "run":
+            # Run doesn't need target - execute immediately
+            self._execute_action(ActionType.RUN, target=None)
+
+    def _show_attack_submenu(self, actor: Character):
+        """Show attack type submenu."""
+        self.state = UIState.ACTION_SELECTION
+
+        # Hide main menu
+        self.action_menu.set_visible(False)
+        self.action_menu.set_active(False)
+
+        # Build attack submenu options
+        options = []
+
+        # Punch (basic unarmed attack - always available)
+        options.append(ActionOption(
+            "punch",
+            "Punch",
+            enabled=True
+        ))
+
+        # Weapon attack (if has weapon equipped)
+        has_weapon = False
+        weapon_name = "Weapon"
+        if hasattr(actor, 'equipment') and actor.equipment:
+            weapon = actor.equipment.get("weapon") or actor.equipment.get("main_hand")
+            if weapon:
+                has_weapon = True
+                weapon_name = weapon.get("name", "Weapon")[:15]
+        options.append(ActionOption(
+            "weapon",
+            weapon_name,
+            enabled=has_weapon
+        ))
+
+        # Devil Fruit Abilities
+        if hasattr(actor, 'devil_fruit') and actor.devil_fruit is not None:
+            abilities = actor.devil_fruit.unlocked_abilities
+            for i, ability in enumerate(abilities[:4]):  # Max 4 abilities
+                ap_cost = ability.get("ap_cost", 10)
+                can_afford = actor.current_ap >= ap_cost
+                ability_name = ability.get("name", "Ability")[:15]
+                options.append(ActionOption(
+                    f"ability_{i}",
+                    f"{ability_name} ({ap_cost}AP)",
+                    enabled=can_afford
+                ))
+
+        self.attack_submenu.set_options(options)
+        self.attack_submenu.set_visible(True)
+        self.attack_submenu.set_active(True)
+
+    def _on_attack_submenu_selected(self, action_type: str):
+        """Handle attack submenu selection."""
+        self.current_action_type = action_type
+        actor = self.battle_manager.current_actor
+
+        if not actor:
+            return
+
+        # Hide submenu
+        self.attack_submenu.set_visible(False)
+        self.attack_submenu.set_active(False)
+
         if action_type == "punch":
-            # Basic unarmed attack - show target selector
             self._show_target_selector(
                 self.battle_manager.get_alive_enemies(),
                 "Punch Target"
             )
 
         elif action_type == "weapon":
-            # Weapon attack - show target selector
             self._show_target_selector(
                 self.battle_manager.get_alive_enemies(),
                 "Weapon Target"
             )
 
-        elif action_type == "defend":
-            # Defend doesn't need target - execute immediately
-            self._execute_action(ActionType.DEFEND, target=None)
-
         elif action_type.startswith("ability_"):
-            # Devil Fruit ability - get ability index
             try:
                 ability_idx = int(action_type.split("_")[1])
                 abilities = actor.devil_fruit.unlocked_abilities
@@ -256,18 +310,14 @@ class BattleUI:
                 self.hud.add_log_message("Ability not available!")
                 self._show_action_menu(actor)
 
-        elif action_type == "item":
-            # Show item selection menu
-            if hasattr(actor, 'inventory') and actor.inventory:
-                self._show_item_menu(actor)
-            else:
-                self.hud.add_log_message("No items in inventory!")
-                self._show_action_menu(actor)
+    def _on_attack_submenu_cancel(self):
+        """Go back to main action menu."""
+        self.attack_submenu.set_visible(False)
+        self.attack_submenu.set_active(False)
+        actor = self.battle_manager.current_actor
+        if actor:
+            self._show_action_menu(actor)
 
-        elif action_type == "run":
-            # Run doesn't need target - execute immediately
-            self._execute_action(ActionType.RUN, target=None)
-    
     def _on_action_menu_cancel(self):
         """Called when action menu is cancelled."""
         # Can't cancel on player turn - must select an action
@@ -489,6 +539,7 @@ class BattleUI:
         
         # Hide all menus
         self.action_menu.set_visible(False)
+        self.attack_submenu.set_visible(False)
         self.target_selector.set_visible(False)
         self.item_menu.set_visible(False)
     
@@ -504,6 +555,9 @@ class BattleUI:
         """
         # Pass events to active UI components based on state
         if self.state == UIState.ACTION_SELECTION:
+            # Check which menu is active
+            if self.attack_submenu.visible:
+                return self.attack_submenu.handle_event(event)
             return self.action_menu.handle_event(event)
 
         elif self.state == UIState.TARGET_SELECTION:
@@ -540,7 +594,10 @@ class BattleUI:
         
         # Update active components
         if self.state == UIState.ACTION_SELECTION:
-            self.action_menu.update(dt)
+            if self.attack_submenu.visible:
+                self.attack_submenu.update(dt)
+            else:
+                self.action_menu.update(dt)
 
         elif self.state == UIState.TARGET_SELECTION:
             self.target_selector.update(dt)
@@ -572,6 +629,9 @@ class BattleUI:
         # Render active UI components
         if self.action_menu.visible:
             self.action_menu.render(surface)
+
+        if self.attack_submenu.visible:
+            self.attack_submenu.render(surface)
 
         if self.target_selector.visible:
             self.target_selector.render(surface)
