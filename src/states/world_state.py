@@ -7,6 +7,7 @@ import pygame
 from typing import Optional
 from states.state import State
 from entities.player import Player
+from entities.devil_fruit import DevilFruit
 from world.map import Map
 from world.camera import Camera
 from world.player_controller import PlayerController
@@ -15,6 +16,7 @@ from world.island_factory import IslandFactory
 from systems.party_manager import PartyManager
 from systems.equipment_manager import EquipmentManager
 from systems.sprite_manager import SpriteManager
+from systems.devil_fruit_manager import devil_fruit_manager
 from ui.party_menu import PartyMenu
 from ui.inventory_menu import InventoryMenu
 from ui.equipment_menu import EquipmentMenu
@@ -154,11 +156,11 @@ class WorldState(State):
             player.base_speed = 18
             
             # Add Devil Fruit for testing
-            player.devil_fruit = {
-                "id": "gomu_gomu",
-                "name": "Gomu Gomu no Mi",
-                "type": "paramecia"
-            }
+            devil_fruit_manager.load_all_fruits()
+            fruit_data = devil_fruit_manager.get_fruit("gomu_gomu")
+            if fruit_data:
+                player.devil_fruit = DevilFruit(fruit_data)
+                print(f"Equipped {player.devil_fruit.name} with {len(player.devil_fruit.unlocked_abilities)} abilities")
             player.max_ap = 50
             player.current_ap = 50
         

@@ -15,6 +15,7 @@
       "description": "Stretches arm back and launches a powerful punch",
       "damage_type": "Physical",
       "target": "Single",
+      "base_damage": 25,
       "effects": []
     },
     {
@@ -25,6 +26,18 @@
       "description": "Stretches both arms and delivers a double-palm strike",
       "damage_type": "Physical",
       "target": "Single",
+      "base_damage": 40,
+      "effects": []
+    },
+    {
+      "name": "Gomu Gomu Gatling",
+      "level_required": 1,
+      "ap_cost": 20,
+      "cooldown": 2,
+      "description": "Rapid fire barrage of punches",
+      "damage_type": "Physical",
+      "target": "Single",
+      "base_damage": 50,
       "effects": []
     }
   ],

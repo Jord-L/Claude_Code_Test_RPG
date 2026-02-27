@@ -155,8 +155,12 @@ class BattleUI:
             enabled=True
         ))
         
-        # Devil Fruit Abilities (if character has Devil Fruit)
-        has_abilities = hasattr(actor, 'devil_fruit') and actor.devil_fruit is not None
+        # Devil Fruit Abilities (if character has Devil Fruit with unlocked abilities)
+        has_abilities = (
+            hasattr(actor, 'devil_fruit') and
+            actor.devil_fruit is not None and
+            len(actor.devil_fruit.unlocked_abilities) > 0
+        )
         options.append(ActionOption(
             "ability",
             "Devil Fruit",
@@ -212,7 +216,8 @@ class BattleUI:
             # For now, just show a simple target selector
             # and use first ability if available
             if hasattr(actor, 'devil_fruit') and actor.devil_fruit:
-                abilities = actor.devil_fruit.get("abilities", [])
+                # Access abilities from DevilFruit object
+                abilities = actor.devil_fruit.unlocked_abilities
                 if abilities:
                     # Use first ability for now
                     self.pending_action = CombatAction(
