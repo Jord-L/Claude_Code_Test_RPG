@@ -218,6 +218,26 @@ class BattleUI:
             # Run doesn't need target - execute immediately
             self._execute_action(ActionType.RUN, target=None)
 
+    def _get_attack_label(self, actor: Character) -> str:
+        """Return the primary attack label based on the actor's equipped weapon type."""
+        if hasattr(actor, 'equipment') and actor.equipment:
+            weapon = actor.equipment.get("weapon") or actor.equipment.get("main_hand")
+            if weapon:
+                weapon_type = weapon.get("weapon_type", "fist")
+                if weapon_type in ("sword", "dual_swords"):
+                    return "Slash"
+                elif weapon_type in ("axe",):
+                    return "Chop"
+                elif weapon_type == "polearm":
+                    return "Chop"
+                elif weapon_type in ("gun", "rifle"):
+                    return "Aim"
+                elif weapon_type == "bow":
+                    return "Throw"
+                elif weapon_type == "staff":
+                    return "Strike"
+        return "Punch"
+
     def _show_attack_submenu(self, actor: Character):
         """Show attack type submenu."""
         self.state = UIState.ACTION_SELECTION
@@ -229,10 +249,11 @@ class BattleUI:
         # Build attack submenu options
         options = []
 
-        # Punch (basic unarmed attack - always available)
+        # Primary attack - label changes based on equipped weapon type
+        attack_label = self._get_attack_label(actor)
         options.append(ActionOption(
             "punch",
-            "Punch",
+            attack_label,
             enabled=True
         ))
 
@@ -280,9 +301,10 @@ class BattleUI:
         self.attack_submenu.set_active(False)
 
         if action_type == "punch":
+            attack_label = self._get_attack_label(actor)
             self._show_target_selector(
                 self.battle_manager.get_alive_enemies(),
-                "Punch Target"
+                f"{attack_label} Target"
             )
 
         elif action_type == "weapon":

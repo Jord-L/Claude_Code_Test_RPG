@@ -233,6 +233,13 @@ class WorldState(State):
         if self.island_manager:
             self.player_controller.current_island = self.island_manager.get_current_island()
 
+        # Restore player position when returning from battle
+        if "player_position" in persistent:
+            saved_x, saved_y = persistent["player_position"]
+            self.player_controller.x = float(saved_x)
+            self.player_controller.y = float(saved_y)
+            print(f"✓ World State: Restored player position to ({saved_x}, {saved_y})")
+
         # Create camera
         map_width, map_height = self.current_map.get_world_size()
         self.camera = Camera(map_width, map_height)
