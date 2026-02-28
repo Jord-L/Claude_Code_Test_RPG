@@ -331,24 +331,40 @@ class ChestMenu:
         if self.selected_chest_slot < 0 or not self.chest_inventory or not self.player_inventory:
             return
 
+        if self.selected_chest_slot >= len(self.chest_inventory.slots):
+            return
+
         slot = self.chest_inventory.slots[self.selected_chest_slot]
         if slot and not slot.is_empty():
+            item = slot.item
+            item_name = item.name
             # Transfer item
-            if self.player_inventory.add_item(slot.item, 1):
-                self.chest_inventory.remove_item_at(self.selected_chest_slot, 1)
-                print(f"Took {slot.item.name} from chest")
+            if self.player_inventory.add_item(item, 1):
+                self.chest_inventory.remove_item(item.id, 1)
+                print(f"Took {item_name} from chest")
+                # Reset selection if slot is now empty or invalid
+                if self.selected_chest_slot >= len(self.chest_inventory.slots):
+                    self.selected_chest_slot = -1
 
     def _on_store(self):
         """Store item from player inventory to chest."""
         if self.selected_player_slot < 0 or not self.chest_inventory or not self.player_inventory:
             return
 
+        if self.selected_player_slot >= len(self.player_inventory.slots):
+            return
+
         slot = self.player_inventory.slots[self.selected_player_slot]
         if slot and not slot.is_empty():
+            item = slot.item
+            item_name = item.name
             # Transfer item
-            if self.chest_inventory.add_item(slot.item, 1):
-                self.player_inventory.remove_item_at(self.selected_player_slot, 1)
-                print(f"Stored {slot.item.name} in chest")
+            if self.chest_inventory.add_item(item, 1):
+                self.player_inventory.remove_item(item.id, 1)
+                print(f"Stored {item_name} in chest")
+                # Reset selection if slot is now empty or invalid
+                if self.selected_player_slot >= len(self.player_inventory.slots):
+                    self.selected_player_slot = -1
 
     def _on_take_all(self):
         """Take all items from chest to player inventory."""
@@ -358,19 +374,19 @@ class ChestMenu:
         items_taken = 0
         inventory_full = False
 
-        # First collect all items and their slot indices
+        # First collect all items (item and quantity only, not indices)
         items_to_take = []
-        for i, slot in enumerate(self.chest_inventory.slots):
+        for slot in self.chest_inventory.slots:
             if slot and not slot.is_empty():
-                items_to_take.append((i, slot.item, slot.quantity))
+                items_to_take.append((slot.item, slot.quantity))
 
-        # Now transfer items
-        for slot_idx, item, quantity in items_to_take:
+        # Now transfer items using item ID (avoids index shifting issues)
+        for item, quantity in items_to_take:
             if inventory_full:
                 break
             for _ in range(quantity):
                 if self.player_inventory.add_item(item, 1):
-                    self.chest_inventory.remove_item_at(slot_idx, 1)
+                    self.chest_inventory.remove_item(item.id, 1)
                     items_taken += 1
                 else:
                     print("Inventory full!")

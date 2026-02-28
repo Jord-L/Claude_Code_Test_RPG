@@ -417,6 +417,33 @@ class Inventory:
 
         return removed
 
+    def remove_item_at(self, slot_index: int, quantity: int = 1) -> int:
+        """
+        Remove item from a specific slot.
+
+        Args:
+            slot_index: Index of the slot
+            quantity: Amount to remove
+
+        Returns:
+            Amount actually removed
+        """
+        if slot_index < 0 or slot_index >= len(self.slots):
+            return 0
+
+        slot = self.slots[slot_index]
+        if not slot or slot.is_empty():
+            return 0
+
+        amount = min(quantity, slot.quantity)
+        slot.remove(amount)
+
+        # Remove empty slot
+        if slot.is_empty():
+            self.slots.pop(slot_index)
+
+        return amount
+
     def has_item(self, item_id: str, quantity: int = 1) -> bool:
         """
         Check if inventory has item.
